@@ -84,7 +84,7 @@ Remote: A version of your repository hosted on the internet or network (e.g., Gi
     3.4 Working with Remotes
   
         3.4.1 Add a remote repository:
-        git remote add origin <repository-url
+        git remote add origin <repository-url>
 
         3.4.2 Push changes to a remote repository::
         git push origin <branch-name>
