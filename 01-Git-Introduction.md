@@ -2,6 +2,7 @@
 
 Git is a distributed version control system that allows multiple developers to work on a project simultaneously. It keeps track of changes made to files and directories, enabling you to revert to previous versions if needed.
 
+<br>
 
 **Basic Terminologies**
 
@@ -14,9 +15,7 @@ Branch: A separate line of development. The default branch is usually called mai
 Merge: Combining changes from different branches.
 
 Remote: A version of your repository hosted on the internet or network (e.g., GitHub).
-
-
-
+<br><br>
 
 
 
@@ -31,6 +30,7 @@ Remote: A version of your repository hosted on the internet or network (e.g., Gi
    On macOS: Use Homebrew: brew install git.
 
    On Linux: Use your package manager: sudo apt-get install git.
+<br><br>
 
 
 2. Configure Git:
@@ -39,8 +39,7 @@ Remote: A version of your repository hosted on the internet or network (e.g., Gi
 
         git config --global user.email "your.email@example.com
 
-
-
+<br>
 
 3. Git Commands :
    
