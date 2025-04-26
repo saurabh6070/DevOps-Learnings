@@ -51,20 +51,20 @@ Remote: A version of your repository hosted on the internet or network (e.g., Gi
 
    3.2 Working with Files
 
-     **3.2.1 Check the status of your repository:**
+       3.2.1 Check the status of your repository:**
 
        git status
 
-     **3.2.2 Add files to the staging area:**
+       3.2.2 Add files to the staging area:**
 
        git add <file-name>
        git add .  
 
-     **3.2.3 Commit changes:**
+       3.2.3 Commit changes:
 
        git commit -m "Your commit message
 
-     **3.2.4 View commit history:**
+       3.2.4 View commit history:
 
        git log
      
