@@ -24,9 +24,6 @@ Remote: A version of your repository hosted on the internet or network (e.g., Gi
    On macOS: Use Homebrew: brew install git.
 
    On Linux: Use your package manager: sudo apt-get install git.
-   
-
-
 
 
 3. Configure Git:
@@ -42,14 +39,14 @@ Remote: A version of your repository hosted on the internet or network (e.g., Gi
 
    3.1 Repository Commands
 
-     3.1.1 Initialize a new repository:
-           git init
+       3.1.1 Initialize a new repository:
+             git init
      
-     3.1.2 Clone an existing repository:
-           git clone <repository-url>
+       3.1.2 Clone an existing repository:
+             git clone <repository-url>
            
-     3.1.3 Forking an existing repository:
-           git init
+       3.1.3 Forking an existing repository:
+             git init
      
 
    3.2 Working with Files
