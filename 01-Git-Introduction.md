@@ -144,7 +144,8 @@ To check Git Version :
         git restore .
 
 
-    3.6 Git Reset
+    **3.6 Git Reset**
+   <br>
         The git reset command is a powerful tool in Git for undoing changes and manipulating the commit history.
         **git reset --soft <commit>**
 
@@ -161,14 +162,23 @@ To check Git Version :
 
 **Important Considerations :**
 <br>
-        Data Loss: Be cautious with git reset --hard as it will discard all changes in your working directory. <br>
-        History Rewriting: Using git reset can rewrite commit history, which can be problematic if you’ve already pushed commits to a remote repository. In such cases, consider using git revert instead. <br>
+      
+        Data Loss: Be cautious with git reset --hard as it will discard all changes in your working directory.
+        History Rewriting: Using git reset can rewrite commit history, which can be problematic if you’ve already pushed commits to a remote repository. In such cases, consider using git revert instead.
 
 
-
-
+  **3.7 Git Revert**
+   <br>
+        When you revert a commit, Git creates a new commit that applies the inverse of the changes introduced by the original commit. This means the original commit remains in the history, but its changes are effectively undone.
    
-     
+        3.7.1 Reverting a Single Commit
+        git revert <commit>
 
+        3.7.2 Reverting Multiple Commits
+        git revert <commit1>..<commit2>
 
+**Important Considerations :**
+<br>
 
+        Conflict Resolution: Reverting commits can sometimes lead to conflicts, especially if the changes being reverted are intertwined with other changes. You'll need to resolve these conflicts manually.
+        Commit History: Since git revert adds new commits, the history remains intact, making it easier to track changes and understand the project's evolution.
