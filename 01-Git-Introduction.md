@@ -68,7 +68,7 @@ Remote: A version of your repository hosted on the internet or network (e.g., Gi
 
 
 
-  3.3 Branching and Merging
+    3.3 Branching and Merging
   
         3.3.1 Create a new branch:
         git branch <branch-name>
