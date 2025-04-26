@@ -8,10 +8,10 @@
 | **Backup**                      | Single point of failure                   | Multiple copies of the repository         |
 | **Performance**                 | Slower due to network dependency          | Faster due to local operations            |
 | **Branching and Merging**       | More complex and less flexible            | Easier and more flexible                  |
-| **Examples**                    | SVN, CVS                                  | Git, Mercurial                            |
 | **Conflict Resolution**         | Handled on central server                 | Handled locally before pushing            |
 | **Security**                    | Centralized control                       | Decentralized control                     |
 | **Scalability**                 | Limited by central server capacity        | Highly scalable due to distributed nature |
+| **Examples**                    | SVN, CVS                                  | Git, Mercurial                            |
 
 
 
