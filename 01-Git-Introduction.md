@@ -73,11 +73,25 @@ Remote: A version of your repository hosted on the internet or network (e.g., Gi
         3.3.1 Create a new branch:
         git branch <branch-name>
 
-        3.3.1 Switch to a branch:
+        3.3.2 Switch to a branch:
         git checkout <branch-name
 
-        3.3.1 Merge a branch into the current branch:
+        3.3.3 Merge a branch into the current branch:
         git merge <branch-name>
+
+
+
+    3.4 Working with Remotes
+  
+        3.4.1 Add a remote repository:
+        git remote add origin <repository-url
+
+        3.4.2 Push changes to a remote repository::
+        git push origin <branch-name>
+
+        3.4.3 Pull changes from a remote repository:
+        git pull origin <branch-name>
+
 
         
 
