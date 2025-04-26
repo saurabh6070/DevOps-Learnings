@@ -27,11 +27,15 @@ Remote: A version of your repository hosted on the internet or network (e.g., Gi
 
 
 2. Configure Git:
+   
     git config --global user.name "Your Name"
+
     git config --global user.email "your.email@example.com
 
 
+
 3. Git Commands :
+   
 
    3.1 Repository Commands
 
