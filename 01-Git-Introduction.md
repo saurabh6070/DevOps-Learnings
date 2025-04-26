@@ -4,6 +4,7 @@ Git is a distributed version control system that allows multiple developers to w
 
 
 **Basic Terminologies**
+
 Repository (Repo): A directory where Git stores all the files and their history.
 Commit: A snapshot of your changes. Each commit has a unique ID and a message describing the changes.
 Branch: A separate line of development. The default branch is usually called main or master.
@@ -11,6 +12,7 @@ Merge: Combining changes from different branches.
 Remote: A version of your repository hosted on the internet or network (e.g., GitHub).
 
 **Basic Commands**
+
 1. Setting Up Git
   Install Git:
 
