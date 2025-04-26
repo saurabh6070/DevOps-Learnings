@@ -1,3 +1,31 @@
+| Feature                         | CVCS                                      | DVCS                                      |
+|---------------------------------|-------------------------------------------|-------------------------------------------|
+| **Architecture**                | Centralized                               | Distributed                               |
+| **Repository Location**         | Single central repository                 | Multiple repositories (local and remote)  |
+| **Access**                      | Requires network access to central server | Can work offline with local repository    |
+| **Commit History**              | Stored on central server                  | Stored locally and can be pushed to remote|
+| **Collaboration**               | Changes are shared via central server     | Changes can be shared directly between developers|
+| **Backup**                      | Single point of failure                   | Multiple copies of the repository         |
+| **Performance**                 | Slower due to network dependency          | Faster due to local operations            |
+| **Branching and Merging**       | More complex and less flexible            | Easier and more flexible                  |
+| **Examples**                    | SVN, CVS                                  | Git, Mercurial                            |
+| **Conflict Resolution**         | Handled on central server                 | Handled locally before pushing            |
+| **Security**                    | Centralized control                       | Decentralized control                     |
+| **Scalability**                 | Limited by central server capacity        | Highly scalable due to distributed nature |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 **What is Git?**
 
 Git is a distributed version control system that allows multiple developers to work on a project simultaneously. It keeps track of changes made to files and directories, enabling you to revert to previous versions if needed.
