@@ -18,6 +18,8 @@ Remote: A version of your repository hosted on the internet or network (e.g., Gi
 
 
 
+
+
 **Basic Commands**
 
 1. Setting Up Git
