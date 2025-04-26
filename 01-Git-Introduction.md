@@ -26,6 +26,8 @@ Remote: A version of your repository hosted on the internet or network (e.g., Gi
    On Linux: Use your package manager: sudo apt-get install git.
 
 
+
+
 2. Configure Git:
    
     git config --global user.name "Your Name"
