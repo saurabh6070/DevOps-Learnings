@@ -1,9 +1,10 @@
-**Version Control System
-**
+**Version Control System**
+
 A version control system (VCS) is a tool that helps manage changes to source code over time, allowing multiple developers to collaborate efficiently. It tracks revisions, enabling you to revert to previous versions and maintain a history of changes.
+<br>
 
-
-<br><br>
+Types of Version Conrtol System :- Centralised VCS & Distributed VCS.
+<br>
 
 | Feature                         | CVCS                                      | DVCS                                      |
 |---------------------------------|-------------------------------------------|-------------------------------------------|
@@ -28,11 +29,6 @@ A version control system (VCS) is a tool that helps manage changes to source cod
 
 
 
-
-
-
-
-
 **What is Git?**
 
 Git is a distributed version control system that allows multiple developers to work on a project simultaneously. It keeps track of changes made to files and directories, enabling you to revert to previous versions if needed.
@@ -41,15 +37,15 @@ Git is a distributed version control system that allows multiple developers to w
 
 **Basic Terminologies**
 
-Repository (Repo): A directory where Git stores all the files and their history.
+**Repository (Repo):** A directory where Git stores all the files and their history.
 
-Commit: A snapshot of your changes. Each commit has a unique ID and a message describing the changes.
+**Commit:** A snapshot of your changes. Each commit has a unique ID and a message describing the changes.
 
-Branch: A separate line of development. The default branch is usually called main or master.
+**Branch:** A separate line of development. The default branch is usually called main or master.
 
-Merge: Combining changes from different branches.
+**Merge:** Combining changes from different branches.
 
-Remote: A version of your repository hosted on the internet or network (e.g., GitHub).
+**Remote:** A version of your repository hosted on the internet or network (e.g., GitHub).
 <br><br>
 
 
@@ -65,16 +61,17 @@ Remote: A version of your repository hosted on the internet or network (e.g., Gi
    On macOS: Use Homebrew: brew install git.
 
    On Linux: Use your package manager: sudo apt-get install git.
-<br><br>
+To check Git Version :
+
+        git --version
 
 
 2. Configure Git:
    
         git config --global user.name "Your Name"
-
         git config --global user.email "your.email@example.com
-
-<br>
+        git config --global core.editor "vi"
+        git config --list
 
 3. Git Commands :
    
@@ -135,6 +132,39 @@ Remote: A version of your repository hosted on the internet or network (e.g., Gi
 
 
         
+    3.5 Git Restore
+  
+        3.5.1 Discard changes in the working directory
+        git restore example.txt
+
+        3.5.2 Restore a file from a specific commit. If you want to restore a file to its state in a specific commit, you can use:
+        git restore --source <commit> <file>
+        
+        3.5.3 Restore all files in the working directory
+        git restore .
+
+
+    3.6 Git Reset
+        The git reset command is a powerful tool in Git for undoing changes and manipulating the commit history.
+        **git reset --soft <commit>**
+
+        Types of Git Reset
+   
+        **3.6.1 Soft Reset (--soft) : ** Moves the HEAD to the specified commit but keeps the changes in the staging area
+        git reset --soft HEAD~1
+
+        **3.6.2 Mixed Reset (--mixed) : **  Moves the HEAD to the specified commit and resets the staging area, but keeps the changes in the working directory.
+        git reset --mixed HEAD~1
+
+       ** 3.6.3 Hard Reset (--hard) : ** Moves the HEAD to the specified commit and resets both the staging area and the working directory to match the specified commit.
+        git reset --hard HEAD~1
+
+   Important Considerations :
+        Data Loss: Be cautious with git reset --hard as it will discard all changes in your working directory.
+        History Rewriting: Using git reset can rewrite commit history, which can be problematic if you’ve already pushed commits to a remote repository. In such cases, consider using git revert instead.
+
+
+
 
    
      
