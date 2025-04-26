@@ -1,3 +1,10 @@
+**Version Control System
+**
+A version control system (VCS) is a tool that helps manage changes to source code over time, allowing multiple developers to collaborate efficiently. It tracks revisions, enabling you to revert to previous versions and maintain a history of changes.
+
+
+<br><br>
+
 | Feature                         | CVCS                                      | DVCS                                      |
 |---------------------------------|-------------------------------------------|-------------------------------------------|
 | **Architecture**                | Centralized                               | Distributed                               |
@@ -15,7 +22,7 @@
 
 
 
-
+<br><br>
 
 
 
