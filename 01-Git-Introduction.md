@@ -182,3 +182,20 @@ To check Git Version :
 
         Conflict Resolution: Reverting commits can sometimes lead to conflicts, especially if the changes being reverted are intertwined with other changes. You'll need to resolve these conflicts manually.
         Commit History: Since git revert adds new commits, the history remains intact, making it easier to track changes and understand the project's evolution.
+
+
+  **3.8 Git Rebase**
+   <br>
+        When you rebase a branch, Git takes the commits from the current branch and re-applies them on top of another branch. This can be useful for integrating changes from one branch into another or for cleaning up the commit history.
+   
+        3.8.1 Interactive Rebase (-i): This command will open an editor where you can interactively rebase the last three commits.
+        git rebase -i HEAD~3
+
+        3.8.2 Regular Rebase : Re-applies commits from the current branch onto the specified base branch.
+        git rebase master
+
+**Important Considerations :**
+<br>
+
+        Conflict Resolution: Rebasing can lead to conflicts, especially if the changes being rebased overlap with changes in the base branch. You'll need to resolve these conflicts manually.
+        History Rewriting: Rebasing rewrites commit history, which can be problematic if you've already pushed commits to a remote repository. In such cases, consider using git merge instead.
