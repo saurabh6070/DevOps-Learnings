@@ -159,7 +159,8 @@ To check Git Version :
        ** 3.6.3 Hard Reset (--hard) : ** Moves the HEAD to the specified commit and resets both the staging area and the working directory to match the specified commit.
         git reset --hard HEAD~1
 
- **  Important Considerations :** <br>
+**Important Considerations :**
+<br>
         Data Loss: Be cautious with git reset --hard as it will discard all changes in your working directory. <br>
         History Rewriting: Using git reset can rewrite commit history, which can be problematic if you’ve already pushed commits to a remote repository. In such cases, consider using git revert instead. <br>
 
