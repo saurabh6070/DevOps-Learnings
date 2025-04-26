@@ -1,4 +1,5 @@
 **What is Git?**
+
 Git is a distributed version control system that allows multiple developers to work on a project simultaneously. It keeps track of changes made to files and directories, enabling you to revert to previous versions if needed.
 
 
