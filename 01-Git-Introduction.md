@@ -11,21 +11,26 @@ Branch: A separate line of development. The default branch is usually called mai
 Merge: Combining changes from different branches.
 Remote: A version of your repository hosted on the internet or network (e.g., GitHub).
 
+
+
 **Basic Commands**
 
 1. Setting Up Git
   Install Git:
 
-    On Windows: Download and install Git from git-scm.com.
-    On macOS: Use Homebrew: brew install git.
-    On Linux: Use your package manager: sudo apt-get install git.
 
-2. Configure Git:
+   On Windows: Download and install Git from git-scm.com.
+
+   On macOS: Use Homebrew: brew install git.
+
+   On Linux: Use your package manager: sudo apt-get install git.
+
+3. Configure Git:
     git config --global user.name "Your Name"
     git config --global user.email "your.email@example.com
 
 
-3. Git Commands :
+4. Git Commands :
 
    3.1 Repository Commands
 
