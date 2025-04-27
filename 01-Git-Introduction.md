@@ -199,3 +199,79 @@ To check Git Version :
 
         Conflict Resolution: Rebasing can lead to conflicts, especially if the changes being rebased overlap with changes in the base branch. You'll need to resolve these conflicts manually.
         History Rewriting: Rebasing rewrites commit history, which can be problematic if you've already pushed commits to a remote repository. In such cases, consider using git merge instead.
+
+
+  **3.9 Git Ignore**
+   <br>
+        A .gitignore file is used in Git to specify which files and directories should be ignored by Git. This means that these files won't be tracked or included in version control.
+   
+        3.9.1 Git-Ignore File to add and commit.
+              touch .gitignore
+              git add .gitignore
+              git commit .gitignore -m "Git ignore File"
+
+        3.9.2 Add files in git ignore
+              echo "myfile.txt" >> .gitignore
+              echo "Line added in myfile.txt for Git-Ignore"
+              echo "*.mov" >> .gitignore					     ## all files ending with mov will be ignored.
+              git status
+              git add .gitignore
+              git commit .gitignore -m "Git ignore File commit 2nd time"
+
+    
+
+  **3.10 Git Cat-File**
+   <br>
+        A git cat-file is used to display the contents of objects in the Git database. Git's internal structure is like an **inverted tree**, where the root is the latest commit and branches are previous commits, blobs, and trees.
+   <br><br>
+       **Git's Inverted Tree Structure**
+       <br>
+          Commit Objects: These are the root nodes. Each commit points to a tree object representing the state of the repository at that point in time.
+       <br>
+          Tree Objects: These represent directories and contain pointers to blobs (files) and other trees (subdirectories).
+       <br>
+          Blob Objects: These are the leaf nodes and represent the actual file data.
+   <br><br>
+          Commit -> Tree -> blob1, blob2, blob3
+ <br>
+ 
+        3.10.1 Show the type of the object
+              git cat-file -t <object>
+
+        3.10.2 Show the content of the object
+              git cat-file -p <object>
+
+        Replace <object> with the SHA-1 hash of the object you want to inspect. This command is useful for examining blobs, trees, and commits in your repository.
+
+**Usage :**
+
+        git log
+        git cat-file -p de714cd6fb   		## contains tree, parent, author
+        git cat-file -p 2e9cbfefdc			## blob files for this commit
+        git cat-file -p 74fa7fe7e5			## output of cat myapp.py
+
+
+  **3.11 Git Upstream**
+   <br>
+        Upstream refers to the remote repository that your local repository is tracking. This is often the repository from which you clone your project and to which you push your changes. Understanding and managing upstream repositories is crucial for collaborating with others and keeping your local repository in sync with the remote one.
+   
+        3.11.1 Setting Upstream for a Branch.
+              git push --set-upstream origin <branch_name>
+
+        3.11.2 Checking Upstream Branch
+              git branch -vv
+
+        3.11.3 Fetching Changes from Upstream : fetches changes from the upstream repository without merging them into your local branch.
+              git fetch upstream
+
+        3.11.4 Pulling Changes from Upstream : fetches and merges changes from the upstream branch into your current branch.
+              git pull upstream <branch_name>
+
+        3.11.5 Push Changes to Your Fork:
+              git push origin main
+
+
+
+
+
+ 
