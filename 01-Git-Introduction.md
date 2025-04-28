@@ -114,9 +114,36 @@ To check Git Version :
         3.3.2 Switch to a branch:
         git checkout <branch-name
 
-        3.3.3 Merge a branch into the current branch:
+        3.3.3 Merge a branch into the current branch (If merge happens before any changes in Master since the branching is created. Then in the output of merge command, it will mention Fast-Forward merge. Fast forward merge is the basic merge with no conflict.) :
         git merge <branch-name>
 
+        3.3.4 Deleting a Branch
+        git branch -d br100
+
+        3.3.5 3-way Merge/ Merge Conflict (If a master has created one branch br1, and at the time branch is merging into Master branch, some changes already in Master branch as well.)
+        mkdir my_Git_Project
+        cd my_Git_Project/
+        git init
+        echo "initial content" > file.txt
+        git add file.txt
+        git commit -m "Initial commit on main"
+        git branch
+        git checkout -d feature
+        git branch
+        ls														# Output :- file.txt
+        echo "Feature branch changes" >> file.txt
+        cat file.txt
+        git commit -am "added changes to the feature branch"
+        git checkout master
+        echo "Master branch content" >> file.txt
+        git branch
+        git merge feature master 								## Conflict, and need to fix before merge
+        ls
+        cat file.txt											## shows content of both branches.
+        git status
+        git add file.txt
+        git commit -m "Fix the conflict"
+        cat file.txt
 
 
     3.4 Working with Remotes
@@ -131,7 +158,6 @@ To check Git Version :
         git pull origin <branch-name>
 
 
-        
     3.5 Git Restore
   
         3.5.1 Discard changes in the working directory
@@ -142,9 +168,23 @@ To check Git Version :
         
         3.5.3 Restore all files in the working directory
         git restore .
+       
+        3.5.4 Examples
+
+        echo "Adding second line in Python Code" >> myapp.py
+        git status 								## file myapp.py is modified.
+        git restore myapp.py
+        git status
+        cat myapp.py
+
+        echo "Adding second line in Python Code" >> myapp.py
+        git status 								## file myapp.py is modified.
+        git add myapp.py
+        git restore --staged myapp.py
+        git status
 
 
-    **3.6 Git Reset**
+   **3.6 Git Reset**
    <br>
         The git reset command is a powerful tool in Git for undoing changes and manipulating the commit history.
         **git reset --soft <commit>**
