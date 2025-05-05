@@ -48,6 +48,66 @@ Example :
     [dbservers:vars]
     db_port=3306
     [loadbalancers:vars]
-    lb_port=443
+    lb_port=443<br>
+<br><br>
+2.6 To set up password-less SSH access between your Ansible server and Ansible slave:
+  2.6.1 Generate SSH Key Pair:
+
+    ssh-keygen -t rsa
+    
+  2.6.2 Follow the prompts to save the key pair in the default location (~/.ssh/id_rsa).
+  2.6.3 Navigate to the .ssh Directory:
+  2.6.4 List the Contents of the .ssh Directory:
+        You should see your newly created id_rsa and id_rsa.pub files.
+        Copy the Public Key to the Ansible Slave:
+        Replace user with the username on the Ansible slave and ansible_slave_ip with the IP address of the Ansible slave.
+  2.6.5 Verify SSH Access:
+        You should be able to log in without being prompted for a password.
+    These steps ensure that your Ansible server can communicate with the Ansible slave securely and without requiring a password each time.
+<br><br>
+2.7 Note: <br><br>
+  2.7.1 Private-IP to be used for Ansible Master-Slave.<br>
+        For AWS EC2-Instance, we can use both Public-IPs or Private-IPs of an instance in Ansible Inventory-File. But it is better to use Private IPs instead of Public IPs. This will be much reliable/ faster/ secure. Also, Public-IP in an EC2-instance will change once EC2 is restarted. But Private-IP will be same even after reboot.
+<br><br>
+![image](https://github.com/user-attachments/assets/7ba881e3-0f06-4321-8117-8c8b6e49eace)
+
+
+  2.7.2 Private-Key for SSH connection for Master Slave.<br>
+        In Ansible inventory file, we can have private key to login Slave servers instead of setting passwordless ssh access of all the slave nodes.
+        Also, if in hosts section of ansible-playbook, it is mentioned as localhost, then it means master node itself(127.0.0.1)
+
+        [webservers]
+        slave1 ansible_user=10.10.100.12 ansible_ssh_private_key_file=/path/to/your/private/key ansible_python_interpreter=/usr/bin/python3
+<br><br>
+2.8 Ansible Variables: <br><br>
+  2.8.1 Inline variable : Using variable in same playbook.
+        Example :
+              
+        - name: Inline variable example
+          hosts: all
+          vars:
+          region:
+	        -  ap-south-1
+	        -  us-east-1
+          tasks:
+          -	name: Ansible list variable example
+            debug:
+		        msg: "{{ region[1] }}"
+
+  2.8.2 External variable : Using variable in other playbooks.
+        Example :
+
+        - name: Use variables from external file
+          region: [ap-south-1, us-east-1]
+          hosts: all
+          vars_files:
+	          - vars/main.yml
+          tasks:
+          -	name: Ansible list variable example
+            debug:
+		          msg: "{{ region[1] }}"
+
+  NOTE : Precedence of variables defined in the file will be higher than variable defined in other files.<br>
+        **Jinja Temleting:** It means defining code in different variables in different path.
 
 
