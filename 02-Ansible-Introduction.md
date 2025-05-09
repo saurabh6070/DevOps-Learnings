@@ -143,7 +143,6 @@ Example :
        •  Organization: Helps in organizing complex playbooks by breaking them down into smaller, manageable units. <br>
        •  Collaboration: Roles can be shared with others, promoting collaboration and standardization. <br> <br>
 
-<br><br>
 2.10 Ansible Handlers: <br>
   2.10.1 Ansible Handlers <br>
   	Ansible Handlers are special tasks that only run when notified by other tasks. They are typically used to perform actions like restarting services, reloading configurations, or any other operations that should only occur if a preceding task makes changes. <br>
