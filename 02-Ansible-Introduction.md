@@ -120,5 +120,40 @@ Example :
 
   NOTE : Precedence of variables defined in the file will be higher than variable defined in other files.<br>
         **Jinja Temleting:** It means defining code in different variables in different path.
+<br><br>
+2.9 Ansible Roles: <br>
+  2.9.1 Ansible Roles <br>
+  	Ansible Roles are self-contained units of automation that can be easily shared and reused. They follow a specific directory structure, making it easy to manage and understand the components involved. <br>
+   
+  2.9.2 Directory Structure <br>
+  	A typical Ansible Role has the following directories: <br>
+           •  tasks/: Contains the main list of tasks to be executed. <br>
+           •  handlers/: Defines handlers, which are tasks triggered by other tasks. <br>
+           •  templates/: Stores templates that can be used with the template module. <br>
+           •  files/: Contains files that can be deployed to the managed nodes. <br>
+           •  vars/: Defines variables that are used within the role. <br>
+           •  defaults/: Sets default variables for the role. <br>
+           •  meta/: Provides metadata about the role, including dependencies. <br>
 
+  2.9.3 Using Roles <br>
+  	We can use roles in playbooks by including them with the roles directive or by using the include_role or import_role modules. This allows us to modularize playbooks and reuse roles across different projects. <br> 
 
+  2.9.4 Benefits of Using Roles <br>
+       •  Reusability: Roles can be reused across multiple playbooks and projects. <br>
+       •  Organization: Helps in organizing complex playbooks by breaking them down into smaller, manageable units. <br>
+       •  Collaboration: Roles can be shared with others, promoting collaboration and standardization. <br> <br>
+
+<br><br>
+2.10 Ansible Handlers: <br>
+  2.10.1 Ansible Handlers <br>
+  	Ansible Handlers are special tasks that only run when notified by other tasks. They are typically used to perform actions like restarting services, reloading configurations, or any other operations that should only occur if a preceding task makes changes. <br>
+   
+   2.10.2 How Handlers Work <br>
+  	**Notification: **Tasks notify handlers using the notify directive. This means that if a task changes the state of the system, it can trigger a handler to run. <br>
+  	**Execution: **Handlers are executed at the end of the play, after all tasks have completed. This ensures that any necessary actions are taken only once, even if multiple tasks notify the same handler. <br>
+ 
+   2.10.3 Benefits of Using Handlers <br>
+  	**Efficiency: **Handlers ensure that actions like service restarts only happen once, even if multiple tasks notify the same handler. <br>
+	**Order of Execution: **Handlers are executed in the order they are defined, not in the order they are notified. <br>
+	**Conditional Execution: **Handlers only run if they are notified by a task that changes the system state. <br> <br>
+ 
