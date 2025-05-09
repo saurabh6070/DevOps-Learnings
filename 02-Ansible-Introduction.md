@@ -1,3 +1,14 @@
+1. Configuration Management Tool <br>
+   1.1 Configuration management tools are essential for automating the setup, maintenance, and consistency of IT infrastructure. They help ensure that systems are configured correctly and consistently, reducing the risk of errors and improving efficiency.<br><br>
+   1.2 Ansible is a popular configuration management tool developed by Red Hat.<br><br>
+   1.3 Here are some key points about Ansible:<br>
+       •  Simplicity and Ease of Use: Ansible uses YAML, a straightforward, human-readable language, to define automation tasks. This makes it accessible to both developers and system administrators.<br>
+       •  Agentless Architecture: Unlike some other tools, Ansible does not require any agent software to be installed on the managed nodes. It operates from a control node, pushing commands to the target systems. <br>
+       •  Idempotency: Ansible ensures that tasks are idempotent, meaning that running the same task multiple times will not change the system state after the first successful run. <br>
+       •  Wide Range of Uses: Ansible can manage systems, applications, servers, storage, and networking devices, making it versatile for various IT environments. <br>
+       •  Scalability: It can manage one to hundreds of systems from a central location, making it suitable for both small and large-scale environments.<br><br>
+
+
 2.1 Ansible - Configuration Management Tool <br>
   •  Released in 2012<br>
   •  Idempotency :- While Shell scripts can be used to execute commands on multiple servers, they lack idempotency. This means that if a command has already been executed on a server, the script will not recognize this and may execute the same command again, such as installing a package. In contrast, Ansible ensures idempotency, meaning it will not re-execute commands that have already been successfully applied.<br>
