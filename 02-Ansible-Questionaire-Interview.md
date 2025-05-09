@@ -1,4 +1,4 @@
-    1. Static and dynamic inventory file in ansible ?
+1. Static and dynamic inventory file in ansible ?
 Ans :- Static means ip for slave nodes are fixed.
        Dynamic means ips for slave nodes are dynamic and can be configured python script to fetch these ips and add in inventory file
 
@@ -151,6 +151,3 @@ We can generate a sample ansible.cfg file with all parameters commented out usin
       
       ansible-config init --disabled > ansible.cfg
 This command creates a fully commented-out example configuration file that we can customize as needed.
-
-
-16. 
