@@ -1,27 +1,27 @@
-1. Static and dynamic inventory file in ansible ?
+1. Static and dynamic inventory file in ansible ?<br>
 Ans :- Static means ip for slave nodes are fixed.
        Dynamic means ips for slave nodes are dynamic and can be configured python script to fetch these ips and add in inventory file
+<br><br>
 
-
-2. Ansible components ?
+2. Ansible components ?<br>
 Ans :- Playbooks : contains multiple plays where each play will have some tasks, like install nginx, start and enable nginx in a single block
        Plugin are also modules which are used generally for logging purposes.
        Modules are also present on master node which are written in python for each task category module is written which serves purpose for specific tasks in all OS.
        Copy and recursive two modules which can be used to copy files from master to ansible slave nodes.
+<br><br>
 
-
-3. How To encrypt already present file ?
+3. How To encrypt already present file ?<br>
 Ans :-  ansible-vault encrypt test.yml
         ansible-vault decrypt test.yml
+<br><br>
 
-
-4. To create a new encrypted file in ansible ?
+4. To create a new encrypted file in ansible ?<br>
 Ans :- In each case password will be asked. For setting two time and for decrypting one tIme
 
         ansible-vault create hello.yml
+<br>
 
-
-5. Default Fork Limit in Ansible ?
+5. Default Fork Limit in Ansible ?<br>
 Ans :- In Ansible, the fork limit refers to the number of parallel processes that Ansible can use to execute tasks on multiple hosts simultaneously. By default, Ansible uses 5 forks 1 2, but this can be adjusted based on your needs and the capacity of your system.
 
 **Adjusting Fork Limit**
@@ -40,56 +40,56 @@ Note :-
 **Considerations**
 **System Resources: **Increasing the number of forks can improve performance but also requires more CPU and memory. It's recommended to have 4 GB RAM per 100 forks.
 **Task Execution: **More forks mean more tasks can be executed in parallel, which can speed up playbook execution, especially in large environments.
+<br><br>
 
-
-6. Can we have windows node as Ansible Controller node ?
+6. Can we have windows node as Ansible Controller node ?<br>
 Ans :- No. Only linux machine can be used as controller node in Ansible.
+<br><br>
 
-
-7. Can we have Windows node as a Host node in Ansible. How ansible work with Windows node ?
+7. Can we have Windows node as a Host node in Ansible. How ansible work with Windows node ?<br>
 Ans :- Controller node will be able to connect with Window node using winrm.
+<br><br>
 
-
-8. How ansible work with Linux node ?
+8. How ansible work with Linux node ?<br>
 Ans :- using SSH
+<br><br>
 
-
-9. What are best practices in ssh-based linux Node ?
+9. What are best practices in ssh-based linux Node ?<br>
 Ans :- 	• Establish Passwordless SSH
        	• Avoid using root user on Managed (Slave) Node. Allow using sudo access.
-
-10. How to debug an ansible playbook execution ?
+<br><br>
+10. How to debug an ansible playbook execution ?<br>
 Ans :- To debug an ansible playbook :-
 	• Use verbose while running playbook
 	
         ansibe-playbook play.yml -vvvv
 	 • Debug Module in Ansible can be used to print logs for the task
 	Use debug module and register keyword in ansible to write logs for the automation.
+<br><br>
 
-
-11. How to run tasks in ansible playbook with sudo privileges ?
+11. How to run tasks in ansible playbook with sudo privileges ?<br>
 Ans :- Use **become : true** in playbook. Task will be executed with sudo privileges.
+<br><br>
 
-
-12. Default host groups in inventory file ?
+12. Default host groups in inventory file ?<br>
 Ans :- Two Groups :-
 	• All
 	• Ungrouped
+<br><br>
 
-
-13. What is the purpose of handlers in Ansible ?
+13. What is the purpose of handlers in Ansible ?<br>
 Ans :- Suppose we have a task in ansible to install service of apache and then restart apache. Incase, if Apache is already up and running in slave node, then first step of installing apache will be skipped, but restart of service will be executed.
 In this case, Handlers can be useful.
+<br><br>
 
-
-14. Features of Ansible ?
+14. Features of Ansible ?<br>
 Ans :- Features are :
 	• Agentless 
 	• Ansible follows push architecture
 	• Works over ssh for Linux, and winrm for Windows.
+<br><br>
 
-
-15. Ansible.cfg file all parameters ?
+15. Ansible.cfg file all parameters ?<br>
 Ans :- The ansible.cfg file is a central configuration file for Ansible, allowing you to customize its behavior. It is structured in sections, each containing various parameters.
        Here are the key sections and some important parameters:
     Key Sections and Parameters
@@ -151,3 +151,4 @@ We can generate a sample ansible.cfg file with all parameters commented out usin
       
       ansible-config init --disabled > ansible.cfg
 This command creates a fully commented-out example configuration file that we can customize as needed.
+<br><br>
