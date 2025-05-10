@@ -15,20 +15,28 @@ Steps :-
         aws_secret_access_key = YOUR_SECRET_ACCESS_KEY
 
 
-3. Create an Inventory File: Use the aws_ec2 inventory plugin to dynamically fetch EC2 instances based on tags. Create an inventory file (aws_ec2.yml):
+3. Create an Inventory File: Use the aws_ec2 inventory plugin to dynamically fetch EC2 instances based on tags and connects to EC2-Instances on Purivate-IP only. Create an inventory file (aws_ec2.yml):
 
-       plugin: aws_ec2
+       plugin: amazon.aws.aws_ec2
        regions:
          - us-east-1
        filters:
           tag:Environment: production
           tag:Role: webserver
+       hostnames:
+          - private_ip_address
        keyed_groups:
           - key: tags.Name
             prefix: tag
 
 
-5. Write Your Playbook: Create a playbook (playbook.yml) to perform tasks on instances with specific tags:
+4. Configure Group Variables: Create a group variables file (group_vars/tag_production.yml) to specify the SSH private key:
+
+          ansible_ssh_private_key_file: /path/to/your/private_key.pem
+          ansible_user: ec2-user
+
+
+6. Write Your Playbook: Create a playbook (playbook.yml) to perform tasks on instances with specific tags:
 
        - name: Perform tasks on EC2 instances based on tags
          hosts: tag_production:&tag_webserver
@@ -45,7 +53,7 @@ Steps :-
                    state: started
                    enabled: yes
 
-6. Run Your Playbook: Execute the playbook using the dynamic inventory:
+7. Run Your Playbook: Execute the playbook using the dynamic inventory:
 
         ansible-playbook -i aws_ec2.yml playbook.yml
 
