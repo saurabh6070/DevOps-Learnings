@@ -38,3 +38,13 @@ i. Finally update all the code on the private branch
     echo "Updated master.txt file" >> master.txt
     git status
     git add master.txt 
+    git commit -m "Edit master.txt on private branch"
+    git checkout public1
+    git merge master
+    git checkout public2
+    git merge master
+    git checkout master
+    git merge private
+    git checkout private
+    git merge master
+    ls
