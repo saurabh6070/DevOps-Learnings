@@ -1,13 +1,13 @@
 Problem Statement 3. Based on what you have learnt in the class, do the following steps: <br>
-a. Create a Git working directory, with the following branches:
-● Develop
-● F1
-● f2
-b. In the master branch, commit main.txt file
-c. Put develop.txt in develop branch, f1.txt and f2.txt in f1 and f2 respectively
-d. Push all these branches to GitHub
-e. On local delete f2 branch
-f. Delete the same branch on GitHub as well
+a. Create a Git working directory, with the following branches: <br>
+● Develop <br>
+● F1 <br>
+● f2 <br>
+b. In the master branch, commit main.txt file <br>
+c. Put develop.txt in develop branch, f1.txt and f2.txt in f1 and f2 respectively <br>
+d. Push all these branches to GitHub <br>
+e. On local delete f2 branch <br>
+f. Delete the same branch on GitHub as well <br>
 <br><br><br>
 
 
