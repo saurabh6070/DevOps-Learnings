@@ -5,7 +5,7 @@ Problem Statement 2. Based on what you have learnt in the class, do the followin
 4. Stash this file and check out to feature1 branch 
 5. Create new.txt file in feature1 branch, stage and commit this file 
 6. Checkout to develop, unstash this file and commit 
-
+<br><br><br>
 
 **Solution :-**
 
