@@ -2,7 +2,7 @@
 
 Virtualization is the process of creating virtual instances of computing resources such as servers, operating systems, storage devices, or networks. It plays a crucial role in modern IT infrastructure, especially in cloud computing. When implementing virtualization—whether through virtual machines (VMs), containers, or bare-metal servers—three key factors must be considered: **Cost Efficiency**, **Security**, and **Resource Allocation**.
 
-## a. Security Considerations
+## a. 🔐 Security Considerations
 
 Virtual machines operate in isolated environments and do not have direct control over the host system. This isolation is enforced by the hypervisor, which acts as a security boundary between the host and the VMs. As a result, VMs can achieve a level of security comparable to that of dedicated physical servers.
 
