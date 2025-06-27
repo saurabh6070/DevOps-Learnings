@@ -1,4 +1,4 @@
-# Introduction to Virtualization
+# 1. Introduction to Virtualization
 
 Virtualization is the process of creating virtual instances of computing resources such as servers, operating systems, storage devices, or networks. It plays a crucial role in modern IT infrastructure, especially in cloud computing. When implementing virtualization—whether through virtual machines (VMs), containers, or bare-metal servers—three key factors must be considered: **Cost Efficiency**, **Security**, and **Resource Allocation**.
 
