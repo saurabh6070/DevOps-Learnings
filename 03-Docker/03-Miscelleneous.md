@@ -92,7 +92,7 @@ View containerd logs for any runtime issues.
 journalctl -u containerd
 ```
 
-📊 4.4 More Info on the ss Command (Advanced Version of netstat)
+## 📊 3. More Info on the ss Command (Advanced Version of netstat)
 The ss (socket statistics) command is a powerful tool for viewing network connections and socket information. It is a modern replacement for netstat, offering faster performance and better filtering.
 
 🔍 Key Benefits:
