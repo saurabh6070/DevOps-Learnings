@@ -160,3 +160,8 @@ kubectl exec -it myapp -- bash
 df -kh
 Check for /vault/secrets mount with injected content.
 ```
+
+<br><br><br><br><br>
+
+Complete Logs for this Lab Setup can be taken for reference from below link :-
+https://drive.google.com/drive/u/5/folders/1nJgsQwxAV7Peb7BrfXC979VCppIyyvNd
