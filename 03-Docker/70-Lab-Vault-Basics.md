@@ -162,7 +162,7 @@ Check for /vault/secrets mount with injected content.
 ```
 
 ### ✅ 11. Conclusion
-In summary, we have:
+In summary, we have: <br>
     1. Deployed Vault in dev mode via Helm <br>
     2. Stored and retrieved a secret <br>
     3. Enabled Kubernetes auth in Vault <br>
