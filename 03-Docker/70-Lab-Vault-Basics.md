@@ -11,13 +11,13 @@ c. helm CLI <br>
 ⚠️ Dev mode is insecure and should only be used for testing/learning purposes.
 
 
-```bash
+```
 helm repo add hashicorp https://helm.releases.hashicorp.com
 helm repo update
 ```
 #### Install Vault in dev mode
 
-```bash
+```
 helm install vault hashicorp/vault --set "server.dev.enabled=true"
 
 #Verify installation:
@@ -29,12 +29,12 @@ kubectl get pods
  
 ### 🔌 3. Connect to Vault Pod
 
-```bash
+```
 kubectl exec -it vault-0 -- sh
 vault status
 ```
 Expected Output:
-```bash
+```
 Seal Type       shamir
 Initialized     true
 Sealed          false
@@ -45,13 +45,13 @@ Version         1.19.0
 
 ### 🔐 4. Store and Retrieve a Secret
 Inside the Vault pod:
-```bash
+```
 vault kv put secret/hello foo=bar
 vault kv get secret/hello
 ```
 
 Expected Output:
-```bash
+```
 Key    Value
 foo    bar
 ```
@@ -59,7 +59,7 @@ foo    bar
 ### ⚙️ 5. Enable Kubernetes Auth Method
 Inside the Vault pod:
 
-```bash
+```
 vault auth enable kubernetes
 
 # Set Kubernetes auth config
@@ -74,10 +74,10 @@ vault write auth/kubernetes/config \
 ```
 
 
-📜 6. Create Vault Policy
+### 📜 6. Create Vault Policy
 Save this as /tmp/myapp-policy.hcl:
 
-```bash
+```
 # myapp-policy.hcl
 path "secret/data/hello" {
   capabilities = ["read"]
@@ -85,7 +85,7 @@ path "secret/data/hello" {
 ```
 Write the policy and role:
 
-```bash
+```
 vault policy write myapp-policy /tmp/myapp-policy.hcl
 
 vault write auth/kubernetes/role/myapp-role \
@@ -95,9 +95,10 @@ vault write auth/kubernetes/role/myapp-role \
   ttl=1h
 ```
 
-🔧 7. Define Kubernetes Resources
+### 🔧 7. Define Kubernetes Resources
 #### sa.yml - ServiceAccount
-```apiVersion: v1
+```
+apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: myapp-sa
@@ -109,7 +110,8 @@ kubectl apply -f sa.yml
 ```
 
 #### pod.yml - Pod Definition with Vault Injection
-```apiVersion: v1
+```
+apiVersion: v1
 kind: Pod
 metadata:
   name: myapp
@@ -127,36 +129,34 @@ spec:
 kubectl apply -f pod.yml
 ```
 
-📁 8. Validate Secret Injection
+### 📁 8. Validate Secret Injection
 List the injected secret:
 
-bash
-Copy
-Edit
+```
 kubectl exec -it myapp -- ls /vault/secrets
-View the secret:
 
-bash
-Copy
-Edit
+#View the secret:
+
 kubectl exec -it myapp -- cat /vault/secrets/hello
+```
+
 Expected Output:
 
-json
-Copy
-Edit
+```
 data: map[foo:bar]
-📊 9. Confirm Pod Structure
-bash
-Copy
-Edit
+```
+
+### 📊 9. Confirm Pod Structure
+
+```
 kubectl describe pod myapp
+```
+
 Check that the Vault Agent and Init Containers are running and that the annotation status is injected.
 
-🧪 10. Inside Pod - File System Check
-bash
-Copy
-Edit
+### 🧪 10. Inside Pod - File System Check
+```
 kubectl exec -it myapp -- bash
 df -kh
 Check for /vault/secrets mount with injected content.
+```
