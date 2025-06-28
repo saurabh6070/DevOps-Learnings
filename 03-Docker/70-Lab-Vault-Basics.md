@@ -161,6 +161,22 @@ df -kh
 Check for /vault/secrets mount with injected content.
 ```
 
+### ✅ 11. Conclusion
+In summary, we have:
+    1. Deployed Vault in dev mode via Helm <br>
+    2. Stored and retrieved a secret <br>
+    3. Enabled Kubernetes auth in Vault <br>
+    4. Defined policy and role for service account <br>
+    5. Created service account and pod with Vault Agent Injector <br>
+    6. Verified secrets injected into a live pod <br>
+This demonstrates a complete, end-to-end Vault workflow on Kubernetes. <br>
+ <br>
+
+### 👋 12. Wrap-Up
+Next time, we can explore production-grade Vault setup with TLS, auto-unseal, persistent storage, dynamic secrets, and secret rotation. But for now, this lab gives you the core building blocks. Thank you and see you in the next session!
+
+
+
 <br><br><br><br><br>
 
 Complete Logs for this Lab Setup can be taken for reference from below link :-
