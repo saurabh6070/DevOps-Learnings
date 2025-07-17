@@ -100,7 +100,7 @@ Containers solve this by isolating environments using **Namespaces**.
 - 🧱 **Namespaces**: Isolate system resources (e.g., process IDs, network, file systems) so that each container sees its own set of resources.
 - 📊 **cgroups (Control Groups)**: Limit and monitor resource usage (CPU, memory, disk I/O) for a group of processes.
 
-🛠️ ## g. Container Lifecycle and Docker Workflow
+## g. 🛠️ Container Lifecycle and Docker Workflow
 
 Developer → Writes Code → Adds to Dockerfile → Builds Docker Image → Runs Container
 
