@@ -60,11 +60,32 @@
 
 ### 1.1 What is Linux?
 
-**Linux** is a free, open-source, Unix-like operating system kernel created by **Linus Torvalds** in **1991**. It is the backbone of most servers, cloud infrastructure, containers, mobile devices (Android), and supercomputers.
+**Linux** is a Unix-like operating system kernel that powers servers, desktops, cloud platforms, mobile devices, and supercomputers.
+Linux was created in 1991 by **Linus Torvalds**.
 
+Strictly speaking:
+Linux = Kernel
+
+When combined with tools from GNU Project, it forms a complete operating system often called GNU/Linux.
 ```
 Linux = Kernel (core) + GNU Tools + Shell + Applications
 ```
+
+---
+
+#### ⚙️ What is an Operating System?
+
+#### An Operating System (OS):
+> Manages CPU, memory, disk, and devices.
+> Runs applications.
+> Provides security and user management.
+> Handles networking.
+
+#### Examples of Operating Systems:
+> Microsoft Windows
+> macOS
+> linux
+
 
 ### 1.2 Why Linux?
 
