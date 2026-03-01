@@ -45,16 +45,16 @@
 | 35 | [🕐 NTP — chrony, ntpd, timedatectl](#35--ntp--network-time-protocol) |
 | 36 | [🌐 Samba Server — full implementation, smb.conf, mount](#36--samba-server--full-implementation) |
 | 37 | [🗃️ NFS & Samba — /etc/exports, smb.conf, full setup](#37-%EF%B8%8F-nfs--samba-file-sharing) |
-| 38 | [🌐 Apache — httpd.conf, VirtualHost, SSL](#39--http-server--apache-httpdconf) |
-| 39 | [🔒 sudo and visudo — sudoers syntax, NOPASSWD, aliases](#40--sudo-and-visudo--privilege-management) |
-| 40 | [🔒 Linux Security & Hardening — SELinux, sudo, visudo](#41--linux-security--hardening) |
-| 41 | [🔐 GRUB2 Password Recovery + /etc/rc.local](#42--grub2-password--recovery-when-password-forgotten) |
-| 42 | [🔄 Backup & Recovery](#43--backup--recovery) |
-| 43 | [🚀 Performance Tuning — sysctl.conf, IP forwarding, ulimit](#44--performance-tuning) |
-| 44 | [📝 Text Processing — grep, awk, sed](#45--text-processing--grep-awk-sed) |
-| 45 | [📜 Shell Scripting](#46--shell-scripting) |
-| 46 | [⏰ Scheduling Tasks — Cron & At](#47--scheduling-tasks--cron--at) |
-| 47 | [⚡ Quick Reference Cheat Sheet](#48--quick-reference-cheat-sheet) |
+| 38 | [🌐 Apache — httpd.conf, VirtualHost, SSL](#38--http-server--apache-httpdconf) |
+| 39 | [🔒 sudo and visudo — sudoers syntax, NOPASSWD, aliases](#39--sudo-and-visudo--privilege-management) |
+| 40 | [🔒 Linux Security & Hardening — SELinux, sudo, visudo](#40--linux-security--hardening) |
+| 41 | [🔐 GRUB2 Password Recovery + /etc/rc.local](#41--grub2-password--recovery-when-password-forgotten) |
+| 42 | [🔄 Backup & Recovery](#42--backup--recovery) |
+| 43 | [🚀 Performance Tuning — sysctl.conf, IP forwarding, ulimit](#43--performance-tuning) |
+| 44 | [📝 Text Processing — grep, awk, sed](#44--text-processing--grep-awk-sed) |
+| 45 | [📜 Shell Scripting](#45--shell-scripting) |
+| 46 | [⏰ Scheduling Tasks — Cron & At](#46--scheduling-tasks--cron--at) |
+| 47 | [⚡ Quick Reference Cheat Sheet](#47--quick-reference-cheat-sheet) |
 
 ## 1. 🐧 Introduction to Linux
 
