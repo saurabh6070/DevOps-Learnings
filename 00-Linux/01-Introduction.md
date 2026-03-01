@@ -32,7 +32,6 @@
 | 22 | [🗂️ Inodes — Linux Filesystem Internals](#22-%EF%B8%8F-inodes--understanding-the-linux-filesystem-internals) |
 | 23 | [💡 LVM — PV, VG, LV — create, extend, reduce, snapshots](#23--lvm--logical-volume-management) |
 | 24 | [🔒 RAID-5 — theory, implementation with mdadm](#24--raid--redundant-array-of-independent-disks) |
-
 | 25 | [📦 Package Management — RPM, YUM, YUM server setup, vsftpd+GPG](#25--package-management) |
 | 26 | [📦 RPM, YUM Server Setup, vsftpd with GPGcheck](#26--software-management--rpm-yum-server-setup) |
 | 27 | [🌐 Networking — LAN, WAN, OSI, ifcfg/ONBOOT, NetworkManager, hostname, hosts.deny, /etc/network/interfaces, casting types](#27--networking-in-linux) |
