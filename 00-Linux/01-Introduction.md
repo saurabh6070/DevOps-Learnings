@@ -5086,9 +5086,7 @@ systemctl list-timers --all      # Including inactive
 
 systemctl enable --now backup.timer
 ```
-
 ---
-
 
 ## 47. ⚡ Quick Reference Cheat Sheet
 
