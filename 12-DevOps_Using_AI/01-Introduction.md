@@ -1479,6 +1479,61 @@ docker-compose up -d
 
 ---
 
+## Step 8 — 🧠 Pro Tip — Try llama3.2:1b incase if VM is having less resources ( 80 GB Storage, 4 GB RAM )
+
+### Step 8.1 : Installing Docker
+
+```yaml
+sudo su
+curl -fsSL https://get.docker.com | sh
+sudo systemctl start docker
+sudo systemctl status docker
+```
+
+### Step 8.2 : Docker Container with llama3.2:1b
+
+```yaml
+docker pull ollama/ollama
+
+docker run -d --name ollama -p 11434:11434 -v ollama_data:/root/.ollama ollama/ollama
+
+docker exec ollama ollama run llama3.2:1b
+
+curl http://localhost:11434/api/generate -d '{
+  "model": "llama3.2:1b",
+  "prompt": "Explain a CI/CD pipeline",
+  "stream": false
+}'
+```
+
+### Step 8.3 : Docker Container with llama3.2:1b
+
+#### Use Docker-Compose file from above and run following commands for testing :-
+
+```yaml
+docker-compose up -d
+docker ps -a
+
+## This command means, container(name-ollama) which is running because of above command of docker compose
+## in that container, we are running command - ollama pull llama3.2:1b
+
+
+docker exec -it ollama ollama pull llama3.2:1b
+
+docker ps -a
+
+curl http://localhost:11434/api/generate -d '{
+  "model": "llama3.2:1b",
+  "prompt": "Explain a CI/CD pipeline",
+  "stream": false
+}'
+
+```
+
+---
+---
+
+
 ### 🏗️ Architecture Overview
 
 ```
