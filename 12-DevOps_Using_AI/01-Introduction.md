@@ -2083,3 +2083,1747 @@ Return output in this JSON format only:
 - [ ] Try at least one improvement: JSON output, CLI args, or multi-model comparison
 
 ---
+---
+
+## 📅 Day 15 — AI APIs Fundamentals
+
+### 🎯 Goal for Day 15
+
+Understand how cloud AI APIs work — tokens, cost, rate limits, and the standard request/response structure — so you can build and operate AI-powered systems responsibly.
+
+---
+
+### 🧠 Learn
+
+#### 1️⃣ What Are AI APIs?
+
+AI APIs let you send prompts and receive model responses over HTTP.
+
+```
+Your App → API Request → AI Model → Response
+```
+
+Standard endpoint (OpenAI-style):
+
+```http
+POST /v1/chat/completions
+```
+
+---
+
+#### 2️⃣ Core Concepts
+
+##### 🧩 A. Tokens
+
+Tokens are the fundamental unit of cost and context in LLMs — small chunks of text, not full words.
+
+| Text | Approximate Tokens |
+|---|---|
+| `"Hello"` | 1 |
+| `"AI is powerful"` | ~4 |
+| 1 paragraph | 50–150 |
+
+> 💡 **Rough rule:** 1 token ≈ 4 characters, or 0.75 words.
+
+**Why tokens matter:**
+- Cost is calculated per token used
+- Both input (your prompt) and output (model response) consume tokens
+
+---
+
+##### 💰 B. Cost Calculation
+
+Example pricing (simplified):
+
+| Type | Cost |
+|---|---|
+| Input tokens | $0.001 / 1K tokens |
+| Output tokens | $0.002 / 1K tokens |
+
+**Example calculation:**
+
+```
+Prompt:   500 input tokens
+Response: 1000 output tokens
+Total:    1500 tokens
+
+Cost = (0.5 × $0.001) + (1 × $0.002) = $0.0025
+```
+
+> 💡 **Key Insight:** Long, verbose prompts are expensive at scale. Compress prompts and cache responses wherever possible.
+
+---
+
+##### 🚦 C. Rate Limits
+
+APIs restrict usage to prevent overload. Common limits:
+
+- **RPM** — Requests per minute
+- **TPM** — Tokens per minute
+
+Exceeding limits returns `HTTP 429 — Too Many Requests`.
+
+**Handling rate limits gracefully:**
+
+```python
+import time
+
+for i in range(10):
+    try:
+        call_api()
+    except Exception:
+        time.sleep(2)  # wait and retry
+```
+
+> 💡 **DevOps angle:** Design API clients with retries, queues, and exponential backoff from the start.
+
+---
+
+#### 3️⃣ OpenAI-Style API (Industry Standard Format)
+
+Most modern AI providers follow this request format.
+
+**Example request (Python):**
+
+```python
+import requests
+
+url = "https://api.openai.com/v1/chat/completions"
+
+headers = {
+    "Authorization": "Bearer YOUR_API_KEY",
+    "Content-Type": "application/json"
+}
+
+data = {
+    "model": "gpt-4o-mini",
+    "messages": [
+        {"role": "system", "content": "You are a helpful DevOps assistant"},
+        {"role": "user", "content": "Explain CI/CD"}
+    ],
+    "max_tokens": 200
+}
+
+response = requests.post(url, headers=headers, json=data)
+print(response.json())
+```
+
+**Key parameters:**
+
+| Parameter | Purpose |
+|---|---|
+| `model` | Which model to use |
+| `messages` | Full conversation history |
+| `temperature` | Controls creativity (0 = deterministic) |
+| `max_tokens` | Caps response length and cost |
+
+---
+
+#### 4️⃣ Response Structure
+
+```json
+{
+  "choices": [
+    {
+      "message": {
+        "role": "assistant",
+        "content": "CI/CD is..."
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 50,
+    "completion_tokens": 120,
+    "total_tokens": 170
+  }
+}
+```
+
+> ✅ Always log `usage.total_tokens` — it's your cost tracking signal.
+
+---
+
+#### 5️⃣ DevOps Best Practices
+
+**Cost control:**
+- Always set `max_tokens`
+- Compress and trim prompts before sending
+- Cache repeated responses
+
+**Observability:**
+- Log latency, token counts, and error rates per request
+
+**Error handling:**
+
+```python
+if response.status_code != 200:
+    print("Retry or fall back to a cheaper model")
+```
+
+**Fallback strategy:**
+
+```python
+try:
+    call_gpt4()
+except Exception:
+    call_cheaper_model()
+```
+
+**Security:**
+- Never hardcode API keys in source code
+- Always use environment variables:
+
+```bash
+export OPENAI_API_KEY=your_key_here
+```
+
+---
+
+#### 6️⃣ Local Model vs API — Key Trade-offs
+
+| Factor | Local Model | API Model |
+|---|---|---|
+| Cost | Free (compute only) | Pay per token |
+| Speed | Medium | Fast |
+| Accuracy | Lower | Higher |
+| Privacy | 100% local | External |
+
+---
+
+### 🧪 Mini Practice Task
+
+Build a minimal API caller:
+
+```python
+def ask_ai(prompt):
+    # send request to API
+    # return response text
+    pass
+```
+
+Then enhance it to:
+- Log token usage per call
+- Add retry on failure
+- Limit `max_tokens` to control cost
+
+---
+
+### ✅ End-of-Day Checklist
+
+- [ ] Understand what tokens are and how they affect cost
+- [ ] Calculate the approximate cost of a sample API call
+- [ ] Make a successful API call from Python
+- [ ] Implement basic retry and error handling
+- [ ] Store the API key securely via environment variable
+
+---
+---
+
+## 📅 Day 16 — Python + AI API
+
+### 🎯 Goal for Day 16
+
+Build Python automation that calls an AI API, parses structured JSON output, and integrates into real DevOps workflows.
+
+---
+
+### 🏗️ Architecture
+
+```
+Python Script → AI API → JSON Response → Parsed Output → Automation Logic
+```
+
+---
+
+### 🔧 Step-by-Step Build
+
+#### Step 1 — Basic API Client (`ai_client.py`)
+
+```python
+import requests
+import os
+
+API_KEY = os.getenv("OPENAI_API_KEY")
+URL = "https://api.openai.com/v1/chat/completions"
+
+headers = {
+    "Authorization": f"Bearer {API_KEY}",
+    "Content-Type": "application/json"
+}
+
+def ask_ai(prompt):
+    data = {
+        "model": "gpt-4o-mini",
+        "messages": [
+            {"role": "system", "content": "You are a DevOps assistant"},
+            {"role": "user", "content": prompt}
+        ],
+        "max_tokens": 200
+    }
+    response = requests.post(URL, headers=headers, json=data)
+    return response.json()
+
+if __name__ == "__main__":
+    result = ask_ai("Analyze this error: Kubernetes pod crash loop")
+    print(result)
+```
+
+---
+
+#### Step 2 — Clean Response Parsing
+
+```python
+def get_clean_output(response_json):
+    return response_json["choices"][0]["message"]["content"]
+
+if __name__ == "__main__":
+    result = ask_ai("Why does CPU spike in containers?")
+    answer = get_clean_output(result)
+    print("\n=== AI RESPONSE ===\n")
+    print(answer)
+```
+
+---
+
+#### Step 3 — Force Structured JSON Output
+
+**Prompt:**
+
+```
+Analyze this log error and return JSON only:
+
+{
+  "issue": "...",
+  "cause": "...",
+  "solution": "..."
+}
+
+Error: disk space full
+```
+
+**Parse the response:**
+
+```python
+import json
+
+def parse_structured_output(text):
+    try:
+        return json.loads(text)
+    except Exception:
+        return {"error": "Invalid JSON", "raw": text}
+```
+
+---
+
+#### Step 4 — Full Working Example
+
+```python
+import requests
+import os
+import json
+
+API_KEY = os.getenv("OPENAI_API_KEY")
+
+def ask_ai(prompt):
+    url = "https://api.openai.com/v1/chat/completions"
+    headers = {
+        "Authorization": f"Bearer {API_KEY}",
+        "Content-Type": "application/json"
+    }
+    data = {
+        "model": "gpt-4o-mini",
+        "messages": [{"role": "user", "content": prompt}],
+        "temperature": 0
+    }
+    response = requests.post(url, headers=headers, json=data)
+    return response.json()
+
+def extract_json(response):
+    text = response["choices"][0]["message"]["content"]
+    try:
+        return json.loads(text)
+    except Exception:
+        return {"fallback": text}
+
+# Run
+prompt = """
+Analyze and return JSON only:
+
+{
+  "issue": "",
+  "cause": "",
+  "solution": ""
+}
+
+Error: service unavailable 503
+"""
+
+result = ask_ai(prompt)
+parsed = extract_json(result)
+
+print("\n=== PARSED OUTPUT ===\n")
+print(parsed)
+```
+
+---
+
+#### Step 5 — Add Automation Logic
+
+**Trigger an alert based on parsed output:**
+
+```python
+if "disk" in parsed.get("issue", "").lower():
+    print("⚠️ CRITICAL: Disk issue detected!")
+```
+
+**Save output to file:**
+
+```python
+with open("report.json", "w") as f:
+    json.dump(parsed, f, indent=2)
+```
+
+---
+
+#### Step 6 — Production Error Handling
+
+```python
+try:
+    response = ask_ai(prompt)
+    if "choices" not in response:
+        raise ValueError("Unexpected API response structure")
+except Exception as e:
+    print("API call failed:", e)
+```
+
+---
+
+### 💡 Real DevOps Use Cases
+
+With this pattern you can now automate:
+- Log analysis (upgrade from Day 14's local model project)
+- CI/CD failure explanation
+- Incident summarization
+- Alert classification
+- Automated ticket generation
+
+---
+
+### ✅ End-of-Day Checklist
+
+- [ ] Build a working `ask_ai()` function with clean response extraction
+- [ ] Force structured JSON output from an AI prompt
+- [ ] Parse and act on the structured response programmatically
+- [ ] Add error handling for failed or malformed API responses
+- [ ] Save AI output to a JSON report file
+
+---
+---
+
+## 📅 Day 17 — Bash + curl + AI
+
+### 🎯 Goal for Day 17
+
+Integrate AI directly into shell scripts — making it usable inside CI/CD pipelines without any Python dependency.
+
+---
+
+### 🏗️ Architecture
+
+```
+logs.txt → Bash Script → curl → AI API → jq parsed output → Alert / Report
+```
+
+---
+
+### 🔧 Step-by-Step Build
+
+#### Step 1 — Basic curl API Call
+
+```bash
+curl https://api.openai.com/v1/chat/completions \
+  -H "Authorization: Bearer $OPENAI_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "gpt-4o-mini",
+    "messages": [
+      {"role": "user", "content": "Explain CI/CD"}
+    ]
+  }'
+```
+
+---
+
+#### Step 2 — Read Logs in Bash
+
+```bash
+LOGS=$(cat logs.txt)
+```
+
+---
+
+#### Step 3 — Full Log Analyzer Script (`analyze_logs.sh`)
+
+```bash
+#!/bin/bash
+
+API_KEY=$OPENAI_API_KEY
+LOGS=$(cat logs.txt)
+
+PROMPT="Analyze these logs and summarize issues:
+
+$LOGS"
+
+RESPONSE=$(curl -s https://api.openai.com/v1/chat/completions \
+  -H "Authorization: Bearer $API_KEY" \
+  -H "Content-Type: application/json" \
+  -d "{
+    \"model\": \"gpt-4o-mini\",
+    \"messages\": [
+      {\"role\": \"user\", \"content\": \"$PROMPT\"}
+    ],
+    \"max_tokens\": 200
+  }")
+
+echo "=== RAW RESPONSE ==="
+echo "$RESPONSE"
+```
+
+---
+
+#### Step 4 — Parse Output with `jq`
+
+**Install jq:**
+
+```bash
+sudo apt install jq
+```
+
+**Extract the AI response:**
+
+```bash
+SUMMARY=$(echo "$RESPONSE" | jq -r '.choices[0].message.content')
+
+echo "=== AI SUMMARY ==="
+echo "$SUMMARY"
+```
+
+---
+
+#### Step 5 — Request Structured JSON Output
+
+```bash
+PROMPT="Analyze logs and return JSON only:
+
+{
+  \"issues\": [],
+  \"root_causes\": [],
+  \"actions\": []
+}
+
+Logs:
+$LOGS"
+```
+
+**Parse and pretty-print the JSON response:**
+
+```bash
+echo "$SUMMARY" | jq
+```
+
+---
+
+#### Step 6 — Full Production Script
+
+```bash
+#!/bin/bash
+
+set -e
+
+LOG_FILE="logs.txt"
+API_KEY=$OPENAI_API_KEY
+LOGS=$(cat "$LOG_FILE")
+
+PROMPT="Analyze logs and return JSON only:
+
+{
+  \"issues\": [],
+  \"root_causes\": [],
+  \"actions\": []
+}
+
+Logs:
+$LOGS"
+
+RESPONSE=$(curl -s https://api.openai.com/v1/chat/completions \
+  -H "Authorization: Bearer $API_KEY" \
+  -H "Content-Type: application/json" \
+  -d "{
+    \"model\": \"gpt-4o-mini\",
+    \"messages\": [
+      {\"role\": \"user\", \"content\": \"$PROMPT\"}
+    ],
+    \"temperature\": 0
+  }")
+
+SUMMARY=$(echo "$RESPONSE" | jq -r '.choices[0].message.content')
+
+echo "=== AI OUTPUT ==="
+echo "$SUMMARY"
+```
+
+---
+
+#### Step 7 — GitHub Actions Integration
+
+```yaml
+name: AI Log Analyzer
+
+on: [push]
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install jq
+        run: sudo apt-get install -y jq
+
+      - name: Run AI Log Analysis
+        run: |
+          chmod +x analyze_logs.sh
+          ./analyze_logs.sh
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+```
+
+---
+
+#### Step 8 — Add Alert Logic
+
+```bash
+if echo "$SUMMARY" | grep -iq "critical"; then
+    echo "🚨 CRITICAL ISSUE DETECTED — failing pipeline"
+    exit 1
+fi
+```
+
+---
+
+### ⚠️ Common Pitfalls
+
+| Problem | Fix |
+|---|---|
+| Unescaped quotes in prompt | Use `\"` inside JSON strings |
+| Large logs exceed token limit | Truncate input: `LOGS=$(tail -n 100 logs.txt)` |
+
+---
+
+### ✅ End-of-Day Checklist
+
+- [ ] Make a successful `curl` API call from the terminal
+- [ ] Read log file content into a bash variable and send it to AI
+- [ ] Parse the AI response using `jq`
+- [ ] Run the full production script end-to-end
+- [ ] Integrate the script as a GitHub Actions step
+
+---
+---
+
+## 📅 Day 18 — Docker + AI API
+
+### 🎯 Goal for Day 18
+
+Package a Python AI application into a Docker container, making it portable, reproducible, and deployment-ready.
+
+---
+
+### 🔧 Step-by-Step Build
+
+#### Step 1 — Python AI App (`app.py`)
+
+```python
+import requests
+import os
+
+API_URL = "https://api.openai.com/v1/chat/completions"
+API_KEY = os.getenv("API_KEY")
+
+def ask_ai(prompt):
+    headers = {
+        "Authorization": f"Bearer {API_KEY}",
+        "Content-Type": "application/json"
+    }
+    data = {
+        "model": "gpt-4o-mini",
+        "messages": [{"role": "user", "content": prompt}]
+    }
+    response = requests.post(API_URL, headers=headers, json=data)
+    return response.json()["choices"][0]["message"]["content"]
+
+if __name__ == "__main__":
+    user_input = input("Ask AI: ")
+    answer = ask_ai(user_input)
+    print("\nAI Response:\n", answer)
+```
+
+---
+
+#### Step 2 — Requirements File (`requirements.txt`)
+
+```
+requests
+```
+
+---
+
+#### Step 3 — Dockerfile
+
+```dockerfile
+FROM python:3.10-slim
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+COPY app.py .
+
+CMD ["python", "app.py"]
+```
+
+---
+
+#### Step 4 — Build and Run
+
+```bash
+# Build the image
+docker build -t ai-app .
+
+# Run the container
+docker run -it -e API_KEY=your_key_here ai-app
+```
+
+---
+
+### 🧪 Practice Tasks
+
+**Task 1 — Compare local vs containerized behavior:**
+1. Run `app.py` locally with `python app.py`
+2. Run the same app inside Docker
+3. Verify identical behavior
+
+**Task 2 — Extend the app:**
+- Accept prompt as a CLI argument instead of interactive input
+- Or expose a REST endpoint using Flask/FastAPI
+
+---
+
+### 🔐 Security Best Practice
+
+Never hardcode API keys. Pass them at runtime:
+
+```bash
+docker run -it -e API_KEY=your_key ai-app
+```
+
+Or use a `.env` file:
+
+```bash
+docker run -it --env-file .env ai-app
+```
+
+---
+
+### 💡 Pro Tips
+
+- Use `.env` files for local development, secrets managers for production
+- Add logging to `stdout` so Docker can capture it with `docker logs`
+- For production, replace `CMD ["python", "app.py"]` with a Flask/FastAPI server
+
+---
+
+### ✅ End-of-Day Checklist
+
+- [ ] Build a working Python AI app that reads `API_KEY` from environment
+- [ ] Write a clean Dockerfile following best practices
+- [ ] Build and run the Docker image successfully
+- [ ] Pass API key at runtime via `-e` flag — never hardcoded
+- [ ] Test the containerized app with 3 different DevOps prompts
+
+---
+---
+
+## 📅 Day 19 — AI Agents Introduction
+
+### 🎯 Goal for Day 19
+
+Understand what AI Agents are, how they differ from single-response AI tools, and get familiar with the CrewAI multi-agent framework.
+
+---
+
+### 🧠 Learn
+
+#### 1️⃣ What Are AI Agents?
+
+AI Agents are programs that can reason, plan, take actions, and iterate autonomously until a goal is completed.
+
+**Without an Agent (simple AI tool):**
+```
+You ask: "Write a Dockerfile"
+→ AI returns a response
+→ Done (single turn)
+```
+
+**With an Agent:**
+```
+Goal: Deploy the app
+→ Step 1: Generate Dockerfile
+→ Step 2: Create Kubernetes YAML
+→ Step 3: Suggest CI/CD pipeline
+→ Step 4: Validate all outputs
+→ Done (multi-step, autonomous)
+```
+
+---
+
+#### 2️⃣ Tools vs Agents
+
+| Feature | AI Tools (LLM APIs) | AI Agents |
+|---|---|---|
+| Interaction | Single prompt-response | Multi-step autonomous workflow |
+| Memory | ❌ Stateless | ✅ Can maintain context |
+| Autonomy | ❌ None | ✅ High |
+| Decision making | ❌ No | ✅ Yes |
+| Best for | Q&A, generation | Automation, pipelines |
+
+> 💡 **Key distinction:** Tools require you to control every step. Agents decide the steps themselves to achieve a goal.
+
+---
+
+#### 3️⃣ CrewAI Architecture
+
+CrewAI is an open-source framework for building multi-agent systems.
+
+**Core components:**
+
+| Component | Description |
+|---|---|
+| **Agent** | Role-based AI entity (e.g., DevOps Engineer, Reviewer) |
+| **Task** | Specific work assigned to an agent |
+| **Crew** | A group of agents working together as a team |
+| **Process** | Execution flow: Sequential, Parallel, or Hierarchical |
+
+**Simple flow:**
+```
+User Goal → Crew → Agent 1 → Agent 2 → Final Output
+```
+
+**DevOps example:**
+```
+Goal: Deploy a Flask app
+
+Agent 1 (Developer)   → Writes Dockerfile
+Agent 2 (DevOps)      → Creates Kubernetes YAML
+Agent 3 (Reviewer)    → Validates all configs
+
+Output → Production-ready deployment setup
+```
+
+---
+
+### 🧪 Practice Tasks
+
+**Task 1 — Break down a goal into agent steps:**
+
+```
+Goal: Deploy a Python app
+
+→ Step 1 (Build):       Containerize with Docker
+→ Step 2 (Deploy):      Write Kubernetes manifests
+→ Step 3 (Monitor):     Add health checks and observability
+```
+
+**Task 2 — Simulate agents manually with ChatGPT:**
+- You act as the manager
+- Ask ChatGPT to act as the DevOps agent
+- Give it tasks one at a time and review its outputs
+
+**Suggested prompts:**
+
+```
+Act as a DevOps agent. Break down the steps to deploy a Node.js app on Kubernetes.
+```
+
+```
+Simulate two agents: one writes a Dockerfile, the second reviews it for security issues.
+```
+
+---
+
+### ✅ End-of-Day Checklist
+
+- [ ] Explain what makes an AI Agent different from a basic LLM API call
+- [ ] Describe CrewAI's four core components: Agent, Task, Crew, Process
+- [ ] Simulate a multi-step agent workflow manually using ChatGPT
+- [ ] Design a three-agent crew for a real DevOps scenario
+
+---
+---
+
+## 📅 Day 20 — CrewAI Hands-On
+
+### 🎯 Goal for Day 20
+
+Build your first AI agent using CrewAI, define roles and tasks, and run a working multi-agent workflow.
+
+---
+
+### 🔧 Step-by-Step Build
+
+#### Step 1 — Install CrewAI
+
+```bash
+pip install crewai
+```
+
+---
+
+#### Step 2 — Single Agent Example (`agent.py`)
+
+```python
+from crewai import Agent, Task, Crew
+
+# Define the agent
+devops_agent = Agent(
+    role="DevOps Engineer",
+    goal="Help automate deployment tasks",
+    backstory="Expert in CI/CD, Docker, and Kubernetes"
+)
+
+# Define the task
+task = Task(
+    description="Write a Dockerfile for a Python Flask app",
+    agent=devops_agent
+)
+
+# Assemble the crew and run
+crew = Crew(
+    agents=[devops_agent],
+    tasks=[task]
+)
+
+result = crew.kickoff()
+print(result)
+```
+
+---
+
+#### Step 3 — Try Different Tasks
+
+```python
+Task(description="Generate a Kubernetes Deployment YAML for a Flask app")
+```
+
+```python
+Task(description="Write a GitHub Actions CI pipeline for a Python project")
+```
+
+---
+
+#### Step 4 — Add a Second Agent (Reviewer)
+
+```python
+reviewer = Agent(
+    role="Code Reviewer",
+    goal="Review DevOps configurations for correctness and best practices",
+    backstory="Expert in Kubernetes, Docker security, and CI/CD quality"
+)
+```
+
+---
+
+#### Step 5 — Multi-Agent Workflow
+
+```python
+from crewai import Agent, Task, Crew
+
+devops_agent = Agent(
+    role="DevOps Engineer",
+    goal="Generate deployment configurations",
+    backstory="Expert in Docker and Kubernetes"
+)
+
+reviewer = Agent(
+    role="Code Reviewer",
+    goal="Review and improve DevOps configs",
+    backstory="Expert in best practices and security"
+)
+
+task1 = Task(
+    description="Write a Dockerfile for a Python Flask app",
+    agent=devops_agent
+)
+
+task2 = Task(
+    description="Review the Dockerfile for security and best practices",
+    agent=reviewer
+)
+
+crew = Crew(
+    agents=[devops_agent, reviewer],
+    tasks=[task1, task2]
+)
+
+result = crew.kickoff()
+print(result)
+```
+
+---
+
+### 💡 Pro Tips
+
+- Keep agent roles specific — vague roles produce vague outputs
+- Write task descriptions as clear, action-oriented instructions
+- Start with a single agent, then scale to multi-agent as needed
+- The internal prompt CrewAI sends combines `role + goal + backstory + task`
+
+---
+
+### ✅ End-of-Day Checklist
+
+- [ ] Install CrewAI and run the single-agent example
+- [ ] Modify the task description and observe how output changes
+- [ ] Create a second reviewer agent
+- [ ] Build and run a two-agent workflow with sequential tasks
+
+---
+---
+
+## 📅 Day 21 — Mini Project: Kubernetes Pod Failure AI Agent
+
+### 🎯 Goal for Day 21
+
+Build a real AI-powered DevOps assistant that reads Kubernetes pod logs, generates an RCA, and optionally sends a Slack alert.
+
+---
+
+### 🏗️ Project Architecture
+
+```
+Pod Logs (logs.txt) → Python AI Agent → RCA + Fix Suggestion → (Optional) Slack Alert
+```
+
+---
+
+### 📁 Project Structure
+
+```
+k8s-ai-agent/
+├── app.py
+├── notifier.py
+├── sample_logs.txt
+├── requirements.txt
+└── Dockerfile
+```
+
+---
+
+### 🔧 Step-by-Step Build
+
+#### Step 1 — Sample Logs (`sample_logs.txt`)
+
+```
+Error: CrashLoopBackOff
+Back-off restarting failed container
+Reason: environment variable DB_HOST not set
+```
+
+---
+
+#### Step 2 — AI Agent Script (`app.py`)
+
+```python
+import os
+import requests
+
+API_KEY = os.getenv("API_KEY")
+API_URL = "https://api.openai.com/v1/chat/completions"
+
+def analyze_logs(logs):
+    prompt = f"""
+You are a Kubernetes expert.
+
+Analyze the following pod logs:
+{logs}
+
+Provide:
+1. Root cause
+2. Fix suggestion
+"""
+    headers = {
+        "Authorization": f"Bearer {API_KEY}",
+        "Content-Type": "application/json"
+    }
+    data = {
+        "model": "gpt-4o-mini",
+        "messages": [{"role": "user", "content": prompt}]
+    }
+    response = requests.post(API_URL, headers=headers, json=data)
+    return response.json()["choices"][0]["message"]["content"]
+
+if __name__ == "__main__":
+    with open("sample_logs.txt") as f:
+        logs = f.read()
+
+    result = analyze_logs(logs)
+    print("\n🔍 RCA + Fix:\n")
+    print(result)
+```
+
+---
+
+#### Step 3 — Slack Notification (`notifier.py`)
+
+```python
+import requests
+import os
+
+def send_slack(message):
+    webhook = os.getenv("SLACK_WEBHOOK")
+    data = {"text": message}
+    requests.post(webhook, json=data)
+```
+
+**Use in `app.py`:**
+
+```python
+from notifier import send_slack
+
+send_slack(result)
+```
+
+---
+
+#### Step 4 — Requirements (`requirements.txt`)
+
+```
+requests
+```
+
+---
+
+#### Step 5 — Dockerfile
+
+```dockerfile
+FROM python:3.10-slim
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+COPY . .
+
+CMD ["python", "app.py"]
+```
+
+---
+
+#### Step 6 — Run the Project
+
+**Local:**
+
+```bash
+export API_KEY=your_key
+python app.py
+```
+
+**Docker:**
+
+```bash
+docker build -t k8s-ai-agent .
+docker run -e API_KEY=your_key k8s-ai-agent
+```
+
+---
+
+### ✅ Expected Output
+
+```
+Root Cause:
+The container is failing due to missing environment variable DB_HOST.
+
+Fix:
+Update deployment.yaml to include DB_HOST as an environment variable
+under the container spec.
+```
+
+---
+
+### 💡 Enhancements to Level Up
+
+**Use real Kubernetes logs:**
+
+```bash
+kubectl logs <pod-name> > sample_logs.txt
+```
+
+**Force structured JSON output** — update the prompt to return:
+
+```json
+{
+  "root_cause": "",
+  "fix": "",
+  "severity": ""
+}
+```
+
+**Multi-agent version with CrewAI:**
+- Agent 1 → Log Analyzer
+- Agent 2 → Fix Generator
+- Agent 3 → Output Reviewer
+
+**Production integrations:**
+- Store logs and reports in S3
+- Post to Slack or open a Jira ticket automatically
+- Trigger from a CI/CD pipeline on pod failure
+
+---
+
+### ✅ End-of-Day Checklist
+
+- [ ] Create `sample_logs.txt` with realistic pod failure entries
+- [ ] Build and run `app.py` to generate an AI-powered RCA
+- [ ] Dockerize the project and verify it runs correctly
+- [ ] Add the Slack notifier and test with a webhook
+- [ ] Implement structured JSON output from the prompt
+
+---
+---
+
+## 📅 Day 22 — Workflow Automation Platforms
+
+### 🎯 Goal for Day 22
+
+Understand event-driven workflow automation and build a pipeline that connects Kubernetes events, AI analysis, and Slack alerts using n8n.
+
+---
+
+### 🧠 Learn
+
+#### 1️⃣ What Is Workflow Automation?
+
+Workflow automation connects systems and services so that when event X occurs, action Y happens automatically — without manual intervention.
+
+**DevOps example:**
+
+```
+Event: Kubernetes pod fails
+→ Fetch pod logs
+→ Send logs to AI for analysis
+→ Post AI summary to Slack
+```
+
+---
+
+#### 2️⃣ Tool Overview
+
+**n8n (Recommended)**
+- Open-source, self-hosted workflow automation
+- Drag-and-drop visual builder
+- Supports webhooks, schedules, and 350+ integrations
+- Privacy-friendly (runs on your infra)
+
+**Similar tools:** Zapier, Make (formerly Integromat) — cloud-based, lower DevOps flexibility
+
+---
+
+#### 3️⃣ Event Types
+
+| Event Type | Example |
+|---|---|
+| GitHub Event | Code push to main branch |
+| Kubernetes | Pod failure or OOMKilled |
+| API Webhook | External service trigger |
+| Schedule (Cron) | Nightly log analysis job |
+
+---
+
+### 🛠️ Hands-On: n8n
+
+#### Step 1 — Run n8n with Docker
+
+```bash
+docker run -it --rm \
+  -p 5678:5678 \
+  n8nio/n8n
+```
+
+Open the UI at: `http://localhost:5678`
+
+---
+
+#### Step 2 — Build a DevOps Workflow
+
+Create a workflow with these nodes in sequence:
+
+1. **Trigger Node** — Webhook or cron schedule
+2. **HTTP Request Node** — Fetch logs or external data
+3. **Function Node** — Process or transform data
+4. **Slack Node** — Send alert or summary
+
+---
+
+### 🧪 Practice Tasks
+
+**Task 1 — Simple automation:**
+```
+Trigger: Manual webhook
+→ Send prompt to AI API
+→ Log the response
+```
+
+**Task 2 — DevOps incident workflow:**
+```
+Trigger: Simulated pod failure webhook
+→ Read logs from file or API
+→ Send to AI for analysis
+→ Post summary to Slack channel
+```
+
+**Task 3 — CI/CD trigger:**
+```
+Trigger: GitHub push event
+→ Build Docker image
+→ Deploy to staging
+→ Notify team on Slack
+```
+
+---
+
+### 💡 Pro Tips
+
+- Start with one trigger → one action before adding complexity
+- Use webhooks for real-time event-driven workflows
+- Combine n8n with AI agents for intelligent, autonomous pipelines
+- Log every workflow execution for debugging
+
+---
+
+### ✅ End-of-Day Checklist
+
+- [ ] Run n8n locally via Docker and access the UI
+- [ ] Build a simple 2-node workflow (trigger → action)
+- [ ] Create a 4-node DevOps workflow: trigger → logs → AI → Slack
+- [ ] Test the workflow end-to-end with sample data
+
+---
+---
+
+## 📅 Day 23 — AI in CI/CD
+
+### 🎯 Goal for Day 23
+
+Integrate AI into CI/CD pipelines for automated security scan summarization, PR code review, and intelligent pipeline decision-making.
+
+---
+
+### 🛠️ Practice Use Cases
+
+#### 🔐 Use Case 1 — AI Security Scan Summary
+
+**Problem:** Security tools like Trivy, Snyk, and SonarQube produce large, noisy reports that are hard to act on quickly.
+
+**Solution:** Use AI to summarize vulnerabilities, surface critical issues, and generate fix recommendations.
+
+**Script (`security_ai.py`):**
+
+```python
+import requests
+import os
+
+API_KEY = os.getenv("API_KEY")
+
+def summarize_report(report):
+    prompt = f"""
+You are a security expert.
+
+Analyze this security scan report:
+{report}
+
+Provide:
+- Critical vulnerabilities (list each)
+- Overall risk level
+- Specific fix recommendations per issue
+"""
+    response = requests.post(
+        "https://api.openai.com/v1/chat/completions",
+        headers={
+            "Authorization": f"Bearer {API_KEY}",
+            "Content-Type": "application/json"
+        },
+        json={
+            "model": "gpt-4o-mini",
+            "messages": [{"role": "user", "content": prompt}]
+        }
+    )
+    return response.json()["choices"][0]["message"]["content"]
+```
+
+---
+
+#### 🔍 Use Case 2 — PR Review Automation
+
+AI can review code changes for quality, security, and correctness before they're merged.
+
+**Prompt:**
+
+```
+Review this code change and provide feedback on:
+- Security vulnerabilities
+- Coding best practices
+- Potential bugs or edge cases
+- Performance concerns
+```
+
+---
+
+#### ⚙️ Use Case 3 — GitHub Actions Integration
+
+**`.github/workflows/ai-review.yml`:**
+
+```yaml
+name: AI PR Review
+
+on:
+  pull_request:
+
+jobs:
+  ai-review:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Run AI Security Review
+        run: python security_ai.py
+        env:
+          API_KEY: ${{ secrets.OPENAI_API_KEY }}
+```
+
+---
+
+### 🔄 Full CI/CD + AI Flow
+
+```
+PR Created
+→ Security scan runs (Trivy / Snyk)
+→ Scan report sent to AI
+→ AI generates human-readable summary
+→ Summary posted as PR comment or Slack alert
+→ Pipeline passes or fails based on severity
+```
+
+---
+
+### 🧪 Practice Tasks
+
+**Task 1 — Security summary:**
+1. Paste a sample Trivy or Snyk scan output into AI
+2. Prompt for critical issues, risk level, and fixes
+3. Validate the summary is actionable
+
+**Task 2 — PR review:**
+1. Take a sample code diff
+2. Ask AI to review for security and best practices
+3. Compare AI suggestions with what a human reviewer would catch
+
+**Task 3 — Pipeline integration:**
+1. Add a step to an existing GitHub Actions workflow
+2. Trigger on pull request events
+3. Output AI summary to the pipeline log
+
+---
+
+### 💡 Pro Tips
+
+- Use structured JSON output so summaries can trigger automated pass/fail decisions
+- Chunk large scan reports — don't exceed token limits
+- Cache AI results per commit SHA to avoid repeat API calls
+- Combine security summaries with Slack alerts for team visibility
+
+---
+
+### ✅ End-of-Day Checklist
+
+- [ ] Write `security_ai.py` and test it with a sample vulnerability report
+- [ ] Build a PR review prompt and validate the AI's suggestions
+- [ ] Add an AI review step to a GitHub Actions workflow
+- [ ] Test the full pipeline: scan → AI summary → log output
+
+---
+---
+
+## 📅 Day 24 — AIOps Basics
+
+### 🎯 Goal for Day 24
+
+Understand AIOps — how AI applied to metrics, logs, and traces automates monitoring, accelerates root cause analysis, and enables proactive system reliability.
+
+---
+
+### 🧠 Learn
+
+#### 1️⃣ What Is AIOps?
+
+**AIOps = AI + IT Operations**
+
+AIOps uses machine learning and data analytics to monitor, analyze, and respond to IT system behavior — automatically.
+
+**Why it's needed:**
+
+Modern systems are distributed (microservices, Kubernetes), generate high volumes of signals (logs, metrics, events), and are too complex to debug manually at scale.
+
+**What AIOps does:**
+
+| Capability | Description |
+|---|---|
+| 🔍 Monitoring | Continuously tracks system health |
+| 🚨 Anomaly Detection | Identifies unusual or unexpected behavior |
+| 🔎 Root Cause Analysis | Locates the source of issues automatically |
+| ⚙️ Auto-remediation | Restarts, scales, or patches automatically |
+| 📈 Prediction | Forecasts failures before they occur |
+
+---
+
+#### 2️⃣ The Three Core Signals
+
+**📊 Metrics**
+- Numerical data measured over time
+- Examples: CPU usage, memory consumption, request latency
+- Used for: performance monitoring, threshold alerting
+
+**📝 Logs**
+- Text-based output from systems and applications
+- Example: `Error: Database connection failed`
+- Used for: debugging errors, root cause analysis
+
+**🔍 Traces**
+- Track a single request as it flows through multiple services
+- Example: `User request → API Gateway → Service A → Database → Response`
+- Used for: distributed system visibility, latency analysis
+
+**🧠 The AI Layer**
+
+AIOps combines all three signals and applies ML to detect patterns, identify anomalies, and suggest or execute fixes.
+
+---
+
+#### 3️⃣ How AIOps Works End-to-End
+
+```
+Data Collection (Metrics + Logs + Traces)
+→ AI Analysis & Pattern Detection
+→ Anomaly / Issue Detection
+→ Root Cause Analysis
+→ Automated Response or Alert
+```
+
+---
+
+#### 4️⃣ Real DevOps Scenario
+
+**Problem: Kubernetes pod is slow**
+
+| Signal | Finding |
+|---|---|
+| Metrics | CPU spike detected on database pod |
+| Logs | `Error: DB connection timeout` |
+| Traces | Delay concentrated in database service call |
+| **AI Output** | Root cause: DB latency. Fix: Scale database or optimize query. |
+
+---
+
+### 🧪 Practice Thinking
+
+**Scenario 1 — High API latency:**
+```
+→ Metrics: Is CPU or memory elevated?
+→ Logs:    Are there timeout or error messages?
+→ Traces:  Which service in the chain is slow?
+```
+
+**Scenario 2 — CrashLoopBackOff:**
+```
+→ Logs:    Collect crash logs from kubectl
+→ Pattern: AI detects repeated crash on startup
+→ Fix:     AI suggests missing env variable or config error
+```
+
+---
+
+### 💡 Recommended Tool Stack
+
+| Tool | Signal |
+|---|---|
+| Prometheus | Metrics collection |
+| ELK Stack (Elasticsearch + Logstash + Kibana) | Log aggregation |
+| Jaeger | Distributed tracing |
+| Grafana + AI plugins | Unified observability + AI insights |
+| Datadog AI | Full AIOps automation |
+
+> Combining all three signals (metrics + logs + traces) gives you full **observability**. Add an AI layer on top and you have a functional AIOps system.
+
+---
+
+### ✅ End-of-Day Checklist
+
+- [ ] Explain AIOps in your own words to a colleague
+- [ ] Describe the role of each signal: metrics, logs, and traces
+- [ ] Walk through the AIOps flow for a sample incident scenario
+- [ ] Identify which tools you'd use for each signal in your stack
+
+---
+---
+
+## 📅 Day 25 — AI for Observability
+
+### 🎯 Goal for Day 25
+
+Understand how AI enhances observability in Grafana and Datadog — from anomaly detection and smart alerting to automated root cause analysis.
+
+---
+
+### 🧠 Learn
+
+#### 1️⃣ What Is AI Observability?
+
+AI observability means applying AI/ML to monitoring data — logs, metrics, and traces — to:
+
+- Detect anomalies automatically without manual threshold tuning
+- Predict failures before they impact users
+- Reduce alert noise and fatigue
+- Accelerate root cause analysis
+
+It extends traditional observability by adding intelligence and automation on top of the data you already collect.
+
+---
+
+#### 2️⃣ Grafana AI Capabilities
+
+**AI Assistant**
+- Natural language interface: ask *"Why is latency high?"* instead of writing a query
+- Auto-generates PromQL queries, dashboards, and incident summaries
+- Guides teams to insights faster during incidents
+
+**AI-Powered Investigations (SRE Agent)**
+- Automatically correlates logs, metrics, and traces across services
+- Uses a knowledge graph to link signals and suggest root causes
+- Significantly reduces time spent on manual RCA
+
+**AI Observability Plugin**
+- Tracks AI-specific metrics: LLM usage and cost, response latency, GPU utilization
+- Provides prebuilt dashboards for AI workloads running on your infrastructure
+
+**Anomaly Detection & Forecasting**
+- Learns historical patterns and detects deviations automatically
+- Forecasts future capacity issues, traffic spikes, and performance degradation
+
+> 💡 **Key idea:** Grafana uses AI to turn dashboards into decision-support systems — not just visualization tools.
+
+---
+
+#### 3️⃣ Datadog AIOps Capabilities
+
+**Smart Alerting with Dynamic Baselines**
+
+Instead of static thresholds, Datadog's AI learns what "normal" looks like for each service and time window.
+
+| Approach | Alert Condition | Result |
+|---|---|---|
+| Static threshold | CPU > 80% | Noisy, many false positives |
+| AI dynamic baseline | CPU unusual for this time/service | Accurate, actionable alerts |
+
+**Alert Noise Reduction**
+- Groups related alerts into a single incident
+- Removes duplicate and false-positive alerts
+- Surfaces only high-signal, actionable events
+
+**Predictive Monitoring**
+- Forecasts failures before they happen
+- Detects abnormal trends, not just threshold breaches
+- Enables proactive fixes before users are impacted
+
+**Automated Root Cause Analysis**
+- Correlates signals across services using ML
+- Identifies the likely source of an issue instantly
+- Reduces MTTR (Mean Time to Resolution)
+
+**AI Agents (Bits AI SRE)**
+- Autonomous troubleshooting agent
+- Investigates alerts, telemetry, and runbooks independently
+- Suggests or executes remediation steps in minutes
+
+---
+
+#### 4️⃣ Smart Alerting — Traditional vs AI
+
+**Traditional alerting problems:**
+- Static thresholds generate constant noise
+- Too many alerts cause fatigue and missed incidents
+- No context — just a number crossing a line
+- Purely reactive — alerts fire after the problem exists
+
+**AI-based smart alerting:**
+
+| Capability | Description |
+|---|---|
+| Dynamic thresholds | Learned from history, adapts to seasonality and workload |
+| Anomaly detection | Detects unusual patterns, not just limit breaches |
+| Alert correlation | Groups multiple alerts into one actionable incident |
+| Noise reduction | Filters duplicates and false positives |
+| Predictive alerts | Warns before failure based on trend forecasting |
+| Context-aware alerts | Includes logs, traces, affected services, and likely root cause |
+
+---
+
+#### 5️⃣ Grafana vs Datadog
+
+| Feature | Grafana AI | Datadog AI |
+|---|---|---|
+| Focus | Visualization + investigation insights | Full AIOps automation |
+| Interface | Chat-based natural language assistant | Integrated full-stack platform |
+| Strength | RCA, anomaly detection, dashboard intelligence | Alert intelligence, prediction, auto-remediation |
+| Best for | Teams that own their observability stack | Teams wanting managed AIOps |
+
+---
+
+### 🔄 Real-World Impact
+
+**Without AI observability:**
+- 100 alerts fire during an outage
+- Engineers manually search through logs
+- RCA takes 2–4 hours
+
+**With AI observability:**
+- 100 alerts → 1 grouped, prioritized incident
+- AI identifies: *"Database latency spike caused by connection pool exhaustion"*
+- Suggested fix surfaced immediately
+- Resolution in minutes, not hours
+
+---
+
+### ✅ End-of-Day Checklist
+
+- [ ] Describe three ways AI improves Grafana beyond basic dashboards
+- [ ] Explain the difference between static thresholds and AI dynamic baselines
+- [ ] List Datadog's five core AIOps capabilities
+- [ ] Map a real incident scenario through the full AI observability flow
+- [ ] Choose the right tool (Grafana vs Datadog) for a given team context
+
+---
