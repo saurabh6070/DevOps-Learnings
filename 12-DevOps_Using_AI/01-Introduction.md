@@ -1333,12 +1333,32 @@ ollama pull mistral
 ollama run mistral
 ```
 
-| Model | Characteristic |
-|---|---|
-| `llama3` | Better reasoning, slightly slower |
-| `mistral` | Faster and lightweight |
+| Model | Characteristic | Requirements |
+|---|---|---|
+| `llama3` | Better reasoning, slightly slower | Min 80 GB Storage, 8 GB RAM |
+| `mistral` | Faster and lightweight | Min 80 GB Storage, 8 GB RAM |
 
 ---
+
+### 🧠 Pro Tip — Try llama3.2:1b incase if VM is having less resources ( 80 GB Storage, 4 GB RAM )
+
+```bash
+ollama pull llama3.2:1b
+ollama run llama3.2:1b
+ollama run llama3.2:1b "Write a Kubernetes deployment YAML"
+echo "Generate Terraform config for an AWS EC2 instance" | ollama run llama3.2:1b
+
+apt install net-tools
+
+netstat -anp | grep 11434
+
+curl http://localhost:11434/api/generate -d '{
+  "model": "llama3.2:1b",
+  "prompt": "Write a GitHub Actions workflow for CI",
+  "stream": false
+}'
+```
+
 
 ### ✅ End-of-Day Checklist
 
