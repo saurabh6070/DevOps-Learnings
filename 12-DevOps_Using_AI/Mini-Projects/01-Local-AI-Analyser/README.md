@@ -23,7 +23,29 @@ Logs_Analyser/
 - Model pulled locally:
 
 ```bash
+
+## Install Docker
+curl -fsSL https://get.docker.com | sh
+sudo systemctl start docker
+sudo systemctl status docker
+
+## Install Ollama
+curl -fsSL https://ollama.com/install.sh | sh
+ollama --version
 ollama pull llama3.2:1b
+ollama run llama3.2:1b
+
+## Install Net-tools
+apt install net-tools
+netstat -anp | grep 11434
+
+## Install Python3
+sudo apt update
+sudo apt install python3
+python3 --version
+
+python3 analyzer.py
+
 ```
 
 ---
