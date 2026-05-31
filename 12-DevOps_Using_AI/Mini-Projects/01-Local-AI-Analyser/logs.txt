@@ -1,0 +1,5 @@
+2026-05-20 10:12:23 ERROR Failed to connect to database
+2026-05-20 10:12:25 INFO  Retrying connection...
+2026-05-20 10:12:30 ERROR Connection timeout
+2026-05-20 10:13:00 WARN  High memory usage detected
+2026-05-20 10:14:10 ERROR Service crashed unexpectedly
