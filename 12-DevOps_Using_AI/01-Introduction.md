@@ -1581,7 +1581,7 @@ Use GitHub Copilot inside VS Code to generate Kubernetes YAML, Dockerfiles, and 
 
 1. Open VS Code
 2. Go to Extensions (`Ctrl + Shift + X`)
-3. Search and install: **GitHub Copilot** and **GitHub Copilot Chat**
+3. Search and install: **GitHub Copilot Chat**
 4. Sign in with your GitHub account
 
 ---
