@@ -111,16 +111,16 @@ netstat -anp | grep kubelet | grep -iv stream
 
 ---
 
-# 2. 📘 Kubernetes Worker Node Setup (AWS Ubuntu)
+## 2. 📘 Kubernetes Worker Node Setup (AWS Ubuntu)
 
-## 2.1. Prerequisites
+### 2.1. Prerequisites
 Ubuntu 24.04 LTS EC2 instances (Workers).
 
 Same VPC and subnet as Master.
 
 Security groups allowing required ports (10250, 30000–32767).
 
-## 2.2. Kernel Modules & Networking
+### 2.2. Kernel Modules & Networking
 bash
 sudo modprobe overlay
 sudo modprobe br_netfilter
@@ -138,7 +138,7 @@ EOF
 
 sudo sysctl --system
 
-## 2.3. Install Container Runtime
+### 2.3. Install Container Runtime
 bash
 sudo apt install -y curl gnupg2 software-properties-common apt-transport-https ca-certificates
 sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmour -o /etc/apt/trusted.gpg.d/docker.gpg
@@ -151,7 +151,7 @@ sudo sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/c
 sudo systemctl restart containerd
 sudo systemctl enable containerd
 
-## 2.4. Install Kubernetes Components
+### 2.4. Install Kubernetes Components
 bash
 echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.30/deb/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.30/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
@@ -159,7 +159,7 @@ sudo apt update
 sudo apt install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
 
-## 2.5. Join Worker Node to Cluster
+### 2.5. Join Worker Node to Cluster
 On the Master node, after kubeadm init, you’ll see a kubeadm join command. Run it on each Worker:
 
 bash
@@ -170,34 +170,37 @@ Verify:
 bash
 kubectl get nodes
 
-# 3. 📘 Pod Interfaces with Calico CNI
+## 3. 📘 Pod Interfaces with Calico CNI
 
 Calico is a Container Network Interface (CNI) plugin that provides networking and network policy enforcement.
 
-## 🔹 How Pod Interfaces Are Created
+### 🔹 How Pod Interfaces Are Created
 
-### Pod scheduled → kubelet requests CNI plugin to set up networking.
+#### Pod scheduled → kubelet requests CNI plugin to set up networking.
 
-### Calico CNI plugin runs:
+#### Calico CNI plugin runs:
 Creates a veth pair (virtual Ethernet).
 One end inside the Pod’s network namespace (eth0).
 Other end in the host namespace, connected to Calico-managed bridge.
 
-### IP assignment:
+#### IP assignment:
 Calico IPAM allocates Pod IP from the CIDR (10.244.0.0/16).
 IP is written to Pod’s network namespace.
 
-### Routing:
+#### Routing:
 Calico programs routes using BGP or VXLAN.
 Ensures Pod-to-Pod communication across nodes.
 
-### Policies:
+#### Policies:
 NetworkPolicies applied via Calico enforce ingress/egress rules.
 
-## 🔹 Verification
-bash
+### 🔹 Verification
+
+```bash
 kubectl get pods -o wide
 ip a   # check Pod IPs assigned
+```
+
 Inside Pod:
 
 ```bash
