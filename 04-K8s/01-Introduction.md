@@ -680,9 +680,70 @@ metadata:
 
 ---
 
-## 7. Object Relationships & Lifecycle Control
+## 7. 📘 Kubernetes Image Pull Policy, Tags, and Digests
 
-### 7.1 Finalizers
+### 7.1. Image Pull Policy
+
+Kubernetes decides when to pull container images based on the **imagePullPolicy** setting:
+
+- **Always**  
+  - The image is pulled from the registry every time the Pod starts.  
+  - Ensures the latest version is used, but increases startup time and network usage.  
+
+- **IfNotPresent**  
+  - The image is pulled only if it is not already present locally.  
+  - Faster startup if the image exists on the node.  
+
+- **Never** (rarely used)  
+  - The image is never pulled; it must exist locally.  
+
+---
+
+### 7.2. Tags vs Digests
+
+- **Tag**  
+  - Human‑readable identifier (e.g., `nginx:1.21`).  
+  - Mutable: the same tag can point to different image versions over time.  
+
+- **Digest**  
+  - Immutable SHA256 hash of the image content (e.g., `nginx@sha256:abc123...`).  
+  - Guarantees exact image version.  
+
+---
+
+### 7.3. Default Behavior with `latest`
+
+- If **no tag** is defined, Kubernetes defaults to `:latest`.  
+- When using `:latest`, the **imagePullPolicy** defaults to **Always**.  
+- This means the image will be pulled every time, even if it exists locally.  
+
+---
+
+### 7.4. Combined Scenarios
+
+| Scenario | Behavior |
+|----------|----------|
+| **Tag not defined** (defaults to `latest`) + **imagePullPolicy=Always** | Image is always pulled from registry. |
+| **Tag defined** (e.g., `nginx:1.21`) + **digest defined** | Image will not be pulled if already present locally, since digest ensures immutability. |
+| **Tag defined only** + **IfNotPresent** | Image pulled only if missing locally. |
+| **Digest defined only** | Exact image version is guaranteed; pull depends on policy. |
+
+---
+
+### 7.5. Best Practices
+
+- Avoid using `:latest` in production.  
+- Prefer **immutable digests** for reliability.  
+- Use **tags** for readability, but pin to specific versions.  
+- Combine **tag + digest** for clarity and immutability.  
+- Set `imagePullPolicy=IfNotPresent` for stable workloads, `Always` for CI/CD pipelines.  
+
+---
+
+
+## 8. Object Relationships & Lifecycle Control
+
+### 8.1 Finalizers
 
 Finalizers are **pre-deletion hooks** that prevent an object from being deleted until cleanup is complete.
 
@@ -706,7 +767,7 @@ metadata:
 
 ---
 
-### 7.2 Owners and Dependents
+### 8.2 Owners and Dependents
 
 Kubernetes tracks parent-child relationships between objects via `ownerReferences`.
 
@@ -742,7 +803,7 @@ kubectl delete deployment nginx --cascade=orphan
 
 ---
 
-### 7.3 Recommended Labels
+### 8.3 Recommended Labels
 
 The `app.kubernetes.io/` label prefix is a **community standard** for tooling interoperability (Helm, dashboards, operators all recognize these).
 
@@ -768,7 +829,7 @@ metadata:
 
 ---
 
-## 8. Storage Versions & API Versioning
+## 9. Storage Versions & API Versioning
 
 Kubernetes API is **versioned** to allow evolution without breaking existing clients.
 
@@ -816,7 +877,7 @@ versions:
 
 ---
 
-## 9. The Kubernetes Philosophy
+## 10. The Kubernetes Philosophy
 
 Understanding how Kubernetes *thinks* makes you a better operator.
 
@@ -840,7 +901,7 @@ Every controller in Kubernetes (and every well-written Operator) follows this lo
 
 ---
 
-## 10. Essential kubectl Commands
+## 11. Essential kubectl Commands
 
 ```bash
 # ── Cluster Exploration ──────────────────────────────────────
@@ -881,7 +942,7 @@ kubectl annotate pod my-pod owner=team-a    # Add an annotation
 
 ---
 
-## 11. Summary
+## 12. Summary
 
 Here's what you've covered in this section:
 
