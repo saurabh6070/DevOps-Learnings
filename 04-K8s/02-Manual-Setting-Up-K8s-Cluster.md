@@ -192,20 +192,20 @@ Calico is a Container Network Interface (CNI) plugin that provides networking an
 #### Pod scheduled → kubelet requests CNI plugin to set up networking.
 
 #### Calico CNI plugin runs:
-Creates a veth pair (virtual Ethernet).
-One end inside the Pod’s network namespace (eth0).
-Other end in the host namespace, connected to Calico-managed bridge.
+ - Creates a veth pair (virtual Ethernet).
+ - One end inside the Pod’s network namespace (eth0).
+ - Other end in the host namespace, connected to Calico-managed bridge.
 
 #### IP assignment:
-Calico IPAM allocates Pod IP from the CIDR (10.244.0.0/16).
-IP is written to Pod’s network namespace.
+ - Calico IPAM allocates Pod IP from the CIDR (10.244.0.0/16).
+ - IP is written to Pod’s network namespace.
 
 #### Routing:
-Calico programs routes using BGP or VXLAN.
-Ensures Pod-to-Pod communication across nodes.
+ - Calico programs routes using BGP or VXLAN.
+ - Ensures Pod-to-Pod communication across nodes.
 
 #### Policies:
-NetworkPolicies applied via Calico enforce ingress/egress rules.
+ - NetworkPolicies applied via Calico enforce ingress/egress rules.
 
 ### 🔹 Verification
 
