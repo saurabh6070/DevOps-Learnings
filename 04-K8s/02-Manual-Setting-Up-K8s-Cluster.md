@@ -14,6 +14,7 @@
 ---
 
 ### 1.2. Kernel Modules & Networking
+
 ```bash
 sudo modprobe overlay
 sudo modprobe br_netfilter
@@ -35,6 +36,7 @@ sudo sysctl --system
 ---
 
 ### 1.3. Install Container Runtime (containerd)
+
 ```bash
 sudo apt install -y curl gnupg2 software-properties-common apt-transport-https ca-certificates
 sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmour -o /etc/apt/trusted.gpg.d/docker.gpg
@@ -63,6 +65,7 @@ sudo apt-mark hold kubelet kubeadm kubectl
 ---
 
 ### 1.5. Initialize Master Node
+
 ```bash
 sudo kubeadm init --apiserver-advertise-address=<MASTER_PRIVATE_IP> --pod-network-cidr=10.244.0.0/16 --v=5 --ignore-preflight-errors=all
 
@@ -74,6 +77,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ---
 
 ### 1.6. Verify Cluster Status
+
 ```bash
 kubectl get pods -n kube-system
 kubectl get nodes
@@ -83,6 +87,7 @@ curl http://127.0.0.1:10248/healthz
 ---
 
 ### 1.7. Install Calico CNI
+
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/calico.yaml
 ```
@@ -114,14 +119,13 @@ netstat -anp | grep kubelet | grep -iv stream
 ## 2. 📘 Kubernetes Worker Node Setup (AWS Ubuntu)
 
 ### 2.1. Prerequisites
-Ubuntu 24.04 LTS EC2 instances (Workers).
-
-Same VPC and subnet as Master.
-
-Security groups allowing required ports (10250, 30000–32767).
+ - Ubuntu 24.04 LTS EC2 instances (Workers).
+ - Same VPC and subnet as Master.
+ - Security groups allowing required ports (10250, 30000–32767).
 
 ### 2.2. Kernel Modules & Networking
-bash
+
+```bash
 sudo modprobe overlay
 sudo modprobe br_netfilter
 
@@ -137,9 +141,11 @@ net.ipv4.ip_forward = 1
 EOF
 
 sudo sysctl --system
+```
 
 ### 2.3. Install Container Runtime
-bash
+
+```bash
 sudo apt install -y curl gnupg2 software-properties-common apt-transport-https ca-certificates
 sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmour -o /etc/apt/trusted.gpg.d/docker.gpg
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
@@ -150,25 +156,32 @@ containerd config default | sudo tee /etc/containerd/config.toml >/dev/null 2>&1
 sudo sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/config.toml
 sudo systemctl restart containerd
 sudo systemctl enable containerd
+```
 
 ### 2.4. Install Kubernetes Components
-bash
+
+```bash
 echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.30/deb/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.30/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 sudo apt update
 sudo apt install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
+```
 
 ### 2.5. Join Worker Node to Cluster
+
 On the Master node, after kubeadm init, you’ll see a kubeadm join command. Run it on each Worker:
 
-bash
+```bash
 sudo kubeadm join <MASTER_PRIVATE_IP>:6443 --token <TOKEN> \
     --discovery-token-ca-cert-hash sha256:<HASH>
+```
+
 Verify:
 
-bash
+```bash
 kubectl get nodes
+```
 
 ## 3. 📘 Pod Interfaces with Calico CNI
 
