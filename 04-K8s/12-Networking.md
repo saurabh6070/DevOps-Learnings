@@ -165,12 +165,25 @@ kubectl logs weave-net-<pod> -n kube-system | grep ipalloc-range
  - All objects in a namespace are grouped under a subdomain.
  - Services are grouped under svc.
  - Accessing services:
-   Same namespace: curl http://service-name
-   Different namespace: curl http://service-name.namespace-name
-   External: curl http://service-name.namespace-name.svc.cluster.local
+
+   **Same namespace:**
+   ```yaml
+   curl http://service-name
+   ```
+   
+    **Different namespace:** 
+   ```yaml
+   curl http://service-name.namespace-name
+   ```
+   
+    **External:** 
+   ```yaml
+   curl http://service-name.namespace-name.svc.cluster.local
+   ```
+
  - Example:
-Service: job in namespace ola → job.ola.svc.cluster.local
-Pod: testjob in namespace ola → 10-107-37-188.ola.pod.cluster.local
+**Service:** job in namespace ola → job.ola.svc.cluster.local
+**Pod:** testjob in namespace ola → 10-107-37-188.ola.pod.cluster.local
 
 ---
 
