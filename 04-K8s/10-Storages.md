@@ -318,8 +318,84 @@ spec:
  - If an AWS cluster is managed manually, you need to install the CSI drivers as described above. In the case of managed control planes such as EKS, AKS, or GKE, there is no need to install CSI drivers manually, because they are already running in the backend and work without additional setup. - StorageClasses define the type of EBS volume (e.g., gp2, gp3, io1).
  - PVCs request storage from these StorageClasses, and Kubernetes provisions volumes accordingly.
 
+---
 
-## 🗄️ 4. Ceph Storage Integration
+## 📘 4. Kubernetes Storage Provisioning
+
+---
+
+### 4.1. Static Provisioning of Storage
+
+In the first scenario (above example of emptyDir), the cluster administrator manually creates the Persistent Volume (PV) beforehand.
+The administrator defines and provisions the storage resource explicitly.
+After that, the user creates a Persistent Volume Claim (PVC).
+Kubernetes then binds the PVC to an already available PV that matches the requirements.
+
+### ✅ Key Points
+
+- PV creation is manual and done in advance.
+- Storage resources are pre-provisioned by the administrator.
+- PVC simply requests and binds to an existing PV.
+- This approach is called **Static Provisioning** because volumes already exist before they are requested.
+
+---
+
+### 4.2. Dynamic Provisioning of Storage
+
+- In the second scenario (above example of EBS PVC), the administrator does not create any Persistent Volume (PV) manually.
+- The user directly creates a Persistent Volume Claim (PVC).
+- Kubernetes automatically provisions a PV on-demand based on the request.
+- This is made possible through a **StorageClass**, which defines how storage should be dynamically created.
+
+### ✅ Key Points
+
+- No manual PV creation is required.
+- PVC triggers automatic PV provisioning.
+- The StorageClass acts as a template/configuration, specifying:
+  - Provisioner type (e.g., AWS EBS, Azure Disk, etc.)
+  - Storage parameters
+- The dynamically created PV is automatically bound to the PVC.
+
+
+---
+
+## 📘 5. StorageClass and Provisioning Comparison
+
+---
+
+### 5.1. Role of StorageClass
+
+A StorageClass is primarily used in dynamic provisioning.
+It provides Kubernetes with instructions on:
+- Which storage backend to use
+- How to create the storage volume dynamically
+
+Without a StorageClass, dynamic provisioning cannot happen.
+
+---
+
+## 5.2. Comparison: Static vs Dynamic Provisioning
+
+| Aspect                | Static Provisioning                | Dynamic Provisioning               |
+|-----------------------|------------------------------------|-------------------------------------|
+| PV Creation           | Manual (by administrator)          | Automatic (by Kubernetes)           |
+| Storage Timing        | Pre-provisioned                    | On-demand                           |
+| StorageClass Required | No                                 | Yes                                 |
+| Flexibility           | Limited                            | High                                |
+| Operational Effort    | Higher (manual management)         | Lower (automated)                   |
+
+---
+
+## 5.3. Summary
+
+- Static provisioning involves manual creation of storage resources before they are used.
+- Dynamic provisioning automates storage creation using StorageClass, reducing administrative effort and improving scalability.
+- StorageClass is typically defined only when dynamic provisioning is required, as it enables Kubernetes to automatically manage the storage lifecycle.
+
+
+---
+
+## 🗄️ 6. Ceph Storage Integration
 
 ### 🔹 What is Ceph?
  - Ceph is a distributed storage system providing:
@@ -329,7 +405,7 @@ spec:
  - It is highly scalable and fault-tolerant.
 
 
-## 🛠️ 5. Setting up Ceph Cluster in AWS
+## 🛠️ 7. Setting up Ceph Cluster in AWS
  - To use Ceph with Kubernetes:
  - Provision 3 EC2 instances (recommended for quorum).
  - Install Ceph packages (ceph, ceph-mon, ceph-osd, ceph-mgr).
@@ -339,7 +415,7 @@ spec:
 ceph -s
 ```
 
-## 🔄 6. Using Ceph in Kubernetes
+## 🔄 8. Using Ceph in Kubernetes
 
 ### 🔹 Coupling Mode
 PV directly references Ceph storage backend (tight coupling). Pod template specifies Ceph details.
