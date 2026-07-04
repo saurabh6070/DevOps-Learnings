@@ -53,15 +53,15 @@ spec:
       - name: nginx
         image: nginx
         volumeMounts:
-        - name: emptyDirVolume
+        - name: emptydirvolume
           mountPath: /data1
       - name: ubuntu
         image: ubuntu
         volumeMounts:
-        - name: emptyDirVolume
+        - name: emptydirvolume
           mountPath: /data2/
       volumes:
-      - name: emptyDirVolume
+      - name: emptydirvolume
         emptyDir: {}
 ```
 
