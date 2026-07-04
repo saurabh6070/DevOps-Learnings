@@ -1,7 +1,5 @@
 # 🐳 DevSecOps — Container & Docker Security
 
-> **Level:** Intermediate | **Section:** 03 of 08 | **Maintained by:** DevSecOps Learning Series
-
 ---
 
 ## 📑 Table of Contents
@@ -650,14 +648,3 @@ A secure container posture requires multiple overlapping layers. If one layer is
 | 📊 **Image Size Comparison** | Standard ~400 MB → Multi-stage ~80 MB → Distroless ~75 MB |
 
 ---
-
-> **Next Section →** `04-DevSecOps-Kubernetes-Security.md` — Kubernetes RBAC, NetworkPolicies, PodSecurity, OPA/Gatekeeper, secrets management, and EKS hardening
-
----
-
-*📌 References:*
-- *[docs.docker.com/develop/develop-images/multistage-build](https://docs.docker.com/develop/develop-images/multistage-build/)*
-- *[github.com/GoogleContainerTools/distroless](https://github.com/GoogleContainerTools/distroless)*
-- *[aquasecurity.github.io/trivy](https://aquasecurity.github.io/trivy/)*
-- *[github.com/hadolint/hadolint](https://github.com/hadolint/hadolint)*
-- *[docs.docker.com/engine/reference/run/#security-configuration](https://docs.docker.com/engine/reference/run/#security-configuration)*
