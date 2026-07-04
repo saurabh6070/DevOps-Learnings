@@ -52,11 +52,13 @@ spec:
       containers:
       - name: nginx
         image: nginx
+        command: ["sleep", "infinity"]
         volumeMounts:
         - name: emptydirvolume
           mountPath: /data1
       - name: ubuntu
         image: ubuntu
+        command: ["tail", "-f", "/dev/null"]
         volumeMounts:
         - name: emptydirvolume
           mountPath: /data2/
