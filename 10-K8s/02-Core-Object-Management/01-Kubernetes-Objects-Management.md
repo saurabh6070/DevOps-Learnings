@@ -317,6 +317,11 @@ metadata:
 
 # 4. JSON Path Expressions & Custom Columns with kubectl 🆕 (Crucial for fast CKA querying)
 
+kubelet command run on terminal will send request to API-Server and get response from API-Server in JSON-format. kubectl converts the output into tabular format and keeps only relevant information from the output.
+Although using "-o" option, we can get more details but still it will not show all the details. For this JSON Path Queries are used for kubectl.
+JSON Path Queries :- Filter and format the output of kubectl command for easy interpretation of the large data.
+
+
 002 -> How to JSON Path in kubectl 
 		* Identify the kubectl command
 			Ex :- kubectl get pods
