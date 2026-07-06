@@ -13,7 +13,10 @@
 
 
 ## 2. Deployments
-- Create Deployment:  
+- Create Deployment:
+  `kubectl create --help`
+  `kubectl create deployment --help`
+  `kubectl create deployemt mydep --replicas=3 --image=busybox --dry-run=client`
   `kubectl create deployment mydep --image=nginx`
 - Scale Deployment:  
   `kubectl scale deployment mydep --replicas=3`
