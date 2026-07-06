@@ -127,6 +127,12 @@ kubectl get svc
 iptables -L -t nat | grep <service-name>
 ```
 
+In the output, we can relate that any traffic which comes on the IP:port of the Service must be redirected to the IP of the Pod to which the service is mapped with.
+Also, we can get the same result in the file -
+```bash
+cat /var/log/kube-proxy.log
+```
+
  - Proxy modes:
 
 ```bash
@@ -138,7 +144,10 @@ kube-proxy --proxy-mode [userspace | iptables | ipvs]
 
 ```bash
 kube-apiserver --service-cluster-ip-range ipNet
-(Default: 10.0.0.0/24)
+## Default: 10.0.0.0/24
+
+ps aux | grep -i kube-api-server
+## check for the parametr --service-cluster-ip-range in the output
 ```
 
 ---
@@ -158,12 +167,14 @@ kubectl get all --all-namespaces
 kubectl logs weave-net-<pod> -n kube-system | grep ipalloc-range
 ```
 
+The IP-Range allocated to Pods(in kubelet) and IP-Range allocated to Services(in kube-api-server) must no overlap.
+
 ---
 
 ## 🗂️ 7. Namespaces and DNS
 
- - All objects in a namespace are grouped under a subdomain.
- - Services are grouped under svc.
+ - All objects in a namespace are grouped under a subdomain - namespace.
+ - Services are grouped under subdomain - svc.
  - Accessing services:
 
    **Same namespace:**
@@ -191,7 +202,12 @@ kubectl logs weave-net-<pod> -n kube-system | grep ipalloc-range
 
  - Before v1.12 → kube-dns. After v1.12 → CoreDNS.
  - CoreDNS runs as a Deployment with 2 Pods.
- - Config file: /etc/coredns/Corefile (mounted via ConfigMap).
+ - Config file: /etc/coredns/Corefile (mounted via ConfigMap). To check root domain/zone configured in CoreDNS :-
+```bash
+kubectl get pod -n kube-system | grep -i dns
+kubectl get cm -n kube-system | grep -i dns
+kubectl describe cm coredns-enfu2d -n kube-system
+```
  - Every record falls under domain cluster.local.
  - CoreDNS service (kube-dns) IP is automatically added to /etc/resolv.conf of Pods.
  - Check DNS resolution:
