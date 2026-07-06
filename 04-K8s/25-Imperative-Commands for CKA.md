@@ -55,10 +55,10 @@
     nodeName: node01
 
 - Taint Node:
-kubectl taint nodes node01 key=value:NoSchedule
+`kubectl taint nodes node01 key=value:NoSchedule`
 
 - Remove Taint:
-kubectl taint nodes node01 key=value:NoSchedule-
+`kubectl taint nodes node01 key=value:NoSchedule-`
 
 ## 7. Resource Management
 - Set Resource Requests/Limits in Pod:
@@ -73,45 +73,45 @@ kubectl taint nodes node01 key=value:NoSchedule-
   	  memory: "256Mi"
 ## 8. DaemonSets
 - Create DaemonSet from Deployment YAML:
-kubectl create deployment myds --image=nginx --dry-run=client -o yaml > ds.yaml  
+`kubectl create deployment myds --image=nginx --dry-run=client -o yaml > ds.yaml` 
 (then change kind: Deployment → kind: DaemonSet)
 
 ## 9. Jobs & CronJobs
 - Create Job:
-kubectl create job myjob --image=busybox -- sleep 10
+`kubectl create job myjob --image=busybox -- sleep 10`
 
 - Create CronJob:
-kubectl create cronjob mycj --image=busybox --schedule="*/1 * * * *" -- sleep 10
+`kubectl create cronjob mycj --image=busybox --schedule="*/1 * * * *" -- sleep 10`
 
 ## 10. Rollouts
 - Check Rollout Status:
-kubectl rollout status deployment/mydep
+`kubectl rollout status deployment/mydep`
 
 - Undo Rollout:
-kubectl rollout undo deployment/mydep
+`kubectl rollout undo deployment/mydep`
 
 - Set New Image:
-kubectl set image deployment/mydep nginx=nginx:1.19
+`kubectl set image deployment/mydep nginx=nginx:1.19`
 
 ## 11. Node Maintenance
 - Drain Node:
-kubectl drain node01 --ignore-daemonsets --force
+`kubectl drain node01 --ignore-daemonsets --force`
 
 - Cordon Node:
-kubectl cordon node01
+`kubectl cordon node01`
 
 - Uncordon Node:
-kubectl uncordon node01
+`kubectl uncordon node01`
 
 ## 12. Debugging
 - Describe Pod:
-kubectl describe pod mypod
+`kubectl describe pod mypod`
 
 - Logs:
-kubectl logs mypod
+`kubectl logs mypod`
 
 - Exec into Pod:
-kubectl exec -it mypod -- /bin/sh
+`kubectl exec -it mypod -- /bin/sh`
 
 - Events:
-kubectl get events -o wide
+`kubectl get events -o wide`
