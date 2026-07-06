@@ -13,11 +13,14 @@
 
 
 ## 2. Deployments
+
 - Create Deployment:
-  `kubectl create --help`
-  `kubectl create deployment --help`
-  `kubectl create deployemt mydep --replicas=3 --image=busybox --dry-run=client`
-  `kubectl create deployment mydep --image=nginx`
+  ```
+  kubectl create --help
+  kubectl create deployment --help
+  kubectl create deployemt mydep --replicas=3 --image=busybox --dry-run=client
+  kubectl create deployment mydep --image=nginx
+  ```
 - Scale Deployment:  
   `kubectl scale deployment mydep --replicas=3`
 - Export Deployment YAML:  
@@ -54,10 +57,10 @@
   spec:
     nodeName: node01
 
-- Taint Node:
+- Taint Node:  
   `kubectl taint nodes node01 key=value:NoSchedule`
 
-- Remove Taint:
+- Remove Taint:  
   `kubectl taint nodes node01 key=value:NoSchedule-`
 
 ## 7. Resource Management
@@ -72,46 +75,46 @@
   	  cpu: "200m"
   	  memory: "256Mi"
 ## 8. DaemonSets
-- Create DaemonSet from Deployment YAML:
+- Create DaemonSet from Deployment YAML:  
   `kubectl create deployment myds --image=nginx --dry-run=client -o yaml > ds.yaml` 
 (then change kind: Deployment → kind: DaemonSet)
 
 ## 9. Jobs & CronJobs
-- Create Job:
+- Create Job:  
   `kubectl create job myjob --image=busybox -- sleep 10`
 
-- Create CronJob:
+- Create CronJob:  
   `kubectl create cronjob mycj --image=busybox --schedule="*/1 * * * *" -- sleep 10`
 
 ## 10. Rollouts
-- Check Rollout Status:
+- Check Rollout Status:  
   `kubectl rollout status deployment/mydep`
 
-- Undo Rollout:
+- Undo Rollout:  
   `kubectl rollout undo deployment/mydep`
 
-- Set New Image:
+- Set New Image:  
   `kubectl set image deployment/mydep nginx=nginx:1.19`
 
 ## 11. Node Maintenance
-- Drain Node:
+- Drain Node:  
   `kubectl drain node01 --ignore-daemonsets --force`
 
-- Cordon Node:
+- Cordon Node:  
   `kubectl cordon node01`
 
-- Uncordon Node:
+- Uncordon Node:  
   `kubectl uncordon node01`
 
 ## 12. Debugging
-- Describe Pod:
+- Describe Pod:  
   `kubectl describe pod mypod`
 
-- Logs:
+- Logs:  
   `kubectl logs mypod`
 
-- Exec into Pod:
+- Exec into Pod:  
   `kubectl exec -it mypod -- /bin/sh`
 
-- Events:
+- Events:  
   `kubectl get events -o wide`
