@@ -839,6 +839,11 @@ metadata:
 
 Kubernetes API is **versioned** to allow evolution without breaking existing clients.
 
+In Linux, there’s a well-known saying: “Everything in Linux is a file.”  
+In Kubernetes, a similar idea applies: “Everything in Kubernetes is an API.”
+Here, API refers to the API version you declare in your YAML manifests.
+To explore what’s available, you can list all API versions and resources with below commands :
+
 **API version stages:**
 
 | Stage | Stability | Example |
