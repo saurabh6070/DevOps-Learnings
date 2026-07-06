@@ -1,6 +1,6 @@
-## 4. Core Kubernetes Objects
+## 1. Core Kubernetes Objects
 
-### 4.1 Object Model: Spec & Status
+### 1.1 Object Model: Spec & Status
 
 Every Kubernetes resource is an **object** — a persistent record of intent stored in etcd. All objects share the same fundamental model:
 
@@ -21,7 +21,7 @@ Status shows 2 Pods running
 
 ---
 
-### 4.2 Defining Objects — YAML Manifests
+### 1.2 Defining Objects — YAML Manifests
 
 Objects are declared in YAML (or JSON) and submitted to the API server. This is the **declarative** approach — you describe what you want, Kubernetes figures out how to achieve it.
 
@@ -69,7 +69,7 @@ kubectl apply -f https://k8s.io/examples/application/deployment.yaml
 
 ---
 
-### 4.3 Required Fields in Every Manifest
+### 1.3 Required Fields in Every Manifest
 
 Every Kubernetes object manifest must include these four fields:
 
@@ -90,7 +90,7 @@ kubectl explain deployment.spec  # deep-dive into any field
 
 ---
 
-### 4.4 Server-Side Field Validation
+### 1.4 Server-Side Field Validation
 
 Introduced in **Kubernetes v1.25**, server-side validation catches errors before they cause problems.
 
@@ -112,11 +112,11 @@ kubectl apply -f manifest.yaml --validate=warn
 
 ---
 
-## 5. Object Management Techniques
+## 2. Object Management Techniques
 
 There are three ways to manage Kubernetes objects. Choose based on your team's workflow.
 
-### 5.1 Imperative Commands
+### 2.1 Imperative Commands
 
 Run operations directly — no manifest files required.
 
@@ -139,7 +139,7 @@ kubectl delete deployment nginx
 
 ---
 
-### 5.2 Imperative Object Configuration
+### 2.2 Imperative Object Configuration
 
 Work with manifest files, but use imperative commands (`create`, `replace`, `delete`).
 
@@ -154,7 +154,7 @@ kubectl delete -f nginx.yaml
 
 ---
 
-### 5.3 Declarative Object Configuration
+### 2.3 Declarative Object Configuration
 
 The **recommended production approach.** Apply a directory of manifests; Kubernetes figures out what to create, update, or delete.
 
@@ -174,9 +174,9 @@ kubectl apply -R -f configs/
 
 ---
 
-## 6. Naming, Labeling & Organizing Objects
+## 3. Naming, Labeling & Organizing Objects
 
-### 6.1 Names and UIDs
+### 3.1 Names and UIDs
 
 Every object has:
 - **Name** — unique within a namespace for a given resource type (e.g., two Pods can't both be named `my-pod` in the same namespace)
@@ -198,7 +198,7 @@ metadata:
 
 ---
 
-### 6.2 Labels and Selectors
+### 3.2 Labels and Selectors
 
 **Labels** are key/value pairs attached to objects. They are the primary way to organize and select groups of objects.
 
@@ -230,7 +230,7 @@ Used internally by: `Services`, `Deployments`, `ReplicaSets`, `NetworkPolicies`,
 
 ---
 
-### 6.3 Namespaces
+### 3.3 Namespaces
 
 Namespaces provide **virtual cluster isolation** within a physical cluster. They're ideal for:
 - Separating environments (dev / staging / prod) on one cluster
@@ -266,7 +266,7 @@ kubectl api-resources --namespaced=false
 
 ---
 
-### 6.4 Field Selectors
+### 3.4 Field Selectors
 
 Filter objects based on the **values of resource fields** (not labels).
 
@@ -288,7 +288,7 @@ kubectl get pods,services --field-selector metadata.namespace=default
 
 ---
 
-### 6.5 Annotations
+### 3.5 Annotations
 
 Annotations attach **arbitrary, non-identifying metadata** to objects. Unlike labels, annotations are not used for selection — they carry richer, unstructured information.
 
@@ -313,3 +313,276 @@ metadata:
 - `kubectl rollout history` uses the `change-cause` annotation for rollout records
 
 ---
+
+
+# 4. JSON Path Expressions & Custom Columns with kubectl 🆕 (Crucial for fast CKA querying)
+
+002 -> How to JSON Path in kubectl 
+		* Identify the kubectl command
+			Ex :- kubectl get pods
+		* Familiarize with JSON output
+			Ex :- kubectl get pods -o json
+		* From the JSON Path query
+			Ex :- .items[0].spec.containers[0].image
+		* Use the JSON Path query with kubectl command
+			Ex :- kuebctl get pods -o=jsonpath='{ .items[0].spec.containers[0].image }'
+
+003 -> JSON Path Queries :-
+		* kubectl get nodes -o=jsonpath='{ .items[*].metadata.name }'
+		Output :- Node names in the cluster
+		* kubectl get nodes -o=jsonpath='{ .items[*].status.nodeInfo.architecture }'
+		Output :- Hardware architecture of each node in the cluster. (amd64)
+		* kubectl get nodes -o=jsonpath='{ .items[*].status.capacity.cpu }'
+		Output :- CPU capacity of each node in the cluster.
+		* kubectl get nodes -o=jsonpath='{ .items[*].metadata.name } { .items[*].status.capacity.cpu }'
+		Output :- Node Name, CPU capacity of each node in the cluster. (data not understandable yet)
+		* kubectl get nodes -o=jsonpath='{ .items[*].metadata.name } { "\n" } { .items[*].status.capacity.cpu }'
+		Output :- Node Name, CPU capacity of each node in the cluster.
+		* kubectl get nodes -o=custom-columns=NODE:.metadata.name
+		Output :- Node names in the cluster in tabular format.
+		* kubectl get nodes -o=custom-columns=NODE:.metadata.name ,CPU:.metadata.status.capacity.cpu
+		Output :- Node Name, CPU capacity of each node in the cluster in tabular format.
+		
+004 -> Sorting in kubectl
+		* kubectl get nodes --sort-by=.metadata.name
+		
+005 -> Listing using loop :-
+		* kubectl get nodes -o=jsonpath='{range .items[*]} {.metadata.name} {"\t"} {.status.capacity.cpu} {"\n"} {end}'
+		Output :- Node Name, CPU capacity of each node in the cluster in tabular format.
+
+
+
+
+---
+
+# 5. Storage Versions & API Versioning(v1, apps/v1, CRDs API groups)
+ Storage Versions & API Versioning
+
+Kubernetes API is **versioned** to allow evolution without breaking existing clients.
+
+In Linux, there’s a well-known saying: “Everything in Linux is a file.”  
+In Kubernetes, a similar idea applies: “Everything in Kubernetes is an API.”
+Here, API refers to the API version you declare in your YAML manifests.
+To explore what’s available, you can list all API versions and resources with below commands :
+
+**API version stages:**
+
+| Stage | Stability | Example |
+|---|---|---|
+| `v1` | Stable / GA | `core/v1` (Pods, Services) |
+| `v1beta1` | Beta — mostly stable | `apps/v1beta1` |
+| `v1alpha1` | Alpha — may change | `policy/v1alpha1` |
+
+**API Groups:**
+
+```bash
+kubectl api-versions    # Lists all available API versions
+kubectl api-resources   # Lists all resource types with their API groups
+```
+
+Common groups:
+
+```
+core             → pods, services, configmaps, secrets (no group prefix)
+apps/v1          → deployments, statefulsets, daemonsets, replicasets
+batch/v1         → jobs, cronjobs
+networking.k8s.io/v1  → ingresses, networkpolicies
+rbac.authorization.k8s.io/v1 → roles, clusterroles
+```
+
+**Storage Versions in etcd:**
+- Objects are stored in etcd using a designated **storage version**
+- When you use an older API version, the API server transparently converts it to the storage version
+- Important for: encryption at rest, API migrations, and CRD versioning
+
+For Custom Resource Definitions (CRDs), you must declare a storage version:
+
+```yaml
+versions:
+- name: v1
+  served: true
+  storage: true    # ← only one version can be the storage version
+- name: v1beta1
+  served: true
+  storage: false
+```
+
+---
+
+# 6. Object Relationships & Lifecycle Control
+
+### 6.1 Finalizers
+
+Finalizers are **pre-deletion hooks** that prevent an object from being deleted until cleanup is complete.
+
+How they work:
+1. You (or a controller) add a finalizer key to `metadata.finalizers`
+2. When you delete the object, Kubernetes sets `metadata.deletionTimestamp` instead of deleting immediately
+3. The responsible controller performs cleanup, then removes the finalizer key
+4. Once `metadata.finalizers` is empty, the object is deleted
+
+```yaml
+metadata:
+  finalizers:
+  - kubernetes.io/pv-protection   # Prevents PV deletion while in use
+  - storage.company.com/cleanup   # Custom finalizer for external storage cleanup
+```
+
+> ⚠️ If a controller that manages a finalizer crashes, objects can get stuck in `Terminating`. You can force-remove finalizers, but only after verifying cleanup is safe:
+> ```bash
+> kubectl patch pvc my-pvc -p '{"metadata":{"finalizers":null}}'
+> ```
+
+---
+
+### 6.2 Owners and Dependents
+
+Kubernetes tracks parent-child relationships between objects via `ownerReferences`.
+
+```
+Deployment → owns → ReplicaSet → owns → Pods
+```
+
+```yaml
+# Automatically set by controllers — you rarely write this manually
+metadata:
+  ownerReferences:
+  - apiVersion: apps/v1
+    kind: ReplicaSet
+    name: nginx-rs-abc123
+    uid: d9607e19-f88f-11e6-a518-42010a800195
+    controller: true
+    blockOwnerDeletion: true
+```
+
+**Garbage Collection Policies:**
+
+| Policy | Behavior | When to use |
+|---|---|---|
+| **Foreground** | Owner stays until all dependents are deleted | Ensure clean teardown |
+| **Background** | Owner deleted immediately; dependents removed async | Faster deletion |
+| **Orphan** | Dependents are kept after owner deletion | Reuse Pods after ReplicaSet deletion |
+
+```bash
+# Delete with explicit policy
+kubectl delete deployment nginx --cascade=foreground
+kubectl delete deployment nginx --cascade=orphan
+```
+
+---
+
+### 6.3 Recommended Labels
+
+The `app.kubernetes.io/` label prefix is a **community standard** for tooling interoperability (Helm, dashboards, operators all recognize these).
+
+| Label | Description | Example Value |
+|---|---|---|
+| `app.kubernetes.io/name` | Application name | `mysql` |
+| `app.kubernetes.io/instance` | Unique release instance | `mysql-production` |
+| `app.kubernetes.io/version` | Application version | `8.0.32` |
+| `app.kubernetes.io/component` | Component within an app | `database`, `cache`, `frontend` |
+| `app.kubernetes.io/part-of` | Higher-level application | `wordpress` |
+| `app.kubernetes.io/managed-by` | Tool managing this object | `helm`, `argocd` |
+
+```yaml
+metadata:
+  labels:
+    app.kubernetes.io/name: mysql
+    app.kubernetes.io/instance: mysql-production
+    app.kubernetes.io/version: "8.0.32"
+    app.kubernetes.io/component: database
+    app.kubernetes.io/part-of: wordpress
+    app.kubernetes.io/managed-by: helm
+```
+
+### 6.4 Probes: Liveness, Readiness, Startup
+
+
+---
+
+
+
+
+
+## 7. The Kubernetes Philosophy
+
+Understanding how Kubernetes *thinks* makes you a better operator.
+
+> **Linux says:** *"Everything is a file."*  
+> **Kubernetes says:** *"Everything is an API."*
+
+Every resource in Kubernetes — Pods, Services, Deployments, Secrets, even Nodes — is an **API object** with a versioned schema. This consistency means:
+
+- One unified way to create, read, update, and delete any resource (`kubectl`)
+- Declarative configuration works identically for all resource types
+- Custom resources (CRDs) get the same API treatment as built-in types
+- Everything is observable, auditable, and automatable
+
+The **control loop** pattern is equally fundamental:
+
+```
+Watch → Analyze → Act → Repeat
+```
+
+Every controller in Kubernetes (and every well-written Operator) follows this loop. This is why Kubernetes is so resilient — there's always something watching and correcting drift.
+
+---
+
+## 8. Essential kubectl Commands
+
+```bash
+# ── Cluster Exploration ──────────────────────────────────────
+kubectl cluster-info                        # View cluster endpoint
+kubectl get nodes                           # List all nodes
+kubectl describe node <node-name>           # Detailed node info
+kubectl top nodes                           # CPU/memory usage per node
+
+# ── API Discovery ─────────────────────────────────────────────
+kubectl api-versions                        # List all API versions
+kubectl api-resources                       # List all resource types
+kubectl explain pod.spec.containers         # Deep-dive into any field
+
+# ── Working with Pods ─────────────────────────────────────────
+kubectl get pods -A                         # All pods across all namespaces
+kubectl get pods -n kube-system             # Pods in kube-system namespace
+kubectl get pods -o wide                    # Shows node assignment + IPs
+kubectl describe pod <pod-name>             # Full pod details + events
+kubectl logs <pod-name> -c <container>      # Container logs
+kubectl exec -it <pod-name> -- /bin/bash    # Shell into a container
+
+# ── Deployments ───────────────────────────────────────────────
+kubectl rollout status deployment/my-app    # Watch rollout progress
+kubectl rollout history deployment/my-app   # View rollout history
+kubectl rollout undo deployment/my-app      # Roll back to previous version
+
+# ── Object Management ─────────────────────────────────────────
+kubectl apply -f manifest.yaml              # Create or update
+kubectl delete -f manifest.yaml             # Delete from manifest
+kubectl diff -f manifest.yaml               # Preview changes
+kubectl get all -n <namespace>              # All resources in namespace
+
+# ── Labels & Selectors ────────────────────────────────────────
+kubectl get pods -l app=nginx               # Filter by label
+kubectl label pod my-pod env=staging        # Add a label
+kubectl annotate pod my-pod owner=team-a    # Add an annotation
+```
+
+---
+
+## 9. Summary
+
+Here's what you've covered so far :
+
+| Topic | Key Takeaway |
+|---|---|
+| **What is K8s** | Open-source orchestrator for containers; manages deployment, scaling, healing |
+| **Control Plane** | API server, etcd, scheduler, and controller manager — the brain of the cluster |
+| **Worker Nodes** | kubelet + kube-proxy + container runtime — where your apps actually run |
+| **Containers** | Packaged in Pods; share network + storage; managed by kubelet via CRI |
+| **Object Model** | Spec (desired) vs Status (actual); controllers close the gap |
+| **Manifests** | YAML files with apiVersion, kind, metadata, spec — submitted via `kubectl apply` |
+| **Labels** | Key/value tags for organizing and selecting objects |
+| **Namespaces** | Virtual isolation within a cluster — for teams, environments, or RBAC |
+| **Finalizers** | Pre-deletion hooks to ensure safe cleanup |
+| **API Versioning** | Stable/beta/alpha; all resources are versioned API objects |
+| **Philosophy** | Everything is an API; control loops reconcile desired vs actual state |
