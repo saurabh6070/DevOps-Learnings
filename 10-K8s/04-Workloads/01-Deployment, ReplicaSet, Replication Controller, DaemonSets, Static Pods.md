@@ -38,3 +38,46 @@ Metadata is data about data. Name and label of any K8 Object are present in Meta
 
 002 -> DaemonSet, ReplicaSet are very similar in Yaml Definition File. Only one change is the kind.
 
+
+
+
+001 -> DaemonSets are the object which gets created as a single Pod in all the Nodes which are added in the K8 cluster and removes the Pods from the Nodes which are removed from the K8 Cluster.
+These Pods can be used for Log-Capture, Monitoring.
+Example :- kube-proxy, kube-flannel, Weavenet (for Networking).
+
+002 --> Post K8 v1.12, it uses deafult-scheduler, Node-Affinity to deploy Daemon-Set Pods in each node.
+
+003 ->  kubectl get daemonsets
+		kubectl get ds -n kube-system
+
+
+001 -> kubectl create deployment elasticsearch -n kube-system --image=k8s.gcr.io/fluentd-elasticsearch:1.20 --dry-run=client -o yaml > fluentd.yaml
+		then edit this file and change the kind from Deployment to DaemonSets. The structure of Daemon-Set and Deployment is same.
+
+
+001 -> Static Pods are the Pods which gets created automatically by kubelet when the yml files of these Pods are placed in the Pod-Manifest-Path of kubelet. Generally path is :- /etc/kubernetes/manifests .
+To know the path, in Master-Node run :-
+			cat /var/lib/kubelet/config.yml | grep staticPodPath
+All the yml files for Pod only (Not applicable to Deployment, ReplicaSet, etc) will get created, if it is placed in this path. To create these Pods in the Worker, kubelet of this worker don't even need API-Server, Scheduler, ETCD, Controller.
+
+002 -> ETCD, API-Server, Controller-Manager, Scheduler etc are types of Static-Pods.
+
+
+003 -> Static-Pods created by Kubelet whereas Daemon-Sets created by Kube API-Server (DaemonSet Controller)
+Static Pods deploy control plane components whereas DaemonSets deploy Monitoring Agents, Logging Agents on Nodes.
+Both of them ignored by kube-scheduler.
+Static Pods gets deployed on Control=Plane/Master-Node. Daemon-Sets gets deployed on all Nodes ncluding Master and Worker.
+The spec of a static Pod cannot refer to other API objects (e.g., ServiceAccount, ConfigMap, Secret, etc).
+Static pods do not support ephemeral containers.
+
+004 -> To create Static Pods :-
+kubectl run static-busybox --image=nginx --dry-run=client -o yaml --command -- sleep 1000 > /etc/kubernetes/manifests/staticpod.yaml
+
+
+005 -> File Name for Static Pods :- cat /var/lib/kubelet/config.yaml | staticPodPath
+This path can be different for each node in a cluster. So, this way we can add any specific static POD for any node.
+
+
+001 -> kubectl run static-busybox --image=busybox --restart=Never --dry-run=client -o yaml --commmand -- sleep 1000
+(Command should be in the end always)
+
