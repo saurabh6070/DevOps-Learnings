@@ -576,6 +576,16 @@ Every controller in Kubernetes (and every well-written Operator) follows this lo
 ## 8. Essential kubectl Commands
 
 ```bash
+
+001 -> Run following commands :-
+			alias k=kubectl
+			complete -F __start_kubectl k				###### (Enable Autocompletion for short form of kubectl to k)
+
+002 -> To enable Autocompletion using :-
+			source <(kubectl completion bash)
+
+
+
 # ── Cluster Exploration ──────────────────────────────────────
 kubectl cluster-info                        # View cluster endpoint
 kubectl get nodes                           # List all nodes
