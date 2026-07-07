@@ -245,6 +245,14 @@ Namespaces provide **virtual cluster isolation** within a physical cluster. They
 - Multi-team isolation with RBAC and ResourceQuotas
 - Avoiding naming conflicts across teams
 
+
+001 -> Change default namespace
+			kubectl config --help
+			kubectl config set-context --help
+			kubectl config set-context --current --namespace=alpha-ns
+			
+
+
 **Default namespaces:**
 
 | Namespace | Purpose |
