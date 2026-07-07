@@ -81,3 +81,34 @@ This path can be different for each node in a cluster. So, this way we can add a
 001 -> kubectl run static-busybox --image=busybox --restart=Never --dry-run=client -o yaml --commmand -- sleep 1000
 (Command should be in the end always)
 
+
+
+
+Deployment :-
+9. 001 -> Rollout Status
+		kubectl get deploy
+		kubectl rollout status deployment/myapp-deployment
+		kubectl rollout history deployment/myapp-deployment
+		
+002 -> Deployment Strategy :-
+			* Recreate
+					-> Delete all Older Pods, then create Pods with new image
+					-> Application experience Down-time
+			* Rolling-Update
+					-> Delete pods one-by-one while creating Pods with the new image at the same time.
+					-> Application don't experience downtime.
+					-> In this case, new replica-set is created where the number of pods in the new replica-set is increaing one-by-one and at the same time number of pods in old-replica-set is decreasing one-by-one.
+					-> Check parameters to set in sepc of deployment for Rolling-Update
+
+003 -> To check deployment strategy :-
+		kubectl describe deploy myapps | grep -i strategyType
+
+004 -> To rollout a change :-
+		kubectl get deploy
+		kubectl rollout undo deploymentName
+		kubectl get replicasets
+		
+		
+005 -> To set new image to Deployment Object :-
+		kubectl set image deployment/Dep_name container_name=new_image_name
+		kubectl set image deployment/myapp-deployment nginx=nginx:1.9.1
