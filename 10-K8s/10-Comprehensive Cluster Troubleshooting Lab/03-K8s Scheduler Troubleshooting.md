@@ -21,3 +21,14 @@ One method is given above to change in the yaml file in case of scheduler not wo
 Another method is the curl command which can schedule the pod to a node, given that the node is in already in Pending state because of Scheduler not working properly.
 	Curl Command :-
 		curl --header "Content-Type:application/json" --request POST --data '{"apiVersion":"v1", "kind": "Binding", ....}' http://$SERVER/api/vi/namspaces/default/$PODNAME/binding/
+
+
+
+
+001 -> Multiple schedulers can be created in Master using YAMl file. Take reference from this lecture to create Scheduler. In the Pod YAML file, give the name of the new scheduler instead of default-scheduler to schedule for testing.
+
+
+002 -> kubectl get events -o wide
+
+003 -> To view the scheduler logs, 
+kubectl logs my-scheduler -n kube-system
