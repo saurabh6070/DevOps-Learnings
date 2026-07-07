@@ -224,6 +224,14 @@ kubectl get pods -l 'version notin (1.0, 1.1)'
 # Existence check
 kubectl get pods -l 'canary'          # label exists
 kubectl get pods -l '!canary'         # label does not exist
+
+
+## If we want to remove heading in output of list pods :-
+kubectl get pods --selector 'version notin (1.0, 1.1)' --no-headers | wc -l
+
+## To list pods with all labels :-
+kubectl get all --selector environment=production,tier=backend
+
 ```
 
 Used internally by: `Services`, `Deployments`, `ReplicaSets`, `NetworkPolicies`, `PodAffinity` rules.
