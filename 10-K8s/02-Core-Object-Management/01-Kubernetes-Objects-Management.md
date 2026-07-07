@@ -116,6 +116,30 @@ kubectl apply -f manifest.yaml --validate=warn
 
 There are three ways to manage Kubernetes objects. Choose based on your team's workflow.
 
+001 -> Sample Pod file for Commands and Arguments :-
+			-> spec:
+				 containers:
+				 - name: test
+				   image: ubuntu
+				   command: [ "sleeep 5000" ]
+OR				   command: [ "sleep","5000" ]
+OR				   command: [ "sleep" ]
+				   args: [ "5000" ]
+OR				   command:
+				   - "sleep"
+				   - "5000"
+
+
+
+
+
+
+001 -> To deploy any object :-
+* Impeartive Method :- Using command to deploy POD or any other resource
+* Declarative Method :- Using yaml file to deploy POD or any other resource
+
+
+
 ### 2.1 Imperative Commands
 
 Run operations directly — no manifest files required.
