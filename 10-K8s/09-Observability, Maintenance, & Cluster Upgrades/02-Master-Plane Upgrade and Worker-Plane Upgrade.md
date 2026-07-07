@@ -72,3 +72,9 @@ Add total number of Deployment Object + ReplicaSet Object , etc (but not add POD
 
 006 -> To check what can be the latest version to upgrade for kubeadm :-
 sudo kubeadm upgrade plan
+
+
+
+002 -> Backup of Resource Configs :-
+kubectl get all --all-namespaces -o yaml > Backup_all_namepsaces.yaml
+
