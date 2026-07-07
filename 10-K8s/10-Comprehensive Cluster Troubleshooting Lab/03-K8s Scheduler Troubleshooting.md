@@ -32,3 +32,8 @@ Another method is the curl command which can schedule the pod to a node, given t
 
 003 -> To view the scheduler logs, 
 kubectl logs my-scheduler -n kube-system
+
+
+
+003 -> If the issue is that POD is not being assigned any Node, then issue can be in the Scheduler. Since, it is a static POD, check the yml file of scheduler in /etc/kubernetes/manifests/
+If the issue is that POD is not scaling to desired replica, then issue can be in the Controller-Manager. Since, it is a static POD, check the yml file of Controller-Manager in /etc/kubernetes/manifests/
