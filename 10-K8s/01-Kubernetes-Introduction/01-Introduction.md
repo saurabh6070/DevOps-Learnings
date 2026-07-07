@@ -165,6 +165,19 @@ The **primary agent** on each node. It communicates with the API server and ensu
 
 > The kubelet does NOT manage containers it did not create via Kubernetes (e.g., containers started with plain `docker run`).
 
+
+001 -> Kube API-Server talks to kubelet of each Worker.
+	Incase, if we got multiple Masters, then to which Kube API-Server Kubelet talks to.
+	Kube API-Server works in Active-Active mode and processes the request coming from kubelet independently.
+	In case of multiple Kube API-Server, Load Balancer is created on top of these Kube API-Server to balance traffic.
+	
+002 -> Controller-Manager, Kube-Scheduler works in Active-Standby mode in case of multiple masters. Leader election is conducted among all the Controller/Scehduler and it is checked every 15s which should be elected the Leader.
+
+003 -> ETCD works in Active-Active mode.
+	The placement of ETCD-Server can be on the same set of Master-Nodes on which the other control-plan components are deployed or on the different set of Master-Nodes.
+	Sice ETCD only talks with Kube API-Server, the IP-Address of ETCD is passed as an argument while setting up kubeadm.
+
+
 ---
 
 #### 🔹 kube-proxy
