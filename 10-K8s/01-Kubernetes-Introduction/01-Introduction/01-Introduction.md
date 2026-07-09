@@ -1,6 +1,8 @@
-# Kubernetes Notes
+# 📘 Kubernetes — Introduction: Architecture & Functions
 
-## Table of Contents
+---
+
+## 📑 Table of Contents
 
 - [☸️ 1. What is Kubernetes?](#1-what-is-kubernetes)
   - [🧩 1.1 The Problem it Solves](#11-the-problem-it-solves)
