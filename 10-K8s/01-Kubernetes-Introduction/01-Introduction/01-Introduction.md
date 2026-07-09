@@ -71,12 +71,9 @@ A Kubernetes cluster is made up of two logical layers:
 - **Control Plane** — the brain; makes decisions, stores state, manages the cluster
 - **Worker Nodes** — the muscle; run your actual containerized applications inside Pods
 
-```
 
 <img width="533" height="411" alt="k8s" src="https://github.com/user-attachments/assets/6587e70a-2d96-4c70-93e2-0ea597c41f14" />
 
-
-```
 
 ---
 
