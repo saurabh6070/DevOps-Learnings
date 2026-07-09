@@ -1,8 +1,8 @@
-# Docker Storage & Kubernetes Interfaces
+# 🐳 Docker Storage & Kubernetes Interfaces
 
 ---
 
-## 1. Docker Drivers
+## 🔌 1. Docker Drivers
 
 Docker uses two types of drivers to manage how data is stored and accessed:
 
@@ -11,7 +11,7 @@ Docker uses two types of drivers to manage how data is stored and accessed:
 
 ---
 
-## 2. Docker Filesystem Layout
+## 📁 2. Docker Filesystem Layout
 
 Docker's core filesystem lives at:
 
@@ -25,9 +25,9 @@ Docker's core filesystem lives at:
 
 ---
 
-## 3. Image Layers
+## 🧱 3. Image Layers
 
-### 3.1 Layered Architecture
+### 3.1 📚 Layered Architecture
 
 Docker stores images using a **layered architecture**. When a new image is pushed, Docker checks whether any of its layers already match existing layers on the system. Only the new/upper layers that don't already exist are stored.
 
@@ -36,7 +36,7 @@ Docker stores images using a **layered architecture**. When a new image is pushe
 - Reduced storage usage
 - Greater overall efficiency
 
-### 3.2 Read/Write Permissions
+### 3.2 🔒 Read/Write Permissions
 
 | Layer Type | Access |
 |---|---|
@@ -45,9 +45,9 @@ Docker stores images using a **layered architecture**. When a new image is pushe
 
 ---
 
-## 4. Mounting Data into Containers
+## 💾 4. Mounting Data into Containers
 
-### 4.1 Volume Mount
+### 4.1 📦 Volume Mount
 
 Mounting a volume created under `/var/lib/docker/volumes/` into a container is called a **Volume Mount**.
 
@@ -65,7 +65,7 @@ docker run -v data_volume:/var/lib/mysql mysql
 
 > 💡 **Note:** Step 1 isn't strictly necessary — if the volume doesn't exist, Step 2 creates it automatically.
 
-### 4.2 Bind Mount
+### 4.2 🔗 Bind Mount
 
 Mounting any host path **other than** `/var/lib/docker/volumes/` into a container is called a **Bind Mount**.
 
@@ -82,7 +82,7 @@ docker run --mount type=bind,source=/data/mysql,target=/var/lib/mysql mysql
 
 ---
 
-## 5. Storage Drivers
+## 🗄️ 5. Storage Drivers
 
 Docker uses storage drivers to manage the layered image architecture.
 
@@ -93,25 +93,25 @@ Docker uses storage drivers to manage the layered image architecture.
 
 ---
 
-## 6. Volume Drivers
+## 🧩 6. Volume Drivers
 
-### 6.1 Examples
+### 6.1 📋 Examples
 
 `Local` · `Convoy` · `gce-docker` · `Portworx` · `Azure File Storage` · `NetApp` · `RexRay`
 
-### 6.2 Mounting an AWS EBS Volume
+### 6.2 ☁️ Mounting an AWS EBS Volume
 
 ```bash
 docker run -it --name mysql --volume-driver rexray/ebs --mount src=ebs-vol,target=/var/lib/mysql mysql
 ```
 
-### 6.3 Driver Selection
+### 6.3 ⚙️ Driver Selection
 
 > 💡 **Note:** By default, Docker automatically picks the best available **storage driver** if none is specified. To use a specific **volume driver** instead, it must be explicitly declared using the `--volume-driver` flag.
 
 ---
 
-## 7. Kubernetes Interfaces
+## ☸️ 7. Kubernetes Interfaces
 
 Kubernetes uses three interfaces to extend support for different backends:
 
@@ -123,7 +123,7 @@ Kubernetes uses three interfaces to extend support for different backends:
 
 ---
 
-## 8. CSI Communication Flow
+## 🔄 8. CSI Communication Flow
 
 Kubernetes (via CSI) communicates with storage drivers using **Remote Procedure Calls (RPCs)** to perform operations on remote storage:
 
