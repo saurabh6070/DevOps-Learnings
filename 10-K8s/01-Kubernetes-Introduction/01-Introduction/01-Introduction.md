@@ -4,11 +4,11 @@
 
 ## 📑 Table of Contents
 
-- ☸️ 1. [What is Kubernetes?](#what-is-kubernetes)
-  - [🧩 1.1 The Problem it Solves](#11-the-problem-it-solves)
-  - [⚖️ 1.2 Alternatives & Why Kubernetes Wins](#12-alternatives--why-kubernetes-wins)
-- [🏗️ 2. Cluster Architecture](#2-cluster-architecture)
-  - [🧠 2.1 Control Plane Components](#21-control-plane-components)
+1. [What is Kubernetes?](#1-what-is-kubernetes)
+1.1 [The Problem it Solves](#11-the-problem-it-solves)
+1.2 [Alternatives & Why Kubernetes Wins](#12-alternatives--why-kubernetes-wins)
+2. [Cluster Architecture](#2-cluster-architecture)
+  - [2.1 Control Plane Components](#21-control-plane-components)
     - [kube-apiserver](#-kube-apiserver)
     - [etcd](#-etcd)
     - [kube-scheduler](#-kube-scheduler)
