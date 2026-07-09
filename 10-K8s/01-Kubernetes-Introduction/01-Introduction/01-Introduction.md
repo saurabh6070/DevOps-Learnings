@@ -34,7 +34,7 @@ It was originally built by Google, and is now maintained by the **Cloud Native C
 
 ---
 
-### 🧩 1.1 The Problem it Solves
+### 1.1 The Problem it Solves
 
 Running one container on one machine is easy. Running hundreds of containers across dozens of machines is not. Here's what breaks without an orchestrator:
 
