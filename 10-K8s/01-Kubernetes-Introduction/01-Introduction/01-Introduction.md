@@ -72,7 +72,9 @@ A Kubernetes cluster is made up of two logical layers:
 - **Worker Nodes** — the muscle; run your actual containerized applications inside Pods
 
 ```
-<img width="509" height="399" alt="image" src="https://github.com/user-attachments/assets/694b46ba-4aff-4393-9d18-080a5fe56ae8" />
+
+<img width="533" height="411" alt="k8s" src="https://github.com/user-attachments/assets/6587e70a-2d96-4c70-93e2-0ea597c41f14" />
+
 
 ```
 
