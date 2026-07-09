@@ -1,5 +1,3 @@
-📘 # Kubernetes Notes
-
 ## ☸️ 1. What is Kubernetes?
 
 Kubernetes (abbreviated **K8s** — because there are 8 letters between the "K" and "s") is an **open-source container orchestration platform** that automates the deployment, scaling, and operational management of containerized applications.
