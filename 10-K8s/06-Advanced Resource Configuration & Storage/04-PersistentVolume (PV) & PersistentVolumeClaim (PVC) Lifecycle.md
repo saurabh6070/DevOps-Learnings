@@ -80,3 +80,18 @@ spec:
 In this case, deletethe pod as well. The the pvc will also be deleted after the pod is deleted.
 Depending upon the reclaim-policy in pv, the pv will be in "Released" state, if the policy is defined as "Retain".
 
+
+003 -> Yaml file for Persistent Volume Claim :-
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: claim-log-1
+spec:
+  volumeName: pv-log
+  resources:
+    requests: 
+      storage: 50Mi
+  accessModes: 
+  - ReadWriteMany
+
+
