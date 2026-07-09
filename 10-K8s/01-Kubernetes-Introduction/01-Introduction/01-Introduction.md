@@ -1,30 +1,6 @@
-# 📘 Kubernetes — Introduction: Architecture & Functions
+📘 # Kubernetes Notes
 
----
-
-## 📑 Table of Contents
-
-1. [What is Kubernetes?](#1-what-is-kubernetes)
-* 1.1 [The Problem it Solves](#11-the-problem-it-solves)
-* 1.2 [Alternatives & Why Kubernetes Wins](#12-alternatives--why-kubernetes-wins)
-2. [Cluster Architecture](#2-cluster-architecture)
-  - [2.1 Control Plane Components](-#21-control-plane-components)
-    - [kube-apiserver](#-kube-apiserver)
-    - [etcd](#-etcd)
-    - [kube-scheduler](#-kube-scheduler)
-    - [kube-controller-manager](#-kube-controller-manager)
-    - [cloud-controller-manager (optional)](#-cloud-controller-manager-optional)
-  - [🖥️ 2.2 Node (Data Plane) Components](#22-node-data-plane-components)
-    - [kubelet](#-kubelet)
-    - [Multi-Master Notes](#multi-master-notes)
-    - [kube-proxy](#-kube-proxy)
-    - [Container Runtime](#-container-runtime)
-  - [🧩 2.3 Cluster Add-ons](#cluster-add-ons)
-- [☁️ 3. Turnkey & Hosted Solutions of K8s (Managed vs. Self-hosted)](#3-turnkey--hosted-solutions-of-k8s-managed-vs-self-hosted)
-
----
-
-## 1. What is Kubernetes?
+## ☸️ 1. What is Kubernetes?
 
 Kubernetes (abbreviated **K8s** — because there are 8 letters between the "K" and "s") is an **open-source container orchestration platform** that automates the deployment, scaling, and operational management of containerized applications.
 
@@ -34,7 +10,7 @@ It was originally built by Google, and is now maintained by the **Cloud Native C
 
 ---
 
-### 1.1 The Problem it Solves
+### 🧩 1.1 The Problem it Solves
 
 Running one container on one machine is easy. Running hundreds of containers across dozens of machines is not. Here's what breaks without an orchestrator:
 
@@ -49,7 +25,7 @@ Running one container on one machine is easy. Running hundreds of containers acr
 
 ---
 
-### 1.2 Alternatives & Why Kubernetes Wins
+### ⚖️ 1.2 Alternatives & Why Kubernetes Wins
 
 | Tool | Strength | Limitation |
 |---|---|---|
@@ -73,8 +49,7 @@ A Kubernetes cluster is made up of two logical layers:
 - **Control Plane** — the brain; makes decisions, stores state, manages the cluster
 - **Worker Nodes** — the muscle; run your actual containerized applications inside Pods
 
-
-<img width="533" height="411" alt="k8s" src="https://github.com/user-attachments/assets/6587e70a-2d96-4c70-93e2-0ea597c41f14" />
+<img width="533" height="411" alt="k8s" src="https://github.com/user-attachments/assets/4723db6f-f1f4-45e6-90e1-a3af563904a1" />
 
 
 ---
@@ -215,7 +190,7 @@ Common runtimes:
 
 ---
 
-### 🧩 2.3 Cluster Add-ons {#cluster-add-ons}
+### 🧩 2.3 Cluster Add-ons
 
 Add-ons extend cluster capabilities beyond the base components. Most are deployed as Pods managed by Deployments or DaemonSets.
 
