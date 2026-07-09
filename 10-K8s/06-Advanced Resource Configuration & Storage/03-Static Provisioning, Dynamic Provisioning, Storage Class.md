@@ -11,16 +11,3 @@ metadata:
 provisioner: kubernetes.io/gce-pd
 
 
-003 -> Yaml file for Persistent Volume Claim :-
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: claim-log-1
-spec:
-  volumeName: pv-log
-  resources:
-    requests: 
-      storage: 50Mi
-  accessModes: 
-  - ReadWriteMany
-
