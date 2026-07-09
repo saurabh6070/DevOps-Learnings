@@ -1,4 +1,4 @@
-## 1. Core Kubernetes Objects
+## 🧩 1. Core Kubernetes Objects
 
 ### 1.1 Object Model: Spec & Status
 
@@ -112,33 +112,34 @@ kubectl apply -f manifest.yaml --validate=warn
 
 ---
 
-## 2. Object Management Techniques
+## ⚙️ 2. Object Management Techniques
 
 There are three ways to manage Kubernetes objects. Choose based on your team's workflow.
 
-001 -> Sample Pod file for Commands and Arguments :-
-			-> spec:
-				 containers:
-				 - name: test
-				   image: ubuntu
-				   command: [ "sleeep 5000" ]
-OR				   command: [ "sleep","5000" ]
-OR				   command: [ "sleep" ]
-				   args: [ "5000" ]
-OR				   command:
-				   - "sleep"
-				   - "5000"
+**Sample Pod file for Commands and Arguments:**
 
+```yaml
+spec:
+  containers:
+  - name: test
+    image: ubuntu
+    command: [ "sleeep 5000" ]
+# OR
+    command: [ "sleep","5000" ]
+# OR
+    command: [ "sleep" ]
+    args: [ "5000" ]
+# OR
+    command:
+    - "sleep"
+    - "5000"
+```
 
+**To deploy any object, there are two approaches:**
+- **Imperative Method** — Using a command to deploy a Pod or any other resource
+- **Declarative Method** — Using a YAML file to deploy a Pod or any other resource
 
-
-
-
-001 -> To deploy any object :-
-* Impeartive Method :- Using command to deploy POD or any other resource
-* Declarative Method :- Using yaml file to deploy POD or any other resource
-
-
+---
 
 ### 2.1 Imperative Commands
 
@@ -158,7 +159,7 @@ kubectl expose deployment nginx --port=80 --type=NodePort
 kubectl delete deployment nginx
 ```
 
-**✅ Good for:** Quick experiments, one-off tasks, learning  
+**✅ Good for:** Quick experiments, one-off tasks, learning
 **❌ Avoid for:** Production environments — no history, hard to track changes
 
 ---
@@ -173,7 +174,7 @@ kubectl replace -f nginx.yaml
 kubectl delete -f nginx.yaml
 ```
 
-**✅ Good for:** Teams transitioning to YAML-based workflows  
+**✅ Good for:** Teams transitioning to YAML-based workflows
 **❌ Limitation:** `replace` overwrites the entire object — manual merging needed for partial updates
 
 ---
@@ -193,12 +194,12 @@ kubectl apply -f configs/
 kubectl apply -R -f configs/
 ```
 
-**✅ Good for:** GitOps, CI/CD pipelines, team collaboration, auditing  
+**✅ Good for:** GitOps, CI/CD pipelines, team collaboration, auditing
 **How it works:** Kubernetes stores a `last-applied-configuration` annotation and merges changes intelligently
 
 ---
 
-## 3. Naming, Labeling & Organizing Objects
+## 🏷️ 3. Naming, Labeling & Organizing Objects
 
 ### 3.1 Names and UIDs
 
@@ -249,13 +250,11 @@ kubectl get pods -l 'version notin (1.0, 1.1)'
 kubectl get pods -l 'canary'          # label exists
 kubectl get pods -l '!canary'         # label does not exist
 
-
-## If we want to remove heading in output of list pods :-
+# If we want to remove headings in output of list pods
 kubectl get pods --selector 'version notin (1.0, 1.1)' --no-headers | wc -l
 
-## To list pods with all labels :-
+# To list pods with all labels
 kubectl get all --selector environment=production,tier=backend
-
 ```
 
 Used internally by: `Services`, `Deployments`, `ReplicaSets`, `NetworkPolicies`, `PodAffinity` rules.
@@ -269,13 +268,13 @@ Namespaces provide **virtual cluster isolation** within a physical cluster. They
 - Multi-team isolation with RBAC and ResourceQuotas
 - Avoiding naming conflicts across teams
 
+**Change default namespace:**
 
-001 -> Change default namespace
-			kubectl config --help
-			kubectl config set-context --help
-			kubectl config set-context --current --namespace=alpha-ns
-			
-
+```bash
+kubectl config --help
+kubectl config set-context --help
+kubectl config set-context --current --namespace=alpha-ns
+```
 
 **Default namespaces:**
 
@@ -338,10 +337,10 @@ metadata:
     # Build information
     build.company.com/git-commit: "a1b2c3d"
     build.company.com/pipeline-id: "1234"
-    
+
     # Operational notes
     kubernetes.io/change-cause: "Updated image to v2.3.1"
-    
+
     # Tool integrations
     prometheus.io/scrape: "true"
     prometheus.io/port: "9090"
@@ -354,61 +353,63 @@ metadata:
 
 ---
 
+## 🔍 4. JSON Path Expressions & Custom Columns with kubectl
 
-# 4. JSON Path Expressions & Custom Columns with kubectl 🆕 (Crucial for fast CKA querying)
+kubectl commands sent to the API server return responses in **JSON format**. kubectl converts this output into tabular format and keeps only relevant information. Although the `-o` option shows more detail, it still won't show everything — this is where **JSON Path queries** come in, to filter and format kubectl output for easy interpretation of large data.
 
-kubelet command run on terminal will send request to API-Server and get response from API-Server in JSON-format. kubectl converts the output into tabular format and keeps only relevant information from the output.
-Although using "-o" option, we can get more details but still it will not show all the details. For this JSON Path Queries are used for kubectl.
-JSON Path Queries :- Filter and format the output of kubectl command for easy interpretation of the large data.
+**How to build a JSON Path query in kubectl:**
+- Identify the kubectl command → e.g. `kubectl get pods`
+- Familiarize yourself with the JSON output → e.g. `kubectl get pods -o json`
+- Form the JSON Path query → e.g. `.items[0].spec.containers[0].image`
+- Use the JSON Path query with the kubectl command → e.g. `kubectl get pods -o=jsonpath='{ .items[0].spec.containers[0].image }'`
 
+**JSON Path query examples:**
 
-002 -> How to JSON Path in kubectl 
-		* Identify the kubectl command
-			Ex :- kubectl get pods
-		* Familiarize with JSON output
-			Ex :- kubectl get pods -o json
-		* From the JSON Path query
-			Ex :- .items[0].spec.containers[0].image
-		* Use the JSON Path query with kubectl command
-			Ex :- kuebctl get pods -o=jsonpath='{ .items[0].spec.containers[0].image }'
+```bash
+# Node names in the cluster
+kubectl get nodes -o=jsonpath='{ .items[*].metadata.name }'
 
-003 -> JSON Path Queries :-
-		* kubectl get nodes -o=jsonpath='{ .items[*].metadata.name }'
-		Output :- Node names in the cluster
-		* kubectl get nodes -o=jsonpath='{ .items[*].status.nodeInfo.architecture }'
-		Output :- Hardware architecture of each node in the cluster. (amd64)
-		* kubectl get nodes -o=jsonpath='{ .items[*].status.capacity.cpu }'
-		Output :- CPU capacity of each node in the cluster.
-		* kubectl get nodes -o=jsonpath='{ .items[*].metadata.name } { .items[*].status.capacity.cpu }'
-		Output :- Node Name, CPU capacity of each node in the cluster. (data not understandable yet)
-		* kubectl get nodes -o=jsonpath='{ .items[*].metadata.name } { "\n" } { .items[*].status.capacity.cpu }'
-		Output :- Node Name, CPU capacity of each node in the cluster.
-		* kubectl get nodes -o=custom-columns=NODE:.metadata.name
-		Output :- Node names in the cluster in tabular format.
-		* kubectl get nodes -o=custom-columns=NODE:.metadata.name ,CPU:.metadata.status.capacity.cpu
-		Output :- Node Name, CPU capacity of each node in the cluster in tabular format.
-		
-004 -> Sorting in kubectl
-		* kubectl get nodes --sort-by=.metadata.name
-		
-005 -> Listing using loop :-
-		* kubectl get nodes -o=jsonpath='{range .items[*]} {.metadata.name} {"\t"} {.status.capacity.cpu} {"\n"} {end}'
-		Output :- Node Name, CPU capacity of each node in the cluster in tabular format.
+# Hardware architecture of each node in the cluster (e.g. amd64)
+kubectl get nodes -o=jsonpath='{ .items[*].status.nodeInfo.architecture }'
 
+# CPU capacity of each node in the cluster
+kubectl get nodes -o=jsonpath='{ .items[*].status.capacity.cpu }'
 
+# Node name + CPU capacity (output not easily readable yet)
+kubectl get nodes -o=jsonpath='{ .items[*].metadata.name } { .items[*].status.capacity.cpu }'
 
+# Node name + CPU capacity, formatted with a newline
+kubectl get nodes -o=jsonpath='{ .items[*].metadata.name } { "\n" } { .items[*].status.capacity.cpu }'
+
+# Node names in tabular format using custom columns
+kubectl get nodes -o=custom-columns=NODE:.metadata.name
+
+# Node name + CPU capacity in tabular format
+kubectl get nodes -o=custom-columns=NODE:.metadata.name,CPU:.metadata.status.capacity.cpu
+```
+
+**Sorting:**
+
+```bash
+kubectl get nodes --sort-by=.metadata.name
+```
+
+**Listing using a loop:**
+
+```bash
+# Node name + CPU capacity in tabular format, row by row
+kubectl get nodes -o=jsonpath='{range .items[*]} {.metadata.name} {"\t"} {.status.capacity.cpu} {"\n"} {end}'
+```
 
 ---
 
-# 5. Storage Versions & API Versioning(v1, apps/v1, CRDs API groups)
- Storage Versions & API Versioning
+## 🗂️ 5. Storage Versions & API Versioning
 
 Kubernetes API is **versioned** to allow evolution without breaking existing clients.
 
-In Linux, there’s a well-known saying: “Everything in Linux is a file.”  
-In Kubernetes, a similar idea applies: “Everything in Kubernetes is an API.”
-Here, API refers to the API version you declare in your YAML manifests.
-To explore what’s available, you can list all API versions and resources with below commands :
+In Linux, there's a well-known saying: *"Everything in Linux is a file."*
+In Kubernetes, a similar idea applies: *"Everything in Kubernetes is an API."*
+Here, API refers to the API version you declare in your YAML manifests. To explore what's available, you can list all API versions and resources with the commands below.
 
 **API version stages:**
 
@@ -428,11 +429,11 @@ kubectl api-resources   # Lists all resource types with their API groups
 Common groups:
 
 ```
-core             → pods, services, configmaps, secrets (no group prefix)
-apps/v1          → deployments, statefulsets, daemonsets, replicasets
-batch/v1         → jobs, cronjobs
-networking.k8s.io/v1  → ingresses, networkpolicies
-rbac.authorization.k8s.io/v1 → roles, clusterroles
+core                            → pods, services, configmaps, secrets (no group prefix)
+apps/v1                         → deployments, statefulsets, daemonsets, replicasets
+batch/v1                        → jobs, cronjobs
+networking.k8s.io/v1            → ingresses, networkpolicies
+rbac.authorization.k8s.io/v1     → roles, clusterroles
 ```
 
 **Storage Versions in etcd:**
@@ -454,7 +455,7 @@ versions:
 
 ---
 
-# 6. Object Relationships & Lifecycle Control
+## 🔗 6. Object Relationships & Lifecycle Control
 
 ### 6.1 Finalizers
 
@@ -542,18 +543,15 @@ metadata:
 
 ### 6.4 Probes: Liveness, Readiness, Startup
 
+*(To be expanded)*
 
 ---
 
-
-
-
-
-## 7. The Kubernetes Philosophy
+## 💡 7. The Kubernetes Philosophy
 
 Understanding how Kubernetes *thinks* makes you a better operator.
 
-> **Linux says:** *"Everything is a file."*  
+> **Linux says:** *"Everything is a file."*
 > **Kubernetes says:** *"Everything is an API."*
 
 Every resource in Kubernetes — Pods, Services, Deployments, Secrets, even Nodes — is an **API object** with a versioned schema. This consistency means:
@@ -573,18 +571,13 @@ Every controller in Kubernetes (and every well-written Operator) follows this lo
 
 ---
 
-## 8. Essential kubectl Commands
+## 💻 8. Essential kubectl Commands
 
 ```bash
-
-001 -> Run following commands :-
-			alias k=kubectl
-			complete -F __start_kubectl k				###### (Enable Autocompletion for short form of kubectl to k)
-
-002 -> To enable Autocompletion using :-
-			source <(kubectl completion bash)
-
-
+# ── Autocompletion ─────────────────────────────────────────────
+alias k=kubectl
+complete -F __start_kubectl k                # Enable autocompletion for short form 'k'
+source <(kubectl completion bash)            # Enable autocompletion
 
 # ── Cluster Exploration ──────────────────────────────────────
 kubectl cluster-info                        # View cluster endpoint
@@ -624,9 +617,9 @@ kubectl annotate pod my-pod owner=team-a    # Add an annotation
 
 ---
 
-## 9. Summary
+## 📋 9. Summary
 
-Here's what you've covered so far :
+Here's what you've covered so far:
 
 | Topic | Key Takeaway |
 |---|---|
