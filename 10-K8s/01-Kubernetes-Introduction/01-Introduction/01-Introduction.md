@@ -4,10 +4,10 @@
 
 ## 📑 Table of Contents
 
-[☸️ 1. What is Kubernetes?](#1-what-is-kubernetes)
+- [☸️ 1. What is Kubernetes?](#what-is-kubernetes)
   - [🧩 1.1 The Problem it Solves](#11-the-problem-it-solves)
   - [⚖️ 1.2 Alternatives & Why Kubernetes Wins](#12-alternatives--why-kubernetes-wins)
-[🏗️ 2. Cluster Architecture](#2-cluster-architecture)
+- [🏗️ 2. Cluster Architecture](#2-cluster-architecture)
   - [🧠 2.1 Control Plane Components](#21-control-plane-components)
     - [kube-apiserver](#-kube-apiserver)
     - [etcd](#-etcd)
@@ -20,7 +20,7 @@
     - [kube-proxy](#-kube-proxy)
     - [Container Runtime](#-container-runtime)
   - [🧩 2.3 Cluster Add-ons](#23-cluster-add-ons)
-[☁️ 3. Turnkey & Hosted Solutions of K8s (Managed vs. Self-hosted)](#3-turnkey--hosted-solutions-of-k8s-managed-vs-self-hosted)
+- [☁️ 3. Turnkey & Hosted Solutions of K8s (Managed vs. Self-hosted)](#3-turnkey--hosted-solutions-of-k8s-managed-vs-self-hosted)
 
 ---
 
