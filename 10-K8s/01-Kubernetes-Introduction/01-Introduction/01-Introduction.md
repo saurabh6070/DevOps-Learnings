@@ -19,7 +19,7 @@
     - [Multi-Master Notes](#multi-master-notes)
     - [kube-proxy](#-kube-proxy)
     - [Container Runtime](#-container-runtime)
-  - [🧩 2.3 Cluster Add-ons]( #23-cluster-add-ons)
+  - [🧩 2.3 Cluster Add-ons](#cluster-add-ons)
 - [☁️ 3. Turnkey & Hosted Solutions of K8s (Managed vs. Self-hosted)](#3-turnkey--hosted-solutions-of-k8s-managed-vs-self-hosted)
 
 ---
@@ -215,7 +215,7 @@ Common runtimes:
 
 ---
 
-### 🧩 2.3 Cluster Add-ons
+### 🧩 2.3 Cluster Add-ons{#cluster-add-ons}
 
 Add-ons extend cluster capabilities beyond the base components. Most are deployed as Pods managed by Deployments or DaemonSets.
 
