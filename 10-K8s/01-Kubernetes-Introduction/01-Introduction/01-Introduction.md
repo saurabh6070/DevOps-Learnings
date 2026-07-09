@@ -215,7 +215,7 @@ Common runtimes:
 
 ---
 
-### 🧩 2.3 Cluster Add-ons{#cluster-add-ons}
+### 🧩 2.3 Cluster Add-ons {#cluster-add-ons}
 
 Add-ons extend cluster capabilities beyond the base components. Most are deployed as Pods managed by Deployments or DaemonSets.
 
