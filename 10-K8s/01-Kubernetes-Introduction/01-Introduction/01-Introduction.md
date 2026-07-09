@@ -49,7 +49,7 @@ Running one container on one machine is easy. Running hundreds of containers acr
 
 ---
 
-### ⚖️ 1.2 Alternatives & Why Kubernetes Wins
+⚖️ ### 1.2 Alternatives & Why Kubernetes Wins
 
 | Tool | Strength | Limitation |
 |---|---|---|
