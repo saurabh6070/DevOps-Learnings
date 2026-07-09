@@ -202,18 +202,28 @@ Add-ons extend cluster capabilities beyond the base components. Most are deploye
 
 ---
 
-## ☁️ 3. Turnkey & Hosted Solutions of K8s (Managed vs. Self-hosted)
+## ☁️ 3. Turnkey & Hosted Solutions of Kubernetes (Managed vs. Self-hosted)
 
-**001 → Turnkey Solutions (Hosted solution):**
-- You Provision VMs
-- You configure VMs
-- You use scripts to Deploy Cluster
-- You maintain VMs yourself
-- Example: Kubernetes on AWS using KOPS, OpenShift, Cloud Foundry Container Runtime, VMware Cloud PKS, Vagrant
+---
 
-**002 → Hosted Solutions (Managed Solutions):**
-- Kubernetes as a Service
-- Provider provisions VMs
-- Provider installs Kubernetes
-- Provider maintains VMs
-- Example: Google Container Engine (GKE), OpenShift (Online), Azure Kubernetes Service, Amazon Elastic Container Service for Kubernetes (EKS)
+### 001 → Turnkey Solutions (Self-hosted)
+
+- You provision the virtual machines (VMs).
+- You configure the VMs yourself.
+- You use scripts or tools to deploy the cluster.
+- You are responsible for maintaining the VMs.
+
+**Examples:**  
+Kubernetes on AWS using KOPS, OpenShift (self-hosted), Cloud Foundry Container Runtime, VMware Cloud PKS, Vagrant
+
+---
+
+### 002 → Hosted Solutions (Managed Services)
+
+- Kubernetes is offered as a service.
+- The provider provisions the VMs.
+- The provider installs and manages Kubernetes.
+- The provider maintains the underlying infrastructure.
+
+**Examples:**  
+Google Kubernetes Engine (GKE), OpenShift Online, Azure Kubernetes Service (AKS), Amazon Elastic Kubernetes Service (EKS)
