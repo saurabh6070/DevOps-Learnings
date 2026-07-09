@@ -1,4 +1,6 @@
-## 1. Containers in Kubernetes
+# Kubernetes Containers Notes
+
+## 📦 1. Containers in Kubernetes
 
 ### 1.1 Why Containers?
 
@@ -115,17 +117,30 @@ This separation of concerns means:
 
 ---
 
-2. Init-Container & Multiple Containers in a Pod (Sidecar pattern)
+## 🧱 2. Init Containers & Multiple Containers in a Pod (Sidecar Pattern)
 
-001 -> In a multi-container pod, each container is expected to run a process that stays alive as long as the POD's lifecycle. For example in the multi-container pod that we talked about earlier that has a web application and logging agent, both the containers are expected to stay alive at all times. The process running in the log agent container is expected to stay alive as long as the web application is running. If any of them fails, the POD restarts.
-But at times you may want to run a process that runs to completion in a container. For example a process that pulls a code or binary from a repository that will be used by the main web application. That is a task that will be run only  one time when the pod is first created. Or a process that waits  for an external service or database to be up before the actual application starts. That's where initContainers comes in.
-An initContainer is configured in a pod like all other containers, except that it is specified inside a initContainers section.
-When a POD is first created the initContainer is run, and the process in the initContainer must run to a completion before the real container hosting the application starts. 
-You can configure multiple such initContainers as well, like how we did for multi-containers pod. In that case each init container is run one at a time in sequential order.
-If any of the initContainers fail to complete, Kubernetes restarts the Pod repeatedly until the Init Container succeeds.
-Incase all the PODs after initContainers are running, then Init-Containers goes to terminated state. Also, in the output of PODS, init-Containers are not counted for any POD.
+### 2.1 How Init Containers Work
 
-002 -> Yaml file of Init-Container in a POD
+In a multi-container Pod, each container is expected to run a process that stays alive for as long as the Pod's lifecycle. For example, in a multi-container Pod with a web application and a logging agent, both containers are expected to stay alive at all times — the log agent process is expected to stay alive as long as the web application is running. If either fails, the Pod restarts.
+
+But at times you may want to run a process that runs **to completion** inside a container. For example:
+- A process that pulls code or a binary from a repository, to be used by the main web application — a task that runs only once when the Pod is first created
+- A process that waits for an external service or database to be up before the actual application starts
+
+That's where **initContainers** come in.
+
+An init container is configured in a Pod like any other container, except that it's specified inside an `initContainers` section.
+
+- When a Pod is first created, the init container runs, and the process inside it **must run to completion** before the real container hosting the application starts.
+- You can configure multiple init containers, similar to multi-container Pods. In that case, each init container runs **one at a time, in sequential order**.
+- If any init container fails to complete, Kubernetes restarts the Pod repeatedly until the init container succeeds.
+- Once all containers after the init containers are running, the init containers go into a **terminated** state. Also, in the Pod's status output, init containers are not counted as part of the running container count.
+
+---
+
+### 2.2 Init Container YAML Example
+
+```yaml
 apiVersion: v1
 kind: Pod
 metadata:
@@ -144,53 +159,50 @@ spec:
   - name: init-mydb
     image: busybox:1.28
     command: ['sh', '-c', 'until nslookup mydb; do echo waiting for mydb; sleep 2; done;']
-
-
-
-
+```
 
 ---
 
-## 3. 📘 Kubernetes Image Pull Policy, Tags, and Digests
+## 📘 3. Kubernetes Image Pull Policy, Tags, and Digests
 
-### 3.1. Image Pull Policy
+### 3.1 Image Pull Policy
 
 Kubernetes decides when to pull container images based on the **imagePullPolicy** setting:
 
-- **Always**  
-  - The image is pulled from the registry every time the Pod starts.  
-  - Ensures the latest version is used, but increases startup time and network usage.  
+- **Always**
+  - The image is pulled from the registry every time the Pod starts.
+  - Ensures the latest version is used, but increases startup time and network usage.
 
-- **IfNotPresent**  
-  - The image is pulled only if it is not already present locally.  
-  - Faster startup if the image exists on the node.  
+- **IfNotPresent**
+  - The image is pulled only if it is not already present locally.
+  - Faster startup if the image exists on the node.
 
-- **Never** (rarely used)  
-  - The image is never pulled; it must exist locally.  
-
----
-
-### 3.2. Tags vs Digests
-
-- **Tag**  
-  - Human‑readable identifier (e.g., `nginx:1.21`).  
-  - Mutable: the same tag can point to different image versions over time.  
-
-- **Digest**  
-  - Immutable SHA256 hash of the image content (e.g., `nginx@sha256:abc123...`).  
-  - Guarantees exact image version.  
+- **Never** (rarely used)
+  - The image is never pulled; it must exist locally.
 
 ---
 
-### 3.3. Default Behavior with `latest`
+### 3.2 Tags vs Digests
 
-- If **no tag** is defined, Kubernetes defaults to `:latest`.  
-- When using `:latest`, the **imagePullPolicy** defaults to **Always**.  
-- This means the image will be pulled every time, even if it exists locally.  
+- **Tag**
+  - Human‑readable identifier (e.g., `nginx:1.21`).
+  - Mutable: the same tag can point to different image versions over time.
+
+- **Digest**
+  - Immutable SHA256 hash of the image content (e.g., `nginx@sha256:abc123...`).
+  - Guarantees exact image version.
 
 ---
 
-### 3.4. Combined Scenarios
+### 3.3 Default Behavior with `latest`
+
+- If **no tag** is defined, Kubernetes defaults to `:latest`.
+- When using `:latest`, the **imagePullPolicy** defaults to **Always**.
+- This means the image will be pulled every time, even if it exists locally.
+
+---
+
+### 3.4 Combined Scenarios
 
 | Scenario | Behavior |
 |----------|----------|
@@ -201,12 +213,10 @@ Kubernetes decides when to pull container images based on the **imagePullPolicy*
 
 ---
 
-### 3.5. Best Practices
+### 3.5 Best Practices
 
-- Avoid using `:latest` in production.  
-- Prefer **immutable digests** for reliability.  
-- Use **tags** for readability, but pin to specific versions.  
-- Combine **tag + digest** for clarity and immutability.  
-- Set `imagePullPolicy=IfNotPresent` for stable workloads, `Always` for CI/CD pipelines.  
-
----
+- Avoid using `:latest` in production.
+- Prefer **immutable digests** for reliability.
+- Use **tags** for readability, but pin to specific versions.
+- Combine **tag + digest** for clarity and immutability.
+- Set `imagePullPolicy=IfNotPresent` for stable workloads, `Always` for CI/CD pipelines.
