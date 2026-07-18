@@ -149,18 +149,27 @@ The **primary agent** on each node. It communicates with the API server and ensu
 
 > The kubelet does NOT manage containers it did not create via Kubernetes (e.g., containers started with plain `docker run`).
 
-##### Multi-Master Notes
+##### 🔹 kubelet — Behavior in a Multi-Master Setup
 
-**001 →** Kube API-Server talks to kubelet of each Worker.
-- In case we have multiple Masters, then to which Kube API-Server does the kubelet talk?
-- Kube API-Server works in **Active-Active** mode and processes requests coming from the kubelet independently.
-- In case of multiple Kube API-Servers, a **Load Balancer** is created on top of these Kube API-Servers to balance traffic.
+##### 🌐 API Server Connectivity
 
-**002 →** Controller-Manager and Kube-Scheduler work in **Active-Standby** mode in case of multiple masters. A leader election is conducted among all the Controller-Managers/Schedulers, and it is checked every **15s** which one should be elected the Leader.
+The kubelet on a Worker node communicates with the Kube API-Server. This raises a natural question: with multiple Masters, which API-Server does the kubelet actually talk to?
 
-**003 →** ETCD works in **Active-Active** mode.
-- The placement of the ETCD-Server can be on the same set of Master-Nodes on which the other control-plane components are deployed, or on a different set of Master-Nodes.
-- Since ETCD only talks with the Kube API-Server, the IP-Address of ETCD is passed as an argument while setting up `kubeadm`.
+- The Kube API-Server runs in **Active-Active** mode, so every instance processes kubelet requests independently.
+- When multiple Kube API-Servers exist, a **Load Balancer** sits in front of them to distribute traffic evenly.
+
+
+##### 🧭 Controller-Manager & Scheduler Behavior
+
+Across multiple masters, the Controller-Manager and Kube-Scheduler run in **Active-Standby** mode rather than Active-Active. A leader election takes place among all the Controller-Manager/Scheduler instances, and leadership is re-verified every **15s**.
+
+
+##### 🗄️ ETCD Behavior
+
+ETCD operates in **Active-Active** mode.
+
+- ETCD-Servers can be co-located on the same Master-Nodes running the other control-plane components, or hosted on a separate set of Master-Nodes.
+- Because ETCD only communicates with the Kube API-Server, its IP address is supplied as an argument during `kubeadm` setup.
 
 ---
 
