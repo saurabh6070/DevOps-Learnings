@@ -541,9 +541,42 @@ metadata:
     app.kubernetes.io/managed-by: helm
 ```
 
-### 6.4 Probes: Liveness, Readiness, Startup
+### 6.4 🩺 Liveness, Readiness & Startup Probes
 
-*(To be expanded)*
+#### 💓 Liveness Probe
+Checks whether a container is **still running properly**.
+
+- If it fails, the kubelet **restarts** the container.
+- Use it to recover from deadlocks or stuck processes.
+- Example: an app that's running but stuck won't serve traffic — a liveness probe catches this.
+
+#### ✅ Readiness Probe
+Checks whether a container is **ready to receive traffic**.
+
+- If it fails, the Pod is **removed from Service endpoints** (no restart).
+- Use it during startup, warm-up, or temporary dependency issues.
+- Example: an app waiting on a DB connection shouldn't get traffic yet.
+
+#### 🚀 Startup Probe
+Checks whether a **slow-starting container** has finished initializing.
+
+- Disables liveness/readiness checks until it succeeds, avoiding premature restarts.
+- Use for apps with long boot times (legacy apps, large cache warm-up).
+- Once it succeeds once, it's never checked again.
+
+#### 🔍 Probe Mechanisms
+- **HTTP GET** — success on 2xx/3xx response
+- **TCP Socket** — success if port is open
+- **Exec Command** — success if command exits with `0`
+
+#### ⚙️ Key Fields
+`initialDelaySeconds`, `periodSeconds`, `timeoutSeconds`, `failureThreshold`, `successThreshold`
+
+#### 📌 Quick Rule
+- **Startup → "Has it finished booting? Wait before checking anything else."**
+- **Liveness → "Is it alive? Restart if not."**
+- **Readiness → "Is it ready? Pause traffic if not."**
+
 
 ---
 
