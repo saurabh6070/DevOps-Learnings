@@ -1,6 +1,6 @@
-# Kubernetes Resource Quotas 🆕 (Namespace-Level Restrictions)
+# 📊 Kubernetes Resource Quotas 🆕 (Namespace-Level Restrictions)
 
-## 1. What is a ResourceQuota?
+## 1. 📦 What is a ResourceQuota?
 
 A **ResourceQuota** is a Kubernetes API object, scoped at the **Namespace level**, that limits the **aggregate resource consumption** of all objects (mostly Pods) within that namespace.
 
@@ -12,7 +12,7 @@ Think of it like a "budget" assigned to a team (namespace) — no matter how man
 
 ---
 
-## 2. Why Do We Need ResourceQuotas?
+## 2. ❓ Why Do We Need ResourceQuotas?
 
 | Problem Without Quota | Solved By Quota |
 |---|---|
@@ -23,14 +23,14 @@ Think of it like a "budget" assigned to a team (namespace) — no matter how man
 
 ---
 
-## 3. Key Concepts
+## 3. 🔑 Key Concepts
 
-### 3.1 Scope
+### 3.1 🎯 Scope
 - Applied **per Namespace**.
 - A namespace can have **multiple ResourceQuota objects** (each targeting different resources/scopes).
 - Total values across all quota objects in that namespace get summed and enforced.
 
-### 3.2 What Can Be Restricted?
+### 3.2 🚧 What Can Be Restricted?
 
 | Category | Examples |
 |---|---|
@@ -39,7 +39,7 @@ Think of it like a "budget" assigned to a team (namespace) — no matter how man
 | **Object Count** | `pods`, `services`, `configmaps`, `secrets`, `replicationcontrollers`, `services.loadbalancers`, `services.nodeports` |
 | **Extended Resources** | `requests.nvidia.com/gpu` (custom/device resources) |
 
-### 3.3 Quota Scopes (Advanced Filtering)
+### 3.3 🔍 Quota Scopes (Advanced Filtering)
 Quotas can be restricted further using **scopes**, so they apply only to a subset of Pods:
 
 | Scope | Meaning |
@@ -53,7 +53,7 @@ Quotas can be restricted further using **scopes**, so they apply only to a subse
 
 ---
 
-## 4. How Enforcement Works
+## 4. ⚙️ How Enforcement Works
 
 1. Admin creates a `ResourceQuota` object in a namespace.
 2. Kubernetes **admission controller** (`ResourceQuota`) intercepts every new object creation request in that namespace.
@@ -69,9 +69,9 @@ Quotas can be restricted further using **scopes**, so they apply only to a subse
 
 ---
 
-## 5. Basic YAML Examples
+## 5. 🟢 Basic YAML Examples
 
-### 5.1 Example 1 — Simple Compute Quota
+### 5.1 📝 Example 1 — Simple Compute Quota
 
 Restrict total CPU & Memory usage for namespace `dev`.
 
@@ -97,7 +97,7 @@ kubectl describe resourcequota compute-quota -n dev
 
 ---
 
-### 5.2 Example 2 — Object Count Quota
+### 5.2 📝 Example 2 — Object Count Quota
 
 Restrict the **number** of objects that can be created in a namespace.
 
@@ -121,7 +121,7 @@ spec:
 
 ---
 
-### 5.3 Example 3 — Pod Failing Without Requests/Limits
+### 5.3 📝 Example 3 — Pod Failing Without Requests/Limits
 
 If a quota exists on `requests.cpu`, this Pod **will be rejected**:
 
@@ -161,9 +161,9 @@ spec:
 
 ---
 
-## 6. Intermediate YAML Examples
+## 6. 🟡 Intermediate YAML Examples
 
-### 6.1 Storage Quota
+### 6.1 💾 Storage Quota
 
 Restrict PVC count and total storage requested, per StorageClass.
 
@@ -186,7 +186,7 @@ spec:
 
 ---
 
-### 6.2 Quota With BestEffort Scope
+### 6.2 📉 Quota With BestEffort Scope
 
 Limit only Pods that have **no** requests/limits set (QoS class `BestEffort`).
 
@@ -203,7 +203,7 @@ spec:
     pods: "5"
 ```
 
-### 6.3 Quota With NotBestEffort Scope (Guaranteed/Burstable Pods)
+### 6.3 📈 Quota With NotBestEffort Scope (Guaranteed/Burstable Pods)
 
 ```yaml
 apiVersion: v1
@@ -224,9 +224,9 @@ spec:
 
 ---
 
-## 7. Advanced YAML Examples
+## 7. 🔴 Advanced YAML Examples
 
-### 7.1 Quota Scoped by PriorityClass (`scopeSelector`)
+### 7.1 🏆 Quota Scoped by PriorityClass (`scopeSelector`)
 
 Only apply quota to Pods with `priorityClassName: high-priority`.
 
@@ -274,7 +274,7 @@ spec:
 
 ---
 
-### 7.2 Quota for Extended Resources (GPUs)
+### 7.2 🎮 Quota for Extended Resources (GPUs)
 
 ```yaml
 apiVersion: v1
@@ -290,7 +290,7 @@ spec:
 
 ---
 
-### 7.3 Multiple ResourceQuota Objects in Same Namespace (Combined Enforcement)
+### 7.3 🧩 Multiple ResourceQuota Objects in Same Namespace (Combined Enforcement)
 
 You can split concerns into multiple quota objects — Kubernetes enforces **all of them simultaneously**.
 
@@ -335,7 +335,7 @@ spec:
 
 ---
 
-### 7.4 Full Enterprise-Style Multi-Tenant Setup
+### 7.4 🏢 Full Enterprise-Style Multi-Tenant Setup
 
 Combining **ResourceQuota + LimitRange** (best practice — quota alone forces every pod to declare resources, LimitRange provides sane defaults so devs aren't forced to calculate manually).
 
@@ -390,7 +390,7 @@ spec:
 
 ---
 
-## 8. Checking Quota Status
+## 8. 🔎 Checking Quota Status
 
 ```bash
 # List all quotas in a namespace
@@ -414,7 +414,7 @@ requests.memory  1Gi    8Gi
 
 ---
 
-## 9. Best Practices
+## 9. ✅ Best Practices
 
 1. ✅ Always pair **ResourceQuota** with **LimitRange** — otherwise Pods without explicit requests/limits will fail to schedule.
 2. ✅ Use **separate quota objects** for compute, storage, and object-counts for clarity.
@@ -426,7 +426,7 @@ requests.memory  1Gi    8Gi
 
 ---
 
-## 10. Quick Reference Cheat-Sheet
+## 10. 📋 Quick Reference Cheat-Sheet
 
 | kubectl Command | Purpose |
 |---|---|
@@ -438,7 +438,7 @@ requests.memory  1Gi    8Gi
 
 ---
 
-## 11. Summary
+## 11. 🏁 Summary
 
 - **ResourceQuota** = Namespace-level guardrail on total resource consumption (compute, storage, object counts).
 - Enforced via the **ResourceQuota admission controller** at object-creation time.
