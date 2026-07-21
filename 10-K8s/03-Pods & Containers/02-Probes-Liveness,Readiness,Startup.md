@@ -1,5 +1,8 @@
 # 🩺 Liveness, Readiness & Startup Probes
 
+
+---
+
 ## 💓 Liveness Probe
 Checks whether a container is **still running properly**.
 
@@ -26,9 +29,9 @@ spec:
       periodSeconds: 10
 ```
 
-httpGet: Sends an HTTP GET request to / on port 80.
-initialDelaySeconds: Waits 5 seconds before starting checks.
-periodSeconds: Runs the probe every 10 seconds.
+- httpGet: Sends an HTTP GET request to / on port 80.
+- initialDelaySeconds: Waits 5 seconds before starting checks.
+- periodSeconds: Runs the probe every 10 seconds.
 
 - Example 2 : - A complex exec probe with custom thresholds for fine-grained control.
 ```
@@ -62,12 +65,14 @@ spec:
       successThreshold: 1
 ```
 
-exec: Runs a shell command inside the container.
-The probe checks if /tmp/healthy exists. If not, it fails.
-timeoutSeconds: Probe must finish within 2 seconds.
-failureThreshold: After 3 consecutive failures, Kubernetes restarts the container.
-successThreshold: One success is enough to mark it healthy again.
+- exec: Runs a shell command inside the container.
+- The probe checks if /tmp/healthy exists. If not, it fails.
+- timeoutSeconds: Probe must finish within 2 seconds.
+- failureThreshold: After 3 consecutive failures, Kubernetes restarts the container.
+- successThreshold: One success is enough to mark it healthy again.
 
+
+---
 
 ## ✅ Readiness Probe
 Checks whether a container is **ready to receive traffic**.
@@ -94,10 +99,10 @@ spec:
       periodSeconds: 10
 ```
 
-httpGet: Sends an HTTP GET request to / on port 80.
-initialDelaySeconds: Waits 5 seconds before starting checks.
-periodSeconds: Runs the probe every 10 seconds.
-If the probe fails, the pod is marked not ready and removed from Service endpoints.
+- httpGet: Sends an HTTP GET request to / on port 80.
+- initialDelaySeconds: Waits 5 seconds before starting checks.
+- periodSeconds: Runs the probe every 10 seconds.
+- If the probe fails, the pod is marked not ready and removed from Service endpoints.
 
 - Example 2 : - 
 ```
@@ -133,11 +138,11 @@ spec:
       successThreshold: 2
 ```
 
-tcpSocket: Ensures port 8080 is open.
-exec: Runs a shell command inside the container to check /healthz endpoint for "ready".
-timeoutSeconds: Probe must finish within 3 seconds.
-failureThreshold: After 5 consecutive failures, pod is marked not ready.
-successThreshold: Requires 2 consecutive successes before marking pod ready again.
+- tcpSocket: Ensures port 8080 is open.
+- exec: Runs a shell command inside the container to check /healthz endpoint for "ready".
+- timeoutSeconds: Probe must finish within 3 seconds.
+- failureThreshold: After 5 consecutive failures, pod is marked not ready.
+= successThreshold: Requires 2 consecutive successes before marking pod ready again.
 
 
 
@@ -168,10 +173,10 @@ spec:
       periodSeconds: 10
 ```
 
-httpGet: Sends an HTTP GET request to / on port 80.
-failureThreshold: 30 → allows up to 30 failed attempts.
-periodSeconds: 10 → checks every 10 seconds.
-This means the container has up to 5 minutes (30 × 10s) to start before being killed.
+- httpGet: Sends an HTTP GET request to / on port 80.
+- failureThreshold: 30 → allows up to 30 failed attempts.
+= periodSeconds: 10 → checks every 10 seconds.
+= This means the container has up to 5 minutes (30 × 10s) to start before being killed.
 
 
 - Example 2 :- Exec Startup Probe with Long Initialization
@@ -205,10 +210,10 @@ spec:
       failureThreshold: 40
 ```
 
-exec: Runs a shell command inside the container.
-Checks if /tmp/started exists (created after 200s).
-failureThreshold: 40 × periodSeconds: 10s = 400s → gives the app ~6.5 minutes to finish initialization.
-If the probe succeeds, Kubernetes switches to liveness probe and readiness probe checks.
+- exec: Runs a shell command inside the container.
+- Checks if /tmp/started exists (created after 200s).
+- failureThreshold: 40 × periodSeconds: 10s = 400s → gives the app ~6.5 minutes to finish initialization.
+- If the probe succeeds, Kubernetes switches to liveness probe and readiness probe checks.
 
 
 ## 🔍 Probe Mechanisms
