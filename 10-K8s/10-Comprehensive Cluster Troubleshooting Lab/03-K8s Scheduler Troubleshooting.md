@@ -1,73 +1,154 @@
-K8s Scheduler Troubleshooting (Unscheduled pods, resource exhaustion evaluation)
-K8s Scheduler Internals
-Custom Scheduler Configurations
+# 🗂️ Kubernetes Scheduler: Internals, Custom Configurations & Troubleshooting
 
+## 📘 Overview
 
+The **Kubernetes Scheduler (kube-scheduler)** is a control-plane component responsible for assigning Pods to Nodes. It watches for newly created Pods that have no Node assigned and selects the best Node for them to run on, based on resource requirements, constraints, and scoring policies.
 
+This note covers three connected areas:
+- 🧭 Manually scheduling a Pod (bypassing/assisting the scheduler)
+- ⚙️ How the scheduler works internally (its pipeline)
+- 🛠️ Creating and using custom schedulers
+- 🚑 Troubleshooting unscheduled Pods and scheduler-related issues
 
+---
 
+## 🧭 1. Scheduling a Pod Manually on a Node
 
-001 -> Scheduling a Pod manually on a node
-		* In the Pod yml file manually we can write on which node, we want this pod to deploy.
-		Under the spec section of Pod, write like -
-				spec:
-					nodeName: Node001
-					containers:
-					-	image: nginx
-						name: nginx
+Kubernetes allows you to bypass the scheduler entirely by directly specifying the target Node in the Pod's YAML definition.
 
-002 -> If a scheduler not present in Namespace :- "kube-system", then the Pod status will be in "pending state", and in the pod describe, No node will be assigned to this pod. 
-One method is given above to change in the yaml file in case of scheduler not working properly.
-Another method is the curl command which can schedule the pod to a node, given that the node is in already in Pending state because of Scheduler not working properly.
-	Curl Command :-
-		curl --header "Content-Type:application/json" --request POST --data '{"apiVersion":"v1", "kind": "Binding", ....}' http://$SERVER/api/vi/namspaces/default/$PODNAME/binding/
+### ✍️ How to do it
+In the Pod's YAML file, under the `spec` section, add the `nodeName` field:
 
-
-
-
-001 -> Multiple schedulers can be created in Master using YAMl file. Take reference from this lecture to create Scheduler. In the Pod YAML file, give the name of the new scheduler instead of default-scheduler to schedule for testing.
-
-
-002 -> kubectl get events -o wide
-
-003 -> To view the scheduler logs, 
-kubectl logs my-scheduler -n kube-system
-
-
-
-
-
-004 -> Schedule a POD with a Customer Scheduler - my-scheduler
-
-apiVersion: v1 
-kind: Pod 
+```yaml
+apiVersion: v1
+kind: Pod
 metadata:
-  name: nginx 
+  name: nginx
+spec:
+  nodeName: Node001
+  containers:
+  - image: nginx
+    name: nginx
+```
+
+> 💡 **Note:** When `nodeName` is set, the scheduler is skipped completely — the Pod is directly bound to the specified node by the Kubelet on that node.
+
+---
+
+## 🚨 2. What Happens When the Scheduler Is Not Running?
+
+If **no scheduler is running** in the `kube-system` namespace, newly created Pods will not get assigned to any Node.
+
+### 🔍 Symptoms
+- Pod status remains stuck in **`Pending`** state.
+- Running `kubectl describe pod <pod-name>` shows **no Node assigned**.
+
+### 🛠️ Ways to Fix / Work Around This
+
+**Method 1 — Manually assign a Node in YAML**
+Use the `nodeName` field as shown in Section 1 above.
+
+**Method 2 — Bind the Pod using a `curl` command**
+If a Pod is already stuck in `Pending` due to the scheduler being down, you can manually bind it to a node using the Kubernetes API's `Binding` object:
+
+```bash
+curl --header "Content-Type:application/json" \
+     --request POST \
+     --data '{"apiVersion":"v1", "kind": "Binding", ....}' \
+     http://$SERVER/api/v1/namespaces/default/$PODNAME/binding/
+```
+
+> ⚠️ This directly creates a `Binding` object via the API server, simulating what the scheduler would normally do.
+
+---
+
+## ⚙️ 3. Custom Scheduler Configuration
+
+Kubernetes supports running **multiple schedulers** simultaneously within a single cluster — useful when different workloads need different scheduling logic.
+
+### 🏗️ Creating a Custom Scheduler
+- Multiple schedulers can be deployed on the Master node using a YAML file (deployed as a static Pod or Deployment).
+- Each custom scheduler must be given a **unique name**.
+
+### 📄 Assigning a Pod to a Custom Scheduler
+To test/use a custom scheduler, specify its name in the Pod's `schedulerName` field instead of the default `default-scheduler`:
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
 spec:
   schedulerName: my-scheduler
   containers:
   - image: nginx
     name: nginx
+```
 
+### 🔎 Useful Commands for Verification
 
-001 -> Scheduler works in following steps:-
-		* Queue :- Pods are placed in scheduling Queue 
-		* Scheduling Queue :- Sorting of Pods on baisis of priority of Pods (Queue Sort)
-		* Filtering :-  Filtering of Nodes not having sufficient resource
-		* Scoring :- Scoring of Nodes on basis of Free-space if Pods gets deployed.
-		* Binding :- The Pod is now bound to the Node with the highest score
-		
-		
-002 -> For each of the process stated above, multiple plugins are used in each process to complete the step.
+**Check scheduling events:**
+```bash
+kubectl get events -o wide
+```
 
+**View logs of a custom scheduler:**
+```bash
+kubectl logs my-scheduler -n kube-system
+```
 
-003 -> At each step, there is an Extension-Point that can be attached to plugin to modify the operation in each step.
+> 🧪 **Hands-on Practice:** Try this out in the K8s Lab exercises referenced in Lectures #79 and #80.
 
-004 -> Try practical in K8-Lab for Lecture #79, #80.
+---
 
-005 -> Multiple schedulers in a single K8 cluster may come into race condition while scheduling a Pod. Also, we need to have different processes, lifecycle, binaries for all the Schedulers.
-Solution of this problem is Scheduler-Profiles. With the release 1.18, there is an option of Scheduler-Profiles, by  which we can have have multiple profiles in a single Scheduler, which overcomes all the difficulties mentioned above.
+## 🧠 4. Kubernetes Scheduler Internals (Scheduling Pipeline)
 
+The scheduler processes each Pod through a well-defined internal pipeline before it is finally bound to a Node.
 
-003 -> If the issue is that POD is not being assigned any Node, then issue can be in the Scheduler. Since, it is a static POD, check the yml file of scheduler in /etc/kubernetes/manifests/
-If the issue is that POD is not scaling to desired replica, then issue can be in the Controller-Manager. Since, it is a static POD, check the yml file of Controller-Manager in /etc/kubernetes/manifests/
+### 🔄 Scheduling Steps
+
+| Step | Description |
+|------|-------------|
+| 📥 **Queue** | Newly created Pods are placed into a scheduling queue. |
+| 🔀 **Scheduling Queue (Queue Sort)** | Pods are sorted based on their **priority**. |
+| 🧹 **Filtering** | Nodes that **don't have sufficient resources** (or don't meet constraints) are filtered out. |
+| 🎯 **Scoring** | Remaining eligible Nodes are **scored** based on the free capacity/space that would remain if the Pod is deployed there. |
+| 🔗 **Binding** | The Pod is finally **bound to the Node with the highest score**. |
+
+### 🔌 Plugins & Extension Points
+- Each of the steps above (Queue Sort, Filtering, Scoring, Binding, etc.) is implemented using **multiple plugins**.
+- At every step, there is a corresponding **Extension Point** — a hook where custom plugins can be attached to modify or extend the default behavior of that step.
+
+### 🧵 Multiple Schedulers vs. Scheduler Profiles
+
+Running multiple independent schedulers in the same cluster introduces challenges:
+- ⚔️ **Race conditions** may occur when multiple schedulers try to schedule the same Pod.
+- 🧩 Each scheduler requires its **own process, lifecycle, and binary**, increasing operational overhead.
+
+**✅ Solution: Scheduler Profiles**
+From **Kubernetes release 1.18** onward, **Scheduler Profiles** were introduced. This feature allows you to define **multiple scheduling profiles within a single scheduler binary/process**, eliminating the need to run separate scheduler instances — and thereby avoiding race conditions and reducing operational complexity.
+
+---
+
+## 🚑 5. Troubleshooting Scheduler-Related Issues
+
+When Pods are behaving unexpectedly, it's important to identify **which control-plane component** is responsible before troubleshooting.
+
+### 🩺 Diagnostic Guide
+
+| Symptom | Likely Cause | Where to Check |
+|---------|-------------|-----------------|
+| ❌ Pod is **not being assigned any Node** | Issue lies with the **Scheduler** | Since kube-scheduler runs as a **static Pod**, inspect its manifest at:<br>`/etc/kubernetes/manifests/` |
+| ❌ Pod is **not scaling to the desired number of replicas** | Issue lies with the **Controller Manager** | Since kube-controller-manager runs as a **static Pod**, inspect its manifest at:<br>`/etc/kubernetes/manifests/` |
+
+> 🧭 **Key takeaway:** Both the Scheduler and Controller Manager typically run as **static Pods** on the control-plane node. Their configuration files live in `/etc/kubernetes/manifests/`, and editing/restarting them involves modifying these manifest files directly (the Kubelet will auto-restart the static Pod when the manifest changes).
+
+---
+
+## ✅ Quick Recap
+
+- 🧭 You can manually assign a Pod to a Node using `nodeName`, or bind it via a `curl`-based API call if the scheduler is down.
+- ⚙️ Custom schedulers can be created and assigned to specific Pods using `schedulerName`.
+- 🧠 The scheduler follows a pipeline: **Queue → Queue Sort → Filtering → Scoring → Binding**, with plugins and extension points at each stage.
+- 🧵 **Scheduler Profiles** (since v1.18) solve the problems of running multiple standalone schedulers.
+- 🚑 Unscheduled Pods → check the **Scheduler**; Pods not scaling → check the **Controller Manager**. Both are static Pods configurable via `/etc/kubernetes/manifests/`.
