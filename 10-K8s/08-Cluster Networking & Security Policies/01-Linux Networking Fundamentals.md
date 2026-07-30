@@ -12,6 +12,8 @@ By default, a Linux machine does **not** forward packets between network interfa
 By default, IP forwarding is **disabled** (`0`).
 
 ### ✅ Enable IP Forwarding
+
+IP forwarding controls whether a Linux machine is allowed to **forward packets** from one network interface to another — essentially turning the machine into a router.
 To allow a Linux machine to forward packets from one interface to another (i.e., act like a router):
 
 ```bash
@@ -19,6 +21,9 @@ echo 1 > /proc/sys/net/ipv4/ip_forward
 ```
 
 > 💡 This is exactly how a Kubernetes node routes traffic between pods, containers, and external networks.
+
+> ⚠️ **Note:** This setting is critical in Kubernetes — every node must be able to forward traffic between the Pod network and other interfaces, which is why `net.ipv4.ip_forward=1` is a standard requirement on all K8s nodes.
+
 
 ---
 
