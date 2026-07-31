@@ -1,6 +1,6 @@
 # 🧠 AWS Interview Questions
 
-## Common Interview Questions
+## 💬 Common Interview Questions
 - What is the difference between EC2 and Lambda?
 - What is the difference between S3 and EBS?
 - What is the difference between a public subnet and a private subnet?
@@ -8,11 +8,18 @@
 - What is the difference between RDS and DynamoDB?
 - When would you choose Multi-AZ vs Multi-Region architecture?
 
-## Quick Revision Tips
+## 📝 Quick Revision Tips
 - Focus first on core services: EC2, S3, VPC, IAM, RDS, Route 53
 - Learn the use cases, not just definitions
 - Practice explaining trade-offs in architecture decisions
 - Be comfortable discussing reliability, security, scalability, and cost
 
-## Final Advice
+## 🧪 Practical Interview Approach
+When answering AWS interview questions:
+1. define the service briefly
+2. explain the use case
+3. compare it to alternatives
+4. mention trade-offs like cost, latency, and resilience
+
+## ✅ Final Advice
 Solution Architect questions are usually about choosing the best AWS service for a business requirement, not just recalling facts.

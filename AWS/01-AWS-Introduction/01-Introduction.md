@@ -12,6 +12,23 @@ AWS is important because it provides a flexible and scalable environment for:
 
 In simple terms, AWS gives you access to a vast ecosystem of cloud services that can be combined to design modern applications.
 
+### 🧩 Why AWS became dominant
+AWS became widely adopted because it offers:
+- rapid provisioning of resources
+- pay-as-you-go pricing
+- global reach with low latency
+- managed services that reduce operational overhead
+- strong security and compliance capabilities
+
+### 🏗️ High-level architecture view
+```mermaid
+flowchart LR
+    User[User] --> CDN[CloudFront / Edge]
+    CDN --> App[EC2 / Lambda / ECS]
+    App --> DB[RDS / DynamoDB]
+    App --> Storage[S3 / EBS]
+```
+
 ---
 
 ## 🏗️ Why AWS is Important
@@ -52,8 +69,6 @@ An edge location is a site used by services like CloudFront to cache content clo
 ```text
 User --> CloudFront Edge Location --> AWS Region --> Multiple AZs --> EC2 / RDS / S3
 ```
-
-This diagram shows how AWS services can be distributed across regions, availability zones, and edge locations for better performance and resilience.
 
 ---
 
@@ -152,6 +167,37 @@ A simple example is a web application that uses:
 - RDS or DynamoDB for database needs
 - CloudFront to improve content delivery speed
 - IAM for secure access control
+
+---
+
+## 🧪 Practical Part
+
+### 1. 🛠️ Manual labs
+1. Create an AWS account and enable MFA.
+2. Create an IAM user with programmatic access.
+3. Launch a simple EC2 instance.
+4. Create an S3 bucket and upload a sample file.
+5. Review billing and cost explorer basics.
+
+### 2. 🧱 Terraform example
+```hcl
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+}
+
+provider "aws" {
+  region = "us-east-1"
+}
+
+resource "aws_s3_bucket" "demo" {
+  bucket = "demo-bucket-123456"
+}
+```
 
 ---
 

@@ -311,77 +311,142 @@ This distinction is very important in AWS exams and interviews.
 ## 🧪 Practical Part
 
 ## 1. 🛠️ Manual Labs for EC2 and Launch Templates
-Below are practical hands-on tasks you can perform in the AWS console.
+These labs are written to be followed exactly in order. Students should not skip the setup steps because each step teaches an important concept.
 
 ### Lab 1: Launch an EC2 instance manually
-1. Open the AWS Management Console.
-2. Go to EC2 Dashboard.
-3. Click Launch Instance.
-4. Choose an Amazon Machine Image such as Amazon Linux 2 or Ubuntu.
-5. Choose an instance type such as t2.micro or t3.small.
-6. Create or select a key pair.
-7. Configure a Security Group that allows:
-   - SSH (port 22) from your IP
-   - HTTP (port 80) from anywhere if you want a web server
-8. Configure storage and launch the instance.
-9. Wait for the instance to be in a Running state.
-10. Connect to it using SSH:
+1. Sign in to the AWS Management Console.
+2. Open the EC2 service.
+3. In the left menu, click Instances.
+4. Click Launch instances.
+5. In the Name box, enter a name such as demo-web-server.
+6. Choose an Amazon Machine Image such as Amazon Linux 2 or Ubuntu.
+7. Choose an instance type such as t3.micro or t2.micro.
+8. Under Key pair, create a new key pair or select an existing one.
+9. Under Network settings, select the default VPC or a custom VPC if you already created one.
+10. Under Security group, create a new security group or select one that allows SSH and HTTP.
+11. Add an inbound rule for SSH from your IP address.
+12. Add an inbound rule for HTTP from 0.0.0.0/0 if you want a web server.
+13. Under Storage, keep the default root volume size or increase it if needed.
+14. Click Launch instance.
+15. Wait until the instance status changes to Running.
+16. Click the instance and copy its public IPv4 address.
+17. Connect using SSH from your terminal:
    ```bash
+   chmod 400 your-key.pem
    ssh -i your-key.pem ec2-user@<public-ip>
    ```
+18. If the AMI is Amazon Linux, the user is usually ec2-user. For Ubuntu, it is ubuntu.
+
+Expected result: the EC2 instance is running and reachable over SSH.
 
 ### Lab 2: Install a web server on the instance
-Once connected:
-```bash
-sudo yum update -y
-sudo yum install -y httpd
-sudo systemctl start httpd
-sudo systemctl enable httpd
-echo "Hello from EC2" | sudo tee /var/www/html/index.html
-```
+1. Connect to the EC2 instance using SSH.
+2. Update the package manager:
+   ```bash
+   sudo yum update -y
+   ```
+3. Install Apache or Nginx depending on the OS.
+4. For Amazon Linux, run:
+   ```bash
+   sudo yum install -y httpd
+   sudo systemctl start httpd
+   sudo systemctl enable httpd
+   ```
+5. Create a simple index page:
+   ```bash
+   echo "Hello from EC2" | sudo tee /var/www/html/index.html
+   ```
+6. Open the public IP of the instance in a browser.
+7. Confirm that the page appears.
 
-Then open the public IP in your browser.
+Expected result: the instance hosts a simple website.
 
 ### Lab 3: Attach an EBS volume manually
-1. Go to EC2 > Volumes.
-2. Create a new EBS volume.
-3. Select the same Availability Zone as the instance.
-4. Attach the volume to the instance.
-5. Connect to the instance and mount it:
+1. Open the EC2 console.
+2. Go to Volumes.
+3. Click Create volume.
+4. Choose the same Availability Zone as your instance.
+5. Set the size such as 10 GiB.
+6. Choose the volume type such as gp3.
+7. Click Create volume.
+8. Wait until the volume is available.
+9. Select the new volume and click Attach volume.
+10. Choose the EC2 instance you created.
+11. Set the device name such as /dev/sdf.
+12. Click Attach.
+13. Connect to the instance over SSH.
+14. Run:
    ```bash
    lsblk
    sudo mkfs -t xfs /dev/xvdf
    sudo mkdir /data
    sudo mount /dev/xvdf /data
    ```
+15. Verify that the mount works.
+
+Expected result: the EBS volume is attached and mounted successfully.
 
 ### Lab 4: Associate an Elastic IP
-1. Go to EC2 > Elastic IPs.
-2. Allocate a new Elastic IP.
-3. Associate it with your instance.
-4. Verify that the instance remains reachable through the fixed public IP.
+1. Go to Elastic IPs in the EC2 console.
+2. Click Allocate Elastic IP address.
+3. Choose Amazon pool and click Allocate.
+4. Select the newly created Elastic IP.
+5. Click Associate.
+6. Choose your EC2 instance.
+7. Click Associate.
+8. Open a browser and test the instance using the Elastic IP.
+
+Expected result: the instance remains reachable through a stable public IP.
 
 ### Lab 5: Create an AMI from the instance
 1. Stop the instance if necessary.
-2. Go to Actions > Image and templates > Create image.
-3. Provide a name and description.
-4. Launch a new instance from the AMI later if needed.
+2. In the EC2 console, select the instance.
+3. Click Actions > Image and templates > Create image.
+4. Enter a name such as demo-web-image.
+5. Add a description.
+6. Click Create image.
+7. Wait until the AMI is available.
+8. Launch a new instance from the AMI later if needed.
+
+Expected result: a reusable machine image is created.
 
 ### Lab 6: Create a Launch Template manually
-1. Go to EC2 > Launch Templates.
+1. Go to Launch Templates under EC2.
 2. Click Create launch template.
-3. Provide a name and description.
-4. Select AMI, instance type, key pair, security groups, and user data.
-5. Save the template.
-6. Use it to launch a new instance.
+3. Enter a name such as demo-web-template.
+4. Choose the AMI you want to use.
+5. Select the instance type.
+6. Choose the key pair.
+7. Select the security group.
+8. Add user data if you want the instance to install software automatically.
+9. Click Create launch template.
+10. Choose the launch template and click Launch instance from template.
+
+Expected result: the launch template can be used repeatedly for new instances.
 
 ### Lab 7: Practice Auto Scaling concepts manually
-1. Create a Launch Template.
-2. Create an Auto Scaling Group.
-3. Configure minimum and maximum size.
-4. Add a target group and load balancer if you want a full setup.
-5. Observe how EC2 instances are created automatically.
+1. Create or select a launch template.
+2. Go to Auto Scaling Groups in the EC2 console.
+3. Click Create Auto Scaling group.
+4. Choose the launch template.
+5. Select the VPC and subnet.
+6. Set the desired capacity to 2.
+7. Set minimum size to 1 and maximum size to 3.
+8. Configure a health check.
+9. Create the Auto Scaling group.
+10. Observe how new instances are created automatically.
 
+Expected result: the group maintains a desired number of healthy instances.
+
+### Student checklist
+- EC2 instance launched
+- SSH connection tested
+- Web server installed
+- EBS volume attached
+- Elastic IP associated
+- AMI created
+- Launch template created
+- Auto Scaling group created
 ---
 
 ## 2. 🧱 Using Terraform to Provision EC2 and Launch Templates
