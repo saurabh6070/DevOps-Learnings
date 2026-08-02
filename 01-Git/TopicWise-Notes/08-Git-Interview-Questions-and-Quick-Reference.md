@@ -8,7 +8,7 @@ This file preserves the original interview-oriented content and turns it into a 
 - Use the cheat sheet as a quick revision tool before exams or interviews.
 - Connect concepts from earlier topics to practical interview answers.
 
-## 1. 📌 Beginner Questions
+## 📌 1. Beginner Questions
 
 For beginners, the goal is to understand the purpose of Git and how it fits into modern software development. These questions build the mindset needed before moving into advanced workflows and team practices.
 
@@ -41,7 +41,7 @@ It tells Git which files or directories to ignore.
 
 `origin` is the default name of the remote repository.
 
-## 2. 📌 Intermediate Questions
+## 📌 2. Intermediate Questions
 
 Once the basics are clear, interviews often test how well a candidate understands practical Git workflows. These questions focus on branch management, history modification, and safe collaboration.
 
@@ -77,7 +77,7 @@ It applies the changes from one specific commit to another branch.
 
 Tags mark important points in history, often used for releases.
 
-## 3. 📌 Advanced Questions
+## 📌 3. Advanced Questions
 
 Advanced questions examine how well a developer understands Git internally and how to use it in sophisticated engineering environments. This includes repository internals, hooks, submodules, and history management.
 
@@ -101,7 +101,7 @@ Hooks are scripts that run automatically at specific Git events.
 
 Submodules let one repository include another repository as a nested project.
 
-## 4. 📌 Quick Reference Cheat Sheet
+## 📌 4. Quick Reference Cheat Sheet
 
 This final section consolidates the most commonly used Git commands into a compact reference that can be reviewed quickly before interviews, demos, or daily work.
 

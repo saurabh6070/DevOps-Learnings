@@ -8,7 +8,7 @@ This note preserves the original content on how to undo and recover from changes
 - Understand the difference between rewriting history and preserving it.
 - Learn how to recover from mistakes without losing control of the project.
 
-## 1. 📌 Git Restore
+## 📌 1. Git Restore
 
 Sometimes a file needs to return to a previous state because the latest edits are no longer wanted. Git restore provides a safe way to discard local changes or undo a staged change without affecting the full repository history.
 
@@ -20,7 +20,7 @@ git add myapp.py
 git restore --staged myapp.py
 ```
 
-## 2. 📌 Git Reset
+## 📌 2. Git Reset
 
 Reset is used when you want to move the current branch pointer to a different commit. It is powerful because it can change what is recorded in history, what is staged, and what remains in the working directory.
 
@@ -39,7 +39,7 @@ git reset --hard HEAD~1
 git reset --hard <commit-hash>
 ```
 
-## 3. 📌 Git Revert
+## 📌 3. Git Revert
 
 Revert is the safer alternative when the change has already been shared with others. Instead of rewriting history, it creates a new commit that undoes the effect of an earlier commit.
 
@@ -50,7 +50,7 @@ git revert <commit-hash>
 git revert <commit1>..<commit2>
 ```
 
-## 4. 📌 Reset vs Revert
+## 📌 4. Reset vs Revert
 
 | Command | History | Safe for shared branches |
 |---|---|---|

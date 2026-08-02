@@ -2,11 +2,11 @@
 
 Covers common Linux services and server roles used in real environments.
 
-## 33. 🌐 DNS Server Setup — named.conf, Record Types, Zones
+## 🌐 33. DNS Server Setup — named.conf, Record Types, Zones
 
 Many Linux services depend on name resolution and centralized configuration. DNS is the service that translates human-readable names into addresses, making modern networked applications possible.
 
-### 33. 🔹 1 DNS Concepts
+### 🔹 33.1 DNS Concepts
 
 ```
 DNS Resolution order on Linux:
@@ -19,7 +19,7 @@ cat /etc/nsswitch.conf | grep hosts
 # hosts: files dns myhostname
 ```
 
-### 33. 🔹 2 /etc/resolv.conf — Client DNS Config
+### 🔹 33.2 /etc/resolv.conf — Client DNS Config
 
 ```bash
 cat /etc/resolv.conf
@@ -54,7 +54,7 @@ host google.com                              # Simple lookup
 host -t MX gmail.com                         # MX records
 ```
 
-### 33. 🔹 3 DNS Record Types
+### 🔹 33.3 DNS Record Types
 
 | Record | Purpose | Example |
 |--------|---------|---------|
@@ -69,7 +69,7 @@ host -t MX gmail.com                         # MX records
 | **SRV** | Service location | `_sip._tcp.example.com → priority weight port host` |
 | **NAPTR** | Naming Authority Pointer | ENUM, VoIP, URI mapping |
 
-### 33. 🔹 4 Setting Up BIND DNS Server
+### 🔹 33.4 Setting Up BIND DNS Server
 
 ```bash
 # Install BIND:
@@ -193,9 +193,9 @@ nslookup www.example.com 192.168.1.100
 
 ---
 
-## 34. 🖥️ DHCP Server Setup
+## 🖥️ 34. DHCP Server Setup
 
-### 34. 🔹 1 Installing and Configuring dhcpd
+### 🔹 34.1 Installing and Configuring dhcpd
 
 ```bash
 # Install:
@@ -262,13 +262,13 @@ cat /var/lib/dhcpd/dhcpd.leases
 
 ---
 
-## 35. 🕐 NTP — Network Time Protocol
+## 🕐 35. NTP — Network Time Protocol
 
-### 35. 🔹 1 Importance of Time Sync
+### 🔹 35.1 Importance of Time Sync
 
 Accurate time is critical for: logs correlation, SSL certificates, Kerberos auth, cron jobs, distributed systems, databases.
 
-### 35. 🔹 2 chrony (Modern — RHEL 7+, Ubuntu 20.04+)
+### 🔹 35.2 chrony (Modern — RHEL 7+, Ubuntu 20.04+)
 
 ```bash
 # Install:
@@ -307,7 +307,7 @@ chronyc makestep              # Force immediate time sync
 firewall-cmd --permanent --add-service=ntp
 ```
 
-### 35. 🔹 3 ntpd (Older)
+### 🔹 35.3 ntpd (Older)
 
 ```bash
 yum install ntp -y
@@ -318,7 +318,7 @@ ntpstat                       # Sync status
 ntpq -p                       # Peer table
 ```
 
-### 35. 🔹 4 timedatectl (systemd time management)
+### 🔹 35.4 timedatectl (systemd time management)
 
 ```bash
 timedatectl                           # Status
@@ -332,9 +332,9 @@ timedatectl set-ntp false                    # Disable NTP sync
 
 ---
 
-## 36. 🌐 Samba Server — Full Implementation
+## 🌐 36. Samba Server — Full Implementation
 
-### 36. 🔹 1 Samba Overview
+### 🔹 36.1 Samba Overview
 
 Samba allows Linux to share files/printers with **Windows** clients using the **SMB/CIFS** protocol.
 
@@ -344,7 +344,7 @@ yum install samba samba-client samba-common -y   # RHEL
 apt install samba samba-common smbclient cifs-utils -y  # Ubuntu
 ```
 
-### 36. 🔹 2 Complete smb.conf
+### 🔹 36.2 Complete smb.conf
 
 ```bash
 cat > /etc/samba/smb.conf << 'EOF'
@@ -396,7 +396,7 @@ cat > /etc/samba/smb.conf << 'EOF'
 EOF
 ```
 
-### 36. 🔹 3 Samba Setup Steps
+### 🔹 36.3 Samba Setup Steps
 
 ```bash
 # Step 1: Create directories:
@@ -437,9 +437,9 @@ mount -t cifs //192.168.1.100/shared /mnt/smb -o username=alice,password=pass
 
 ---
 
-## 37. 🗃️ NFS & Samba (File Sharing)
+## 🗃️ 37. NFS & Samba (File Sharing)
 
-### 37. 🔹 1 NFS — Network File System
+### 🔹 37.1 NFS — Network File System
 
 ```bash
 # NFS Server setup:
@@ -479,7 +479,7 @@ mount -t nfs4 192.168.1.10:/opt/shared /mnt/nfs  # NFSv4
 # 192.168.1.10:/opt/shared  /mnt/nfs  nfs  defaults,_netdev  0  0
 ```
 
-### 37. 🔹 2 Samba — SMB/CIFS (Windows-compatible sharing)
+### 🔹 37.2 Samba — SMB/CIFS (Windows-compatible sharing)
 
 ```bash
 # Install:
@@ -534,9 +534,9 @@ mount -t cifs //192.168.1.10/shared /mnt/smb -o username=alice
 
 ---
 
-## 38. 🌐 HTTP Server — Apache httpd.conf
+## 🌐 38. HTTP Server — Apache httpd.conf
 
-### 38. 🔹 1 Apache httpd Configuration
+### 🔹 38.1 Apache httpd Configuration
 
 ```bash
 # Install:
@@ -616,9 +616,9 @@ apache2ctl configtest
 
 ---
 
-## 39. 🔒 sudo and visudo — Privilege Management
+## 🔒 39. sudo and visudo — Privilege Management
 
-### 39. 🔹 1 sudo — Superuser Do
+### 🔹 39.1 sudo — Superuser Do
 
 ```bash
 # Run single command as root:
@@ -654,7 +654,7 @@ su -                       # Switch to root (needs root password)
 su - alice                 # Login shell as alice
 ```
 
-### 39. 🔹 2 visudo — Safe Sudoers Editor
+### 🔹 39.2 visudo — Safe Sudoers Editor
 
 ```bash
 # ALWAYS use visudo — it validates syntax before saving!

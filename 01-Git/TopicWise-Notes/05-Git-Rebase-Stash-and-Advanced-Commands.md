@@ -8,7 +8,7 @@ This note preserves the original content on rebase, stash, tags, diff, log, and 
 - Use stash to pause work safely and return later.
 - Use diff and log to inspect and understand repository history.
 
-## 1. 📌 Git Rebase
+## 📌 1. Git Rebase
 
 Rebase is used when you want to keep the project history visually linear and clean. It moves the work from one branch onto another so that commits appear to have been created in a more sequential order.
 
@@ -28,7 +28,7 @@ git rebase -i HEAD~3
 | `fixup` | Combine and discard message |
 | `drop` | Remove commit |
 
-## 2. 📌 Git Stash
+## 📌 2. Git Stash
 
 At times you need to set aside incomplete work to switch tasks without committing. Stash provides a temporary storage area so the current changes can be restored later.
 
@@ -43,7 +43,7 @@ git stash drop
 git stash clear
 ```
 
-## 3. 📌 Git Tags
+## 📌 3. Git Tags
 
 Tags are used to mark meaningful points in history, especially releases. They make it easier to refer to a known-good version of the project later.
 
@@ -55,7 +55,7 @@ git push origin --tags
 git tag -d v1.0
 ```
 
-## 4. 📌 Git Cherry-Pick
+## 📌 4. Git Cherry-Pick
 
 Sometimes a single fix from one branch is needed in another branch without bringing the whole branch history. Cherry-pick allows that targeted transfer of one commit at a time.
 
@@ -65,7 +65,7 @@ git cherry-pick <commit1> <commit2>
 git cherry-pick <commit-hash> --no-commit
 ```
 
-## 5. 📌 Git Diff
+## 📌 5. Git Diff
 
 Diff commands are used to inspect the exact changes between versions, branches, or commits. They are essential for code review, debugging, and understanding the impact of a change.
 
@@ -81,7 +81,7 @@ git diff --name-only
 git diff --word-diff
 ```
 
-## 6. 📌 Git Log
+## 📌 6. Git Log
 
 The log provides a historical view of the project. It helps developers understand who changed what, when, and in what order, which is especially valuable in debugging and auditing.
 

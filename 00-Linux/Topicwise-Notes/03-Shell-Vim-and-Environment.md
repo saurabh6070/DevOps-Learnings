@@ -2,11 +2,11 @@
 
 Covers the shell experience, editing with Vim, and how environment variables shape your session.
 
-## 7. 🐚 Vi / Vim Editor
+## 🐚 7. Vi / Vim Editor
 
 Text editing is a core part of Linux administration and scripting. Vim is widely used because it is powerful, fast, and available on nearly every Linux system.
 
-### 7. 🔹 1 Vim Modes
+### 🔹 7.1 Vim Modes
 
 ```
 Normal Mode     → Default mode. Navigate and issue commands.
@@ -15,7 +15,7 @@ Command Mode    → Run commands. Enter with: : (colon)
 Visual Mode     → Select text. Enter with: v, V, Ctrl+v
 ```
 
-### 7. 🔹 2 Essential Vim Commands
+### 🔹 7.2 Essential Vim Commands
 
 ```bash
 vim file.txt        # Open file in vim
@@ -100,11 +100,11 @@ gg=G                 # Auto-indent entire file
 
 ---
 
-## 8. 🔗 Shell & Environment Variables
+## 🔗 8. Shell & Environment Variables
 
 The shell is the interface between the user and the operating system. Environment variables allow the shell and applications to store values that affect behavior, such as paths, editors, and custom settings.
 
-### 8. 🔹 1 Variables
+### 🔹 8.1 Variables
 
 ```bash
 # Define variables:
@@ -133,7 +133,7 @@ printenv HOME                     # Specific variable
 set                               # All variables + functions (shell)
 ```
 
-### 8. 🔹 2 Important Environment Variables
+### 🔹 8.2 Important Environment Variables
 
 | Variable | Description |
 |----------|-------------|
@@ -158,7 +158,7 @@ set                               # All variables + functions (shell)
 | `$@` | All arguments to script |
 | `$*` | All arguments as single string |
 
-### 8. 🔹 3 Shell Profile Files
+### 🔹 8.3 Shell Profile Files
 
 ```bash
 # Login shell startup order:
@@ -178,7 +178,7 @@ source ~/.bashrc
 . ~/.bashrc             # Same as source
 ```
 
-### 8. 🔹 4 PATH Management
+### 🔹 8.4 PATH Management
 
 ```bash
 # View current PATH:
@@ -196,9 +196,9 @@ command -v python3
 ```
 ---
 
-## 9. 🐚 Shell Profile Files — `.bash_profile`, `.bashrc`, `.bash_logout`
+## 🐚 9. Shell Profile Files — `.bash_profile`, `.bashrc`, `.bash_logout`
 
-### 9. 🔹 1 Profile File Execution Order
+### 🔹 9.1 Profile File Execution Order
 
 ```
 LOGIN SHELL (SSH, TTY login):
@@ -216,7 +216,7 @@ NON-LOGIN INTERACTIVE SHELL (new terminal, bash in GUI):
   ~/.bashrc               → User-specific interactive config
 ```
 
-### 9. 🔹 2 `.bash_profile` — Login Shell Config
+### 🔹 9.2 `.bash_profile` — Login Shell Config
 
 ```bash
 cat ~/.bash_profile
@@ -246,7 +246,7 @@ export HISTFILESIZE=20000
 echo "Welcome back, $USER! Today is $(date)"
 ```
 
-### 9. 🔹 3 `.bashrc` — Interactive Shell Config
+### 🔹 9.3 `.bashrc` — Interactive Shell Config
 
 ```bash
 cat ~/.bashrc
@@ -304,7 +304,7 @@ extract() {
 }
 ```
 
-### 9. 🔹 4 `.bash_logout` — Logout Cleanup
+### 🔹 9.4 `.bash_logout` — Logout Cleanup
 
 ```bash
 cat ~/.bash_logout
@@ -327,7 +327,7 @@ rm -f /tmp/mytempfile 2>/dev/null
 echo "$(date) - $USER logged out from $HOSTNAME" >> ~/.logout_history
 ```
 
-### 9. 🔹 5 Applying Changes Without Logout
+### 🔹 9.5 Applying Changes Without Logout
 
 ```bash
 source ~/.bashrc           # Reload .bashrc
@@ -338,9 +338,9 @@ exec bash                  # Replace current shell with fresh one
 
 ---
 
-## 10. 🔑 Hidden Files and Aliases
+## 🔑 10. Hidden Files and Aliases
 
-### 10. 🔹 1 Hidden Files in Linux
+### 🔹 10.1 Hidden Files in Linux
 
 ```bash
 # Files/directories starting with . are hidden:
@@ -371,7 +371,7 @@ ls -la | grep '^\.'
 find . -name ".*" ! -name "." ! -name ".."
 ```
 
-### 10. 🔹 2 alias — Command Shortcuts
+### 🔹 10.2 alias — Command Shortcuts
 
 ```bash
 # Create temporary alias (lost on logout):

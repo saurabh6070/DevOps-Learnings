@@ -2,11 +2,11 @@
 
 Covers the essential ideas behind Linux, its architecture, and the filesystem hierarchy.
 
-## 1. 🐧 Introduction to Linux
+## 🐧 1. Introduction to Linux
 
 Linux is the foundation of modern infrastructure because it powers servers, cloud platforms, containers, and many developer workstations. Understanding the basic idea of Linux is important before exploring commands, configuration files, or system administration tasks.
 
-### 1. 🔹 1 What is Linux?
+### 🔹 1.1 What is Linux?
 
 **Linux** is a Unix-like operating system kernel that powers servers, desktops, cloud platforms, mobile devices, and supercomputers.
 Linux was created in 1991 by **Linus Torvalds**.
@@ -35,7 +35,7 @@ Linux = Kernel (core) + GNU Tools + Shell + Applications
 > linux
 
 
-### 1. 🔹 2 Why Linux?
+### 🔹 1.2 Why Linux?
 
 | Feature | Description |
 |---------|-------------|
@@ -47,7 +47,7 @@ Linux = Kernel (core) + GNU Tools + Shell + Applications
 | 🌐 **Dominant in Cloud** | 90%+ of cloud workloads run on Linux |
 | 🐳 **Container Native** | Docker, Kubernetes all built on Linux kernel features |
 
-### 1. 🔹 3 Popular Linux Distributions
+### 🔹 1.3 Popular Linux Distributions
 
 | Family | Distributions | Package Manager |
 |--------|--------------|----------------|
@@ -59,7 +59,7 @@ Linux = Kernel (core) + GNU Tools + Shell + Applications
 
 > 💡 **Ubuntu** is most popular for beginners and cloud. **RHEL/CentOS** dominate enterprise environments.
 
-### 1. 🔹 4 Linux Kernel Version
+### 🔹 1.4 Linux Kernel Version
 
 ```bash
 # Check kernel version:
@@ -70,7 +70,7 @@ cat /proc/version  # Detailed kernel info
 
 ---
 
-## 2. 🖥️ Linux Architecture
+## 🖥️ 2. Linux Architecture
 
 A Linux system is organized in layers, from hardware up to user applications. Knowing this structure helps explain why commands, services, and kernel features behave the way they do.
 
@@ -96,7 +96,7 @@ A Linux system is organized in layers, from hardware up to user applications. Kn
 └─────────────────────────────────────────────────────┘
 ```
 
-### 2. 🔹 1 Key Layers
+### 🔹 2.1 Key Layers
 
 | Layer | Description |
 |-------|-------------|
@@ -106,7 +106,7 @@ A Linux system is organized in layers, from hardware up to user applications. Kn
 | **Shell** | Command interpreter — bash, zsh, sh, ksh, fish |
 | **Applications** | User programs — nginx, vim, Python, MySQL |
 
-### 2. 🔹 2 Types of Shells
+### 🔹 2.2 Types of Shells
 
 | Shell | Description |
 |-------|-------------|
@@ -131,7 +131,7 @@ chsh -s /bin/zsh
 
 ---
 
-## 3. 📂 Linux File System Hierarchy
+## 📂 3. Linux File System Hierarchy
 
 The Linux filesystem is a single tree rooted at /, which makes paths and file organization predictable. Learning this hierarchy is essential for locating configuration files, logs, user data, and system resources.
 
@@ -162,7 +162,7 @@ Linux uses a **single root** (`/`) hierarchy — everything hangs from `/`. Unli
 └── run/        ← Runtime data (PID files, sockets)
 ```
 
-### 3. 🔹 1 Key Directories Explained
+### 🔹 3.1 Key Directories Explained
 
 | Directory | Purpose | Examples |
 |-----------|---------|---------|
@@ -174,7 +174,7 @@ Linux uses a **single root** (`/`) hierarchy — everything hangs from `/`. Unli
 | `/tmp` | Temp files — world-writable | Cleared on reboot |
 | `/usr/local/bin` | User-installed binaries | Custom scripts, compiled software |
 
-### 3. 🔹 2 Absolute vs Relative Paths
+### 🔹 3.2 Absolute vs Relative Paths
 
 ```bash
 # Absolute path — always starts with /:

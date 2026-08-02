@@ -8,7 +8,7 @@ This note preserves the original content on branching strategies, merging, and c
 - Learn how merges and conflicts are handled in real projects.
 - Follow the pull request workflow used by modern teams.
 
-## 1. 📌 Branching Basics
+## 📌 1. Branching Basics
 
 Branching is one of Git’s most powerful features because it allows multiple streams of work to exist independently. This is essential for feature development, experimentation, and safe collaboration in team environments.
 
@@ -20,7 +20,7 @@ git checkout -b <branch-name>
 git switch -c <branch-name>
 ```
 
-## 2. 📌 Listing and Deleting Branches
+## 📌 2. Listing and Deleting Branches
 
 ```bash
 git branch
@@ -30,7 +30,7 @@ git branch -d <branch-name>
 git branch -D <branch-name>
 ```
 
-## 3. 📌 Fast-Forward Merge
+## 📌 3. Fast-Forward Merge
 
 When the base branch has not changed since the feature branch started, Git can merge by moving the branch pointer forward. This is the simplest and cleanest merge path.
 
@@ -38,7 +38,7 @@ When the base branch has not changed since the feature branch started, Git can m
 git merge <branch-name>
 ```
 
-## 4. 📌 Three-Way Merge and Merge Conflicts
+## 📌 4. Three-Way Merge and Merge Conflicts
 
 When both branches have changed, Git must compare the common ancestor with both versions before combining them. This is called a three-way merge, and it may require human intervention when the same lines were edited differently.
 
@@ -70,7 +70,7 @@ git add file.txt
 git commit -m "Resolved merge conflict"
 ```
 
-## 5. 📌 Working with Remotes
+## 📌 5. Working with Remotes
 
 A remote is the shared version of the repository that others can access. Working with remotes allows local changes to be pushed, fetched, and synchronized across machines and teams.
 
@@ -84,7 +84,7 @@ git fetch origin
 git fetch --all
 ```
 
-## 6. 📌 Pull Request Workflow
+## 📌 6. Pull Request Workflow
 
 Pull requests are the standard way to propose changes in modern Git workflows. They provide a review process where teammates can inspect, discuss, and approve changes before merging them into the main branch.
 
@@ -98,7 +98,7 @@ Pull requests are the standard way to propose changes in modern Git workflows. T
 7. Review and merge
 ```
 
-## 7. 📌 Workflow Strategies
+## 📌 7. Workflow Strategies
 
 Different project sizes and team structures require different Git workflow models. Choosing the right workflow helps reduce merge conflicts, improve collaboration, and make releases more predictable.
 

@@ -2,11 +2,11 @@
 
 Covers disks, partitions, filesystems, inodes, LVM, and RAID concepts.
 
-## 20. 💾 Disk & Storage Management
+## 💾 20. Disk & Storage Management
 
 Storage management is a core Linux administration task because disks, filesystems, and mounts determine where data lives and how reliably it is preserved. Understanding these topics is critical for both day-to-day operations and disaster recovery.
 
-### 20. 🔹 1 Disk Usage and Space
+### 🔹 20.1 Disk Usage and Space
 
 ```bash
 # df — disk filesystem usage:
@@ -27,7 +27,7 @@ find / -type f -size +100M -exec ls -lh {} \; 2>/dev/null
 du -a / 2>/dev/null | sort -rn | head -20
 ```
 
-### 20. 🔹 2 Disk Partitions
+### 🔹 20.2 Disk Partitions
 
 ```bash
 # View disks and partitions:
@@ -52,7 +52,7 @@ parted /dev/sdb
 gdisk /dev/sdb
 ```
 
-### 20. 🔹 3 Filesystems
+### 🔹 20.3 Filesystems
 
 ```bash
 # Create filesystem:
@@ -70,7 +70,7 @@ e2fsck -f /dev/sdb1              # Force check ext4
 xfs_repair /dev/sdb1             # Repair XFS filesystem
 ```
 
-### 20. 🔹 4 Mounting and Unmounting
+### 🔹 20.4 Mounting and Unmounting
 
 ```bash
 # Mount:
@@ -95,7 +95,7 @@ findmnt                         # Tree view of mounts
 findmnt /mnt/data               # Specific mountpoint info
 ```
 
-### 20. 🔹 5 /etc/fstab — Persistent Mounts
+### 🔹 20.5 /etc/fstab — Persistent Mounts
 
 ```bash
 cat /etc/fstab
@@ -117,7 +117,7 @@ lsblk -f                # Shows UUIDs in tree view
 ```
 
 
-### 20. 🔹 6 Swap Space
+### 🔹 20.6 Swap Space
 
 ```bash
 # View swap:
@@ -145,9 +145,9 @@ echo 'vm.swappiness=10' >> /etc/sysctl.conf  # Permanent
 ```
 ---
 
-## 21. 💾 Advanced Disk Management — fdisk, Partitions & Filesystems
+## 💾 21. Advanced Disk Management — fdisk, Partitions & Filesystems
 
-### 21. 🔹 1 Understanding Partition Types
+### 🔹 21.1 Understanding Partition Types
 
 | Type | Description | Use case |
 |------|-------------|---------|
@@ -166,7 +166,7 @@ MBR Disk (max 4 primary):
     sda7 → Logical (/data)
 ```
 
-### 21. 🔹 2 fdisk — Complete Command Reference
+### 🔹 21.2 fdisk — Complete Command Reference
 
 ```bash
 # Open disk for partitioning (⚠️ DESTRUCTIVE — backup first!):
@@ -234,7 +234,7 @@ Command: p
 Command: w                # ← THIS ACTUALLY SAVES ALL CHANGES
 ```
 
-### 21. 🔹 3 Creating Filesystems (mkfs)
+### 🔹 21.3 Creating Filesystems (mkfs)
 
 ```bash
 # After partitioning, format with filesystem:
@@ -259,7 +259,7 @@ tune2fs -c 30 /dev/sdb1               # Check every 30 mounts
 tune2fs -m 2 /dev/sdb1               # Change reserved space to 2%
 ```
 
-### 21. 🔹 4 /etc/fstab — Permanent Mounts
+### 🔹 21.4 /etc/fstab — Permanent Mounts
 
 ```bash
 cat /etc/fstab
@@ -306,9 +306,9 @@ blkid /dev/sdb1
 
 ---
 
-## 22. 🗂️ Inodes — Understanding the Linux Filesystem Internals
+## 🗂️ 22. Inodes — Understanding the Linux Filesystem Internals
 
-### 22. 🔹 1 What is an Inode?
+### 🔹 22.1 What is an Inode?
 
 An **inode** (index node) is a data structure that stores **metadata** about a file — everything **except** the filename and file content.
 
@@ -329,7 +329,7 @@ Filename  →  Inode Number  →  Inode (metadata)  →  Data Blocks
 - The filename (stored in directory entries)
 - The file content (stored in data blocks)
 
-### 22. 🔹 2 Inode Commands
+### 🔹 22.2 Inode Commands
 
 ```bash
 # View inode number:
@@ -349,7 +349,7 @@ mkfs.ext4 -i 4096 /dev/sdb1           # 1 inode per 4096 bytes
 tune2fs -l /dev/sda1 | grep -i inode   # View inode info for ext4
 ```
 
-### 22. 🔹 3 Hard Links and Inodes
+### 🔹 22.3 Hard Links and Inodes
 
 ```bash
 # Hard links share the same inode:
@@ -370,7 +370,7 @@ rm hardlink.txt         # Nlinks: 0 — data blocks freed
 # ✅ Same inode = same permissions and ownership
 ```
 
-### 22. 🔹 4 Soft Links (Symbolic Links) and Inodes
+### 🔹 22.4 Soft Links (Symbolic Links) and Inodes
 
 ```bash
 # Soft link gets its OWN inode — just stores target path:
@@ -395,9 +395,9 @@ find / -type l -xtype l            # Find broken symlinks
 
 ---
 
-## 23. 💡 LVM — Logical Volume Management
+## 💡 23. LVM — Logical Volume Management
 
-### 23. 🔹 1 LVM Concepts
+### 🔹 23.1 LVM Concepts
 
 ```
 Physical Disks/Partitions (PV)
@@ -409,7 +409,7 @@ Physical Disks/Partitions (PV)
      Filesystem (ext4, xfs, etc.)
 ```
 
-### 23. 🔹 2 LVM Commands
+### 🔹 23.2 LVM Commands
 
 ```bash
 # Physical Volumes (PV):
@@ -469,9 +469,9 @@ lvremove /dev/datavg/datalv_snap                        # Remove snapshot
 
 ---
 
-## 24. 🔒 RAID — Redundant Array of Independent Disks
+## 🔒 24. RAID — Redundant Array of Independent Disks
 
-### 24. 🔹 1 RAID Levels Explained
+### 🔹 24.1 RAID Levels Explained
 
 | RAID | Name | Min Disks | Parity | Fault Tolerance | Read Speed | Write Speed |
 |------|------|:---------:|:------:|:--------------:|:----------:|:-----------:|
@@ -481,7 +481,7 @@ lvremove /dev/datavg/datalv_snap                        # Remove snapshot
 | **6** | Double Parity | 4 | Double | ✅ 2 disks | Fast | Slower |
 | **10** | Stripe+Mirror | 4 | Mirror | ✅ 1 per pair | ⚡ Best | Fast |
 
-### 24. 🔹 2 RAID-5 — How It Works
+### 🔹 24.2 RAID-5 — How It Works
 
 ```
 RAID-5 with 3 disks:
@@ -495,7 +495,7 @@ If Disk 1 fails → A2 + Ap can reconstruct A1 (XOR)
 Minimum 3 disks | Usable = (N-1) × disk_size
 ```
 
-### 24. 🔹 3 RAID-5 Implementation with mdadm
+### 🔹 24.3 RAID-5 Implementation with mdadm
 
 ```bash
 # Install mdadm:

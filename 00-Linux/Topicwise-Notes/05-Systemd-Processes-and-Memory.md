@@ -2,11 +2,11 @@
 
 Covers service management, process monitoring, memory concepts, and logging in Linux.
 
-## 16. ⚙️ Systemd & Service Management
+## ⚙️ 16. Systemd & Service Management
 
 Modern Linux systems use systemd to manage services, boot order, and background processes. Learning how to control services is essential for administration, troubleshooting, and automation.
 
-### 16. 🔹 1 systemctl — Control Services
+### 🔹 16.1 systemctl — Control Services
 
 ```bash
 # Service state:
@@ -39,7 +39,7 @@ systemctl list-units --state=failed  # Failed services
 systemctl list-unit-files            # All unit files + enabled status
 ```
 
-### 16. 🔹 2 systemd Unit Files
+### 🔹 16.2 systemd Unit Files
 
 ```bash
 # Unit file locations:
@@ -86,7 +86,7 @@ systemctl daemon-reload          # Reload systemd config
 systemctl enable --now myapp     # Enable and start
 ```
 
-### 16. 🔹 3 journalctl — System Logs
+### 🔹 16.3 journalctl — System Logs
 
 ```bash
 # View all logs:
@@ -125,7 +125,7 @@ journalctl --vacuum-size=500M        # Keep only 500MB of logs
 journalctl --vacuum-time=30d         # Delete logs older than 30 days
 ```
 
-### 16. 🔹 4 Runlevels and Targets
+### 🔹 16.4 Runlevels and Targets
 
 ```bash
 # systemd targets (replace old runlevels):
@@ -143,11 +143,11 @@ systemctl isolate rescue.target           # Switch to rescue mode now
 
 ---
 
-## 17. ⚙️ Process Management
+## ⚙️ 17. Process Management
 
 Processes are the running programs on a Linux system. Monitoring and controlling them is necessary when diagnosing performance, resource issues, or unexpected service behavior.
 
-### 17. 🔹 1 Viewing Processes
+### 🔹 17.1 Viewing Processes
 
 ```bash
 # ps — process snapshot:
@@ -174,7 +174,7 @@ pgrep -u alice          # All PIDs for alice
 pidof nginx             # PID of nginx (exact name match)
 ```
 
-### 17. 🔹 2 Process States
+### 🔹 17.2 Process States
 
 | State | Symbol | Meaning |
 |-------|:------:|---------|
@@ -184,7 +184,7 @@ pidof nginx             # PID of nginx (exact name match)
 | Stopped | `T` | Suspended (Ctrl+Z) |
 | Zombie | `Z` | Finished but parent hasn't acknowledged |
 
-### 17. 🔹 3 Signals and killing processes
+### 🔹 17.3 Signals and killing processes
 
 ```bash
 # kill — send signal to process:
@@ -214,7 +214,7 @@ pkill -f "python app.py" # Kill by full command match
 # SIGCONT (18) → Resume paused process
 ```
 
-### 17. 🔹 4 Background and Foreground Jobs
+### 🔹 17.4 Background and Foreground Jobs
 
 ```bash
 command &               # Run command in background
@@ -231,7 +231,7 @@ nohup ./script.sh &     # Keeps running after logout
 nohup ./script.sh > output.log 2>&1 &  # With output redirect
 ```
 
-### 17. 🔹 5 Process Priority (nice / renice)
+### 🔹 17.5 Process Priority (nice / renice)
 
 ```bash
 # nice value range: -20 (highest priority) to 19 (lowest)
@@ -251,7 +251,7 @@ ps aux --sort=ni                 # Sort by nice value
 top                              # NI column shows nice value
 ```
 
-### 17. 🔹 6 /proc — Process Information
+### 🔹 17.6 /proc — Process Information
 
 ```bash
 ls /proc/                        # Each number = a PID directory
@@ -267,9 +267,9 @@ cat /proc/sys/kernel/hostname    # Current hostname
 
 ---
 
-## 18. 🧠 Memory & CPU Management
+## 🧠 18. Memory & CPU Management
 
-### 18. 🔹 1 Memory Information
+### 🔹 18.1 Memory Information
 
 ```bash
 free -h                             # Memory summary
@@ -285,7 +285,7 @@ vmstat -s                           # Memory stats
 # available = memory actually available for new processes
 ```
 
-### 18. 🔹 2 Checking CPU Info
+### 🔹 18.2 Checking CPU Info
 
 ```bash
 lscpu                               # CPU architecture and details
@@ -299,7 +299,7 @@ sensors                             # Temperature readings
 sensors-detect                      # Detect sensor chips
 ```
 
-### 18. 🔹 3 Memory Management
+### 🔹 18.3 Memory Management
 
 ```bash
 # Clear page cache (safe to run):
@@ -319,9 +319,9 @@ echo 1000 > /proc/<PID>/oom_score_adj     # Kill this first
 
 ---
 
-## 19. 📋 Linux Logs & Monitoring
+## 📋 19. Linux Logs & Monitoring
 
-### 19. 🔹 1 Key Log Files
+### 🔹 19.1 Key Log Files
 
 | Log File | Contents |
 |----------|---------|
@@ -355,7 +355,7 @@ dmesg -w                             # Follow mode
 dmesg --level=err,crit               # Filter by level
 ```
 
-### 19. 🔹 2 logrotate — Log Rotation
+### 🔹 19.2 logrotate — Log Rotation
 
 ```bash
 # Config files:
@@ -381,7 +381,7 @@ logrotate -d /etc/logrotate.conf     # Debug/dry run
 logrotate -f /etc/logrotate.d/nginx  # Force rotation now
 ```
 
-### 19. 🔹 3 System Monitoring Tools
+### 🔹 19.3 System Monitoring Tools
 
 ```bash
 # top — built-in process monitor:
