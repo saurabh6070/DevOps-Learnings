@@ -6,7 +6,7 @@ Covers package installation, updates, repositories, and package managers on Linu
 
 Software installation and updates are a routine part of Linux administration. Package managers simplify this process by handling dependencies, repositories, and version control consistently.
 
-### 25.1 APT — Debian/Ubuntu
+### 25. 🔹 1 APT — Debian/Ubuntu
 
 ```bash
 # Update package index:
@@ -45,7 +45,7 @@ dpkg -r nginx                            # Remove package
 apt-get update && apt-get upgrade -y
 ```
 
-### 25.2 YUM / DNF — RHEL/CentOS/Fedora
+### 25. 🔹 2 YUM / DNF — RHEL/CentOS/Fedora
 
 ```bash
 # DNF (modern, Fedora 22+, RHEL 8+):
@@ -85,7 +85,7 @@ rpm -qf /etc/nginx/nginx.conf            # Package owning this file
 rpm -V nginx                             # Verify package files
 ```
 
-### 25.3 Repository Management
+### 25. 🔹 3 Repository Management
 
 ```bash
 # APT repositories:
@@ -107,7 +107,7 @@ dnf install epel-release
 
 ## 26. 📦 Software Management — YUM Server Setup
 
-### 26.1 YUM — Yellowdog Updater Modified (RHEL 7 and older)
+### 26. 🔹 1 YUM — Yellowdog Updater Modified (RHEL 7 and older)
 
 ```bash
 yum install nginx -y              # Install
@@ -129,7 +129,7 @@ yum repolist                     # List enabled repos
 yum repolist all                 # All repos including disabled
 ```
 
-### 26.2 Setting Up a Local YUM Repository Server
+### 26. 🔹 2 Setting Up a Local YUM Repository Server
 
 ```bash
 # Step 1: Install HTTP server and createrepo:
@@ -169,7 +169,7 @@ yum clean all && yum repolist
 yum install nginx -y
 ```
 
-### 26.3 vsftpd with GPG Check
+### 26. 🔹 3 vsftpd with GPG Check
 
 ```bash
 # vsftpd — Very Secure FTP Daemon:

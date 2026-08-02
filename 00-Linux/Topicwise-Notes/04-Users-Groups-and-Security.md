@@ -6,7 +6,7 @@ Covers user and group administration, password policies, and essential Linux sec
 
 Linux security begins with controlled access to the system. Users and groups define who can log in, what they can access, and how privileges are separated.
 
-### 11.1 User Accounts
+### 11. 🔹 1 User Accounts
 
 ```bash
 # View user info:
@@ -24,7 +24,7 @@ cat /etc/passwd                # All user accounts
 getent passwd alice            # Look up specific user
 ```
 
-### 11.2 Creating and Managing Users
+### 11. 🔹 2 Creating and Managing Users
 
 ```bash
 # Create user:
@@ -61,7 +61,7 @@ userdel alice                            # Delete user (keep home dir)
 userdel -r alice                         # Delete user + home directory + mail
 ```
 
-### 11.3 Password Policy — /etc/shadow
+### 11. 🔹 3 Password Policy — /etc/shadow
 
 ```bash
 cat /etc/shadow     # Encrypted passwords + expiry info
@@ -76,7 +76,7 @@ chage -E 2025-12-31 alice   # Account expires on date
 chage -d 0 alice            # Force password change on next login
 ```
 
-### 11.4 Group Management
+### 11. 🔹 4 Group Management
 
 ```bash
 # View groups:
@@ -106,7 +106,7 @@ gpasswd -A alice developers      # Make alice group admin
 newgrp developers
 ```
 
-### 11.5 sudo — Privilege Escalation
+### 11. 🔹 5 sudo — Privilege Escalation
 
 ```bash
 # Run command as root:
@@ -135,7 +135,7 @@ usermod -aG sudo alice
 usermod -aG wheel alice
 ```
 
-### 11.6 Key User Files
+### 11. 🔹 6 Key User Files
 
 | File | Contents |
 |------|---------|
@@ -150,7 +150,7 @@ usermod -aG wheel alice
 
 ## 12. 👥 UIDs, GIDs — User and Group IDs in Linux
 
-### 12.1 UID — User ID
+### 12. 🔹 1 UID — User ID
 
 Every user has a **UID (User ID)** — a numeric identifier. UIDs are unique per user.
 
@@ -173,7 +173,7 @@ getent passwd alice                # Look up by name
 getent passwd 1001                 # Look up by UID
 ```
 
-### 12.2 GID — Group ID
+### 12. 🔹 2 GID — Group ID
 
 ```
 GID 0        → root group
@@ -198,7 +198,7 @@ getent group developers
 getent group 1500
 ```
 
-### 12.3 root User Special Properties
+### 12. 🔹 3 root User Special Properties
 
 ```bash
 # root is ALWAYS UID=0, GID=0 — regardless of username
@@ -223,7 +223,7 @@ if [ "$(id -u)" != "0" ]; then
 fi
 ```
 
-### 12.4 Convert Root User ↔ Normal User
+### 12. 🔹 4 Convert Root User ↔ Normal User
 
 ```bash
 # Convert normal user to ROOT-equivalent (dangerous!):
@@ -248,7 +248,7 @@ sudo -l -U alice                # List alice's sudo privileges
 
 ## 13. 📁 /etc/passwd and /etc/shadow — User Database Files
 
-### 13.1 /etc/passwd — User Account Database
+### 13. 🔹 1 /etc/passwd — User Account Database
 
 ```bash
 cat /etc/passwd
@@ -282,7 +282,7 @@ root  :  x  :  0  :  0  :  root  :  /root  :  /bin/bash
 useradd -m -d /home/alice -s /bin/bash -c "Alice Smith" -u 1001 -g 1001 alice
 ```
 
-### 13.2 /etc/shadow — Encrypted Password Storage
+### 13. 🔹 2 /etc/shadow — Encrypted Password Storage
 
 ```bash
 # Only readable by root:
@@ -325,7 +325,7 @@ usermod -U alice        # Unlock (alternative)
 
 ## 14. 🔄 /etc/inittab and Runlevels — Switching Between GUI and CLI
 
-### 14.1 Traditional Runlevels (/etc/inittab)
+### 14. 🔹 1 Traditional Runlevels (/etc/inittab)
 
 ```bash
 # Traditional SysV init runlevels (pre-systemd):
@@ -348,7 +348,7 @@ id:3:initdefault:       ← Boot into CLI mode (runlevel 3)
 id:5:initdefault:       ← Boot into GUI mode (runlevel 5)
 ```
 
-### 14.2 Switching Between GUI and CLI (Modern systemd)
+### 14. 🔹 2 Switching Between GUI and CLI (Modern systemd)
 
 ```bash
 # View current target (equivalent of runlevel):
@@ -374,7 +374,7 @@ init 6                                      # Legacy: reboot
 init 0                                      # Legacy: shutdown
 ```
 
-### 14.3 Runlevel-to-Target Mapping
+### 14. 🔹 3 Runlevel-to-Target Mapping
 
 | Old Runlevel | systemd Target | Description |
 |:---:|---|---|

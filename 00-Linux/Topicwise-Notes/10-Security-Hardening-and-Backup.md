@@ -6,7 +6,7 @@ Covers hardening, backup, performance tuning, and shell scripting in Linux.
 
 Security hardening is the process of reducing risk by tightening access, monitoring activity, and limiting attack surfaces. These practices help protect Linux systems from misconfiguration, abuse, and common threats.
 
-### 40.1 Security Audit Tools
+### 40. 🔹 1 Security Audit Tools
 
 ```bash
 # lynis — security auditing:
@@ -33,7 +33,7 @@ fail2ban-client status sshd     # SSH jail status
 fail2ban-client set sshd unbanip 10.0.0.5  # Unban IP
 ```
 
-### 40.2 SELinux (RHEL/CentOS)
+### 40. 🔹 2 SELinux (RHEL/CentOS)
 
 ```bash
 # SELinux status:
@@ -64,7 +64,7 @@ ausearch -m avc -ts recent      # Recent SELinux denials
 sealert -a /var/log/audit/audit.log  # Analyze and suggest fixes
 ```
 
-### 40.3 AppArmor (Ubuntu/Debian)
+### 40. 🔹 3 AppArmor (Ubuntu/Debian)
 
 ```bash
 # AppArmor status:
@@ -80,7 +80,7 @@ aa-disable /etc/apparmor.d/usr.sbin.nginx   # Disable profile
 apparmor_parser -r /etc/apparmor.d/usr.sbin.nginx
 ```
 
-### 40.4 System Hardening Checklist
+### 40. 🔹 4 System Hardening Checklist
 
 ```bash
 # 1. Keep system updated:
@@ -131,7 +131,7 @@ systemctl enable --now auditd
 
 ## 41. 🔐 GRUB2 Password — Recovery When Password Forgotten
 
-### 41.1 Reset Root Password via GRUB
+### 41. 🔹 1 Reset Root Password via GRUB
 
 ```bash
 # When you forget root password:
@@ -165,7 +165,7 @@ passwd root
 exec /sbin/init                 # Or just reboot -f
 ```
 
-### 41.2 GRUB2 Password Protection
+### 41. 🔹 2 GRUB2 Password Protection
 
 ```bash
 # Protect GRUB menu from editing:
@@ -185,7 +185,7 @@ grub2-mkconfig -o /boot/efi/EFI/centos/grub.cfg  # RHEL (UEFI)
 update-grub                                # Ubuntu
 ```
 
-### 41.3 /etc/rc.local — Legacy Startup Scripts
+### 41. 🔹 3 /etc/rc.local — Legacy Startup Scripts
 
 ```bash
 # /etc/rc.local runs at end of boot process (all targets reached):
@@ -227,7 +227,7 @@ systemctl status rc-local
 
 ## 42. 🔄 Backup & Recovery
 
-### 42.1 rsync — Efficient Backup
+### 42. 🔹 1 rsync — Efficient Backup
 
 ```bash
 # Basic sync:
@@ -258,7 +258,7 @@ rsync -avzP /large/dir/ /backup/
 rsync -avz --link-dest=/backup/prev/ /source/ /backup/new/
 ```
 
-### 42.2 tar for Backups
+### 42. 🔹 2 tar for Backups
 
 ```bash
 # Full backup with timestamp:
@@ -276,7 +276,7 @@ tar -czf /backup/inc_$(date +%Y%m%d).tar.gz \
 tar -czf - /opt/app/ | ssh user@remote "cat > /backup/app_$(date +%Y%m%d).tar.gz"
 ```
 
-### 42.3 dd — Disk Cloning
+### 42. 🔹 3 dd — Disk Cloning
 
 ```bash
 # Clone entire disk:
@@ -298,7 +298,7 @@ dd if=/dev/sda1 of=/backup/sda1.img bs=4M
 dd if=/dev/zero of=/dev/sdb bs=4M status=progress
 ```
 
-### 42.4 Backup Script Example
+### 42. 🔹 4 Backup Script Example
 
 ```bash
 #!/bin/bash
@@ -338,7 +338,7 @@ log "Backup complete"
 
 ## 43. 🚀 Performance Tuning
 
-### 43.1 CPU Performance
+### 43. 🔹 1 CPU Performance
 
 ```bash
 # CPU governor (affects power/performance balance):
@@ -356,7 +356,7 @@ tuned-adm profile latency-performance
 tuned-adm active                            # Current profile
 ```
 
-### 43.2 Memory Performance
+### 43. 🔹 2 Memory Performance
 
 ```bash
 # Tune virtual memory:
@@ -371,7 +371,7 @@ cat /proc/meminfo | grep Huge                      # Check huge pages
 sysctl -p   # Apply all sysctl changes
 ```
 
-### 43.3 Network Performance
+### 43. 🔹 3 Network Performance
 
 ```bash
 # TCP tuning (/etc/sysctl.conf):
@@ -389,7 +389,7 @@ net.ipv4.tcp_wmem = 4096 65536 16777216
 sysctl -p   # Apply
 ```
 
-### 43.4 Disk I/O Performance
+### 43. 🔹 4 Disk I/O Performance
 
 ```bash
 # Check I/O scheduler:
@@ -410,7 +410,7 @@ fio --name=test --rw=randread --bs=4k --iodepth=32 --runtime=30 --filename=/dev/
 # /dev/sda1 /home ext4 defaults,noatime 0 2
 ```
 
-### 43.5 ulimit — User Resource Limits
+### 43. 🔹 5 ulimit — User Resource Limits
 
 ```bash
 ulimit -a                      # Show all limits
@@ -435,7 +435,7 @@ echo 'fs.file-max = 2097152' >> /etc/sysctl.conf
 
 ## 44. 📝 Text Processing — grep, awk, sed
 
-### 44.1 grep — Search Text
+### 44. 🔹 1 grep — Search Text
 
 ```bash
 grep "error" /var/log/syslog          # Basic search
@@ -462,7 +462,7 @@ grep -F "exact.string" file.txt
 fgrep "exact.string" file.txt
 ```
 
-### 44.2 awk — Pattern Processing
+### 44. 🔹 2 awk — Pattern Processing
 
 ```bash
 # Basic usage:
@@ -503,7 +503,7 @@ awk '{print $1}' /var/log/nginx/access.log | sort | uniq -c | sort -rn | head  #
 df -h | awk 'NR>1 {print $5, $6}' | sort -rn      # Disk usage sorted
 ```
 
-### 44.3 sed — Stream Editor
+### 44. 🔹 3 sed — Stream Editor
 
 ```bash
 # Basic substitution:
@@ -539,7 +539,7 @@ sed '/^#/d;/^$/d' /etc/nginx/nginx.conf    # Remove comments and blank lines
 sed 's/[[:space:]]*$//' file.txt            # Remove trailing whitespace
 ```
 
-### 44.4 Other Text Tools
+### 44. 🔹 4 Other Text Tools
 
 ```bash
 # sort:
@@ -582,7 +582,7 @@ ls *.txt | xargs -P 4 gzip                   # Parallel gzip (4 jobs)
 
 ## 45. 📜 Shell Scripting
 
-### 45.1 Script Basics
+### 45. 🔹 1 Script Basics
 
 ```bash
 #!/bin/bash
@@ -601,7 +601,7 @@ sh script.sh
 source script.sh         # Run in current shell (shares variables)
 ```
 
-### 45.2 Variables and Input
+### 45. 🔹 2 Variables and Input
 
 ```bash
 #!/bin/bash
@@ -629,7 +629,7 @@ echo "All args: $@"
 echo "Arg count: $#"
 ```
 
-### 45.3 Conditionals
+### 45. 🔹 3 Conditionals
 
 ```bash
 #!/bin/bash
@@ -687,7 +687,7 @@ fi
 [ $age -gt 18 ] && echo "Adult" || echo "Minor"
 ```
 
-### 45.4 Loops
+### 45. 🔹 4 Loops
 
 ```bash
 #!/bin/bash
@@ -733,7 +733,7 @@ until [ $count -ge 5 ]; do
 done
 ```
 
-### 45.5 Functions
+### 45. 🔹 5 Functions
 
 ```bash
 #!/bin/bash
@@ -771,7 +771,7 @@ check_service nginx
 check_service mysql
 ```
 
-### 45.6 Error Handling
+### 45. 🔹 6 Error Handling
 
 ```bash
 #!/bin/bash
@@ -806,7 +806,7 @@ error_exit() {
 [ -f "/etc/nginx/nginx.conf" ] || error_exit "Nginx config not found!"
 ```
 
-### 45.7 Practical Script Examples
+### 45. 🔹 7 Practical Script Examples
 
 ```bash
 #!/bin/bash
@@ -875,9 +875,9 @@ log "=== Health Check Complete ==="
 
 ---
 
-## 46. ⏰ Scheduling Tasks — Cron & At
+## 46. 📌 ⏰ Scheduling Tasks — Cron & At
 
-### 46.1 cron — Recurring Jobs
+### 46. 🔹 1 cron — Recurring Jobs
 
 ```bash
 # Edit crontab:
@@ -945,7 +945,7 @@ Special characters:
 @hourly   /opt/hourly.sh         # Same as 0 * * * *
 ```
 
-### 46.2 at — One-Time Scheduled Jobs
+### 46. 🔹 2 at — One-Time Scheduled Jobs
 
 ```bash
 # Schedule a one-time command:
@@ -970,7 +970,7 @@ cat /etc/at.allow                # Users allowed to use at
 cat /etc/at.deny                 # Users denied at access
 ```
 
-### 46.3 systemd Timers (Modern Alternative)
+### 46. 🔹 3 systemd Timers (Modern Alternative)
 
 ```bash
 # List timers:

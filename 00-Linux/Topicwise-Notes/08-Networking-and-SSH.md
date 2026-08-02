@@ -6,7 +6,7 @@ Covers networking basics, SSH, routing, and firewall concepts in Linux.
 
 Networking is what allows a Linux system to communicate with other machines, services, and the internet. A strong foundation in IP addressing, routing, and DNS is necessary for both troubleshooting and system design.
 
-### 27.1 Network Interfaces
+### 27. 🔹 1 Network Interfaces
 
 ```bash
 # View interfaces:
@@ -27,7 +27,7 @@ ip addr flush dev eth0           # Remove all IPs from interface
 ip link set eth0 name lan0
 ```
 
-### 27.2 Routing
+### 27. 🔹 2 Routing
 
 ```bash
 # View routing table:
@@ -43,7 +43,7 @@ ip route del 192.168.2.0/24                     # Delete route
 ip route replace default via 192.168.1.254      # Change default gateway
 ```
 
-### 27.3 DNS Configuration
+### 27. 🔹 3 DNS Configuration
 
 ```bash
 # DNS resolution:
@@ -63,7 +63,7 @@ dig MX gmail.com                 # Look up MX records
 host google.com                  # Simple DNS lookup
 ```
 
-### 27.4 Network Diagnostics
+### 27. 🔹 4 Network Diagnostics
 
 ```bash
 # Connectivity tests:
@@ -98,7 +98,7 @@ nethogs                          # Bandwidth per process (install needed)
 iftop                            # Real-time bandwidth monitor
 ```
 
-### 27.5 NetworkManager
+### 27. 🔹 5 NetworkManager
 
 ```bash
 # nmcli — NetworkManager CLI:
@@ -126,7 +126,7 @@ hostnamectl                      # View hostname and info
 hostnamectl set-hostname myserver.example.com
 ```
 
-### 27.6 Network Config Files
+### 27. 🔹 6 Network Config Files
 
 ```bash
 # Ubuntu/Debian — Netplan:
@@ -160,7 +160,7 @@ cat /etc/sysconfig/network-scripts/ifcfg-eth0
 
 ## 28. 🌐 Networking in Linux — LAN, WAN, OSI, and Configuration Files
 
-### 28.1 LAN vs WAN
+### 28. 🔹 1 LAN vs WAN
 
 | Type | Full Name | Description | Range |
 |------|-----------|-------------|-------|
@@ -169,7 +169,7 @@ cat /etc/sysconfig/network-scripts/ifcfg-eth0
 | **MAN** | Metropolitan Area Network | City-wide network | City |
 | **VLAN** | Virtual LAN | Logical segmentation of LAN | Software-defined |
 
-### 28.2 OSI Model — 7 Layers
+### 28. 🔹 2 OSI Model — 7 Layers
 
 ```
 7 │ Application  │ HTTP, FTP, SSH, DNS, SMTP, SNMP
@@ -197,7 +197,7 @@ cat /etc/sysconfig/network-scripts/ifcfg-eth0
 | 2 Data Link | Ethernet, ARP | arp, ip link |
 | 1 Physical | Ethernet cable | ethtool, mii-tool |
 
-### 28.3 Types of Casting (Communication Modes)
+### 28. 🔹 3 Types of Casting (Communication Modes)
 
 | Type | Description | Example |
 |------|-------------|---------|
@@ -215,7 +215,7 @@ wall "System will reboot in 5 minutes!"
 broadcast -a "Maintenance window starting now"
 ```
 
-### 28.4 RHEL Network Config Files — /etc/sysconfig/network-scripts/
+### 28. 🔹 4 RHEL Network Config Files — /etc/sysconfig/network-scripts/
 
 ```bash
 # RHEL 7 and older — ifcfg files:
@@ -248,7 +248,7 @@ ifdown eth0 && ifup eth0        # RHEL 7 and older
 nmcli con reload && nmcli con up eth0   # With NetworkManager
 ```
 
-### 28.5 NetworkManager in RHEL
+### 28. 🔹 5 NetworkManager in RHEL
 
 ```bash
 # NetworkManager manages network connections dynamically:
@@ -282,7 +282,7 @@ nmcli con edit eth0
 # Add to ifcfg file:  NM_CONTROLLED=no
 ```
 
-### 28.6 /etc/network/interfaces — Debian/Ubuntu (Older)
+### 28. 🔹 6 /etc/network/interfaces — Debian/Ubuntu (Older)
 
 ```bash
 cat /etc/network/interfaces
@@ -312,7 +312,7 @@ ifdown eth0 && ifup eth0
 /etc/init.d/networking restart
 ```
 
-### 28.7 Changing Hostname
+### 28. 🔹 7 Changing Hostname
 
 ```bash
 # View current hostname:
@@ -333,7 +333,7 @@ hostnamectl set-hostname "My Production Server" --pretty  # Pretty name
 # Transient hostname (set by DHCP/mDNS, temporary)
 ```
 
-### 28.8 /etc/hosts — Local Name Resolution
+### 28. 🔹 8 /etc/hosts — Local Name Resolution
 
 ```bash
 cat /etc/hosts
@@ -355,7 +355,7 @@ cat /etc/nsswitch.conf | grep hosts
 # hosts: files dns        ← 'files' = /etc/hosts, then 'dns'
 ```
 
-### 28.9 /etc/hosts.deny and /etc/hosts.allow — TCP Wrappers
+### 28. 🔹 9 /etc/hosts.deny and /etc/hosts.allow — TCP Wrappers
 
 ```bash
 # TCP Wrappers control access to services that support libwrap
@@ -378,7 +378,7 @@ cat /etc/hosts.deny        # Blacklist — checked SECOND
 
 ## 29. 🔒 SSH & Remote Access
 
-### 29.1 SSH Client
+### 29. 🔹 1 SSH Client
 
 ```bash
 # Basic connections:
@@ -408,7 +408,7 @@ chmod 600 ~/.ssh/id_ed25519        # Private key
 chmod 644 ~/.ssh/id_ed25519.pub    # Public key
 ```
 
-### 29.2 SSH Config File (~/.ssh/config)
+### 29. 🔹 2 SSH Config File (~/.ssh/config)
 
 ```bash
 # Create SSH client config for shortcuts:
@@ -438,7 +438,7 @@ Host internal
 ssh myserver               # Instead of: ssh -p 2222 alice@192.168.1.100
 ```
 
-### 29.3 SCP and SFTP — Secure File Transfer
+### 29. 🔹 3 SCP and SFTP — Secure File Transfer
 
 ```bash
 # SCP — Secure Copy:
@@ -463,7 +463,7 @@ rsync -avz --delete localdir/ user@host:/remotedir/  # Mirror (delete extras)
 rsync -avzn localdir/ user@host:/remotedir/  # Dry run
 ```
 
-### 29.4 SSH Server Configuration (/etc/ssh/sshd_config)
+### 29. 🔹 4 SSH Server Configuration (/etc/ssh/sshd_config)
 
 ```bash
 # Key sshd_config settings:
@@ -486,7 +486,7 @@ sshd -t                              # Test config (ALWAYS do this first!)
 systemctl restart sshd               # Apply changes
 ```
 
-### 29.5 SSH Tunneling
+### 29. 🔹 5 SSH Tunneling
 
 ```bash
 # Local port forwarding (access remote service locally):
@@ -506,7 +506,7 @@ ssh -D 1080 user@remote-host
 
 ## 30. 🔐 Password-less SSH Authentication — Complete Setup
 
-### 30.1 How Key-Based Auth Works
+### 30. 🔹 1 How Key-Based Auth Works
 
 ```
 1. Admin generates key pair:  private key (secret) + public key (shareable)
@@ -516,7 +516,7 @@ ssh -D 1080 user@remote-host
 5. No password needed!
 ```
 
-### 30.2 Step-by-Step Setup
+### 30. 🔹 2 Step-by-Step Setup
 
 ```bash
 # Step 1: Generate key pair (on CLIENT):
@@ -566,7 +566,7 @@ ssh alice@192.168.1.100    # Now connects without passphrase prompt
 
 ## 31. 🔥 Firewall Management
 
-### 31.1 firewalld (RHEL/CentOS/Fedora)
+### 31. 🔹 1 firewalld (RHEL/CentOS/Fedora)
 
 ```bash
 # Service management:
@@ -607,7 +607,7 @@ firewall-cmd --list-services
 firewall-cmd --list-ports
 ```
 
-### 31.2 ufw — Uncomplicated Firewall (Ubuntu)
+### 31. 🔹 2 ufw — Uncomplicated Firewall (Ubuntu)
 
 ```bash
 # Enable / Disable:
@@ -642,7 +642,7 @@ ufw delete 3                       # Delete rule #3 (from numbered status)
 ufw reset                          # Reset all rules
 ```
 
-### 31.3 iptables — Low-Level Firewall
+### 31. 🔹 3 iptables — Low-Level Firewall
 
 ```bash
 # View rules:
@@ -674,7 +674,7 @@ iptables -F                        # Flush all chains
 
 ## 32. 🔥 Firewall — SNAT, DNAT, Source-Based Routing
 
-### 32.1 NAT — Network Address Translation
+### 32. 🔹 1 NAT — Network Address Translation
 
 ```
 SNAT (Source NAT):     Change SOURCE IP      → Used for internet access from LAN
@@ -715,7 +715,7 @@ iptables -A FORWARD -p tcp -d 192.168.1.50 --dport 80 -j ACCEPT
 iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 2222 -j DNAT --to-destination 192.168.1.10:22
 ```
 
-### 32.2 Source-Based Routing (Policy Routing)
+### 32. 🔹 2 Source-Based Routing (Policy Routing)
 
 Used when a server has **multiple network interfaces** and you need traffic from different sources to go through different gateways.
 
@@ -740,7 +740,7 @@ ip rule list
 ip route show table isp1table
 ```
 
-### 32.3 sysctl.conf — IP Forwarding and Kernel Network Parameters
+### 32. 🔹 3 sysctl.conf — IP Forwarding and Kernel Network Parameters
 
 ```bash
 cat /etc/sysctl.conf

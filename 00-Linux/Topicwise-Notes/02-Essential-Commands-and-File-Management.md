@@ -1,12 +1,12 @@
-# ⌨️ Essential Commands and File Management
+# 📘 ⌨️ Essential Commands and File Management
 
 Covers the daily shell commands and file-management skills needed to work confidently in Linux.
 
-## 4. ⌨️ Essential Linux Commands
+## 4. 📌 ⌨️ Essential Linux Commands
 
 Before managing files or systems, a Linux learner needs a reliable way to navigate the environment and inspect what is available. These commands form the everyday toolkit for working efficiently in the shell.
 
-### 4.1 Navigation
+### 4. 🔹 1 Navigation
 
 ```bash
 pwd                    # Print Working Directory — where am I?
@@ -25,7 +25,7 @@ cd -                   # Go to previous directory
 cd /                   # Go to root directory
 ```
 
-### 4.2 Getting Help
+### 4. 🔹 2 Getting Help
 
 ```bash
 man ls                 # Manual page for 'ls'
@@ -38,7 +38,7 @@ whereis ls             # Binary, source, manual locations
 type ls                # Shows if command is alias/builtin/file
 ```
 
-### 4.3 System Information
+### 4. 🔹 3 System Information
 
 ```bash
 # OS and kernel:
@@ -64,7 +64,7 @@ last                   # Login history
 lastlog                # Last login for all users
 ```
 
-### 4.4 Date and Time
+### 4. 🔹 4 Date and Time
 
 ```bash
 date                   # Current date and time
@@ -78,7 +78,7 @@ cal                    # Calendar for current month
 cal 2025               # Calendar for whole year
 ```
 
-### 4.5 Clear, Reset, History
+### 4. 🔹 5 Clear, Reset, History
 
 ```bash
 clear                  # Clear screen
@@ -96,7 +96,7 @@ Ctrl + L               # Clear screen (same as clear)
 
 ## 5. 🔐 File Permissions & Ownership
 
-### 5.1 Understanding Permissions
+### 5. 🔹 1 Understanding Permissions
 
 Every file has **three sets of permissions** for three types of users:
 
@@ -109,7 +109,7 @@ Every file has **three sets of permissions** for three types of users:
 │││││└───── File type: - (regular), d (dir), l (link), c (char), b (block)
 ```
 
-### 5.2 Permission Values
+### 5. 🔹 2 Permission Values
 
 | Permission | Symbol | Numeric Value |
 |-----------|--------|:------------:|
@@ -133,7 +133,7 @@ Common patterns:
 777 = rwxrwxrwx  → ⚠️ Avoid — world-writable!
 ```
 
-### 5.3 chmod — Change Permissions
+### 5. 🔹 3 chmod — Change Permissions
 
 ```bash
 # Numeric (octal) method:
@@ -157,7 +157,7 @@ chmod -R 755 /opt/app/       # Set website directory permissions
 chmod 400 private.key        # Read-only, owner only
 ```
 
-### 5.4 chown — Change Ownership
+### 5. 🔹 4 chown — Change Ownership
 
 ```bash
 chown alice file.txt              # Change owner to alice
@@ -167,14 +167,14 @@ chown -R www-data:www-data /var/www/html/  # Recursive ownership change
 chown --reference=source.txt dest.txt      # Copy ownership from source
 ```
 
-### 5.5 chgrp — Change Group
+### 5. 🔹 5 chgrp — Change Group
 
 ```bash
 chgrp developers file.txt          # Change group ownership
 chgrp -R developers /opt/project/  # Recursive
 ```
 
-### 5.6 Special Permissions
+### 5. 🔹 6 Special Permissions
 
 ```bash
 # SUID (Set User ID) — run file as owner, not executor:
@@ -191,7 +191,7 @@ ls -ld /tmp                    # Shows: drwxrwxrwt (t at end)
 # Used on /tmp so users can't delete each other's temp files
 ```
 
-### 5.7 umask — Default Permissions
+### 5. 🔹 7 umask — Default Permissions
 
 ```bash
 umask                     # Show current umask (e.g., 0022)
@@ -205,7 +205,7 @@ umask 0022                # Set umask
 umask 0027                # Files: 640, Dirs: 750 (group-readable only)
 ```
 
-### 5.8 ACL — Access Control Lists
+### 5. 🔹 8 ACL — Access Control Lists
 
 ```bash
 # Extended permissions beyond owner/group/other:
@@ -221,7 +221,7 @@ setfacl -b file.txt                           # Remove ALL ACLs
 
 ## 6. 📁 File & Directory Management
 
-### 6.1 Creating Files and Directories
+### 6. 🔹 1 Creating Files and Directories
 
 ```bash
 # Create files:
@@ -239,7 +239,7 @@ mkdir -p /opt/app/logs       # Create directory + all parents
 mkdir -p dir1 dir2 dir3      # Create multiple directories
 ```
 
-### 6.2 Copying, Moving, Renaming
+### 6. 🔹 2 Copying, Moving, Renaming
 
 ```bash
 # Copy:
@@ -260,7 +260,7 @@ mv -v *.log /var/log/archive/    # Verbose move
 for f in *.txt; do mv "$f" "${f%.txt}.bak"; done
 ```
 
-### 6.3 Deleting Files and Directories
+### 6. 🔹 3 Deleting Files and Directories
 
 ```bash
 rm file.txt                  # Remove file
@@ -275,7 +275,7 @@ rm -rf mydir/                # Force recursive remove (⚠️ DANGEROUS!)
 
 > ⚠️ **`rm -rf /` will DESTROY the entire system.** Always double-check paths before using `-rf`.
 
-### 6.4 Viewing File Contents
+### 6. 🔹 4 Viewing File Contents
 
 ```bash
 cat file.txt                 # Print entire file
@@ -299,7 +299,7 @@ diff file1.txt file2.txt     # Show differences between files
 diff -u file1.txt file2.txt  # Unified diff format (git-style)
 ```
 
-### 6.5 Finding Files
+### 6. 🔹 5 Finding Files
 
 ```bash
 # find — most powerful:
@@ -322,7 +322,7 @@ which python3              # Path of executable
 whereis nginx              # Binary + source + man page locations
 ```
 
-### 6.6 File Compression and Archives
+### 6. 🔹 6 File Compression and Archives
 
 ```bash
 
@@ -380,7 +380,7 @@ tar -xvzf archive.tar.gz file.txt  # Extract specific file
 
 
 
-### 6.7 Links — Hard and Symbolic
+### 6. 🔹 7 Links — Hard and Symbolic
 
 ```bash
 # Hard link — another name for the same inode (same data):

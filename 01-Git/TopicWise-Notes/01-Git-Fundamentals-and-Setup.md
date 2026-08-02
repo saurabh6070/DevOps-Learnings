@@ -2,24 +2,24 @@
 
 This note preserves the full content of the original Git introduction guide and presents it as a structured learning document for beginners and DevOps students.
 
-### Key takeaways
+### 🔹 Key takeaways
 
 - Understand why version control matters in software development.
 - Learn the core Git concepts and terminology.
 - Set up Git correctly so your commits are traceable and consistent.
 
-## 1. Version Control System (VCS)
+## 1. 📌 Version Control System (VCS)
 
 A Version Control System is a tool that helps manage changes to files over time. It allows teams to collaborate, track history, and recover previous versions.
 
-### Types of VCS
+### 🔹 Types of VCS
 
 | Type | Description |
 |---|---|
 | Centralized VCS | A single central repository is used by all users |
 | Distributed VCS | Every developer has a full local copy of the repository |
 
-### CVCS vs DVCS
+### 🔹 CVCS vs DVCS
 
 | Feature | CVCS | DVCS |
 |---|---|---|
@@ -30,11 +30,11 @@ A Version Control System is a tool that helps manage changes to files over time.
 | Performance | Depends on network | Faster for local tasks |
 | Example | SVN, CVS | Git, Mercurial |
 
-## 2. What is Git?
+## 2. 📌 What is Git?
 
 Git is a free and open-source distributed version control system created by Linus Torvalds in 2005. It supports branching, merging, collaboration, and fast local operations.
 
-## 3. Basic Terminologies
+## 3. 📌 Basic Terminologies
 
 | Term | Meaning |
 |---|---|
@@ -51,11 +51,11 @@ Git is a free and open-source distributed version control system created by Linu
 | Rebase | Reapply commits on top of another branch |
 | Hook | Script that runs during Git events |
 
-## 4. Setting Up Git
+## 4. 📌 Setting Up Git
 
 Before you can work with Git effectively, you need a working Git environment on your machine and a basic identity configuration. These setup steps ensure that each commit is attributed correctly and that Git behaves consistently across systems.
 
-### Installation
+### 🔹 Installation
 
 ```bash
 # Windows
@@ -68,13 +68,13 @@ brew install git
 sudo apt install git
 ```
 
-### Verify installation
+### 🔹 Verify installation
 
 ```bash
 git --version
 ```
 
-### Initial configuration
+### 🔹 Initial configuration
 
 ```bash
 git config --global user.name "Your Name"
@@ -84,24 +84,24 @@ git config --global init.defaultBranch main
 git config --list
 ```
 
-## 5. Repository Commands
+## 5. 📌 Repository Commands
 
 Once Git is installed, the next step is to create or obtain a repository. These commands form the foundation of working with Git because they define where your project history will live and how it will be shared.
 
-### Initialize a repository
+### 🔹 Initialize a repository
 
 ```bash
 git init
 ```
 
-### Clone a repository
+### 🔹 Clone a repository
 
 ```bash
 git clone <repository-url>
 git clone <repository-url> <folder-name>
 ```
 
-### Forking
+### 🔹 Forking
 
 Forking creates a personal copy of another user’s repo on a hosting platform.
 
@@ -109,18 +109,18 @@ Forking creates a personal copy of another user’s repo on a hosting platform.
 git clone <your-fork-url>
 ```
 
-## 6. Working with Files
+## 6. 📌 Working with Files
 
 After a repository exists, the main activity becomes tracking and recording changes to files. Understanding the file lifecycle helps students reason about what happens when they create, edit, stage, and commit files.
 
-### Git file lifecycle
+### 🔹 Git file lifecycle
 
 ```text
 Untracked -> Staged -> Committed
 Modified <- edit <-
 ```
 
-### Status and staging
+### 🔹 Status and staging
 
 ```bash
 git status
@@ -131,7 +131,7 @@ git add *.js
 git add src/
 ```
 
-### Commit changes
+### 🔹 Commit changes
 
 ```bash
 git commit -m "Your commit message"
@@ -139,7 +139,7 @@ git commit -am "Message"
 git commit --amend -m "New msg"
 ```
 
-### Remove files
+### 🔹 Remove files
 
 ```bash
 git rm <file-name>

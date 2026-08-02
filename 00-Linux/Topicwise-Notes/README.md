@@ -2,7 +2,7 @@
 
 This set is organized to cover the full content of [00-Linux/01-Introduction.md](../01-Introduction.md) across separate topic-wise files.
 
-## Coverage map from the source note
+## 📌 Coverage map from the source note
 
 | Source sections | Topic-wise file |
 |---|---|
@@ -17,7 +17,7 @@ This set is organized to cover the full content of [00-Linux/01-Introduction.md]
 | 33-39 | [09-Servers-and-Services.md](09-Servers-and-Services.md) |
 | 40-47 | [10-Security-Hardening-and-Backup.md](10-Security-Hardening-and-Backup.md) |
 
-## Files
+## 📌 Files
 
 1. [Introduction, Architecture, and Filesystem](01-Introduction-and-Architecture.md)
 2. [Essential Commands and File Management](02-Essential-Commands-and-File-Management.md)
