@@ -4,6 +4,12 @@
 
 This note preserves the original content on rebase, stash, tags, diff, log, and related advanced Git operations.
 
+### Key takeaways
+
+- Use rebase when you want a cleaner commit history.
+- Use stash to pause work safely and return later.
+- Use diff and log to inspect and understand repository history.
+
 ## 1. Git Rebase
 
 Rebase is used when you want to keep the project history visually linear and clean. It moves the work from one branch onto another so that commits appear to have been created in a more sequential order.

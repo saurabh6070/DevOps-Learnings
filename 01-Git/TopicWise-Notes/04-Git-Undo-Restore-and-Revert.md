@@ -4,6 +4,12 @@
 
 This note preserves the original content on how to undo and recover from changes safely.
 
+### Key takeaways
+
+- Know when to use restore, reset, or revert.
+- Understand the difference between rewriting history and preserving it.
+- Learn how to recover from mistakes without losing control of the project.
+
 ## 1. Git Restore
 
 Sometimes a file needs to return to a previous state because the latest edits are no longer wanted. Git restore provides a safe way to discard local changes or undo a staged change without affecting the full repository history.

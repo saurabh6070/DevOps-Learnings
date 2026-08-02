@@ -2,6 +2,14 @@
 
 This directory contains a complete, teaching-oriented reorganization of the Git notes from the parent folder.
 
+## Suggested study flow
+
+1. Start with the fundamentals to understand what Git is and how it works.
+2. Learn the everyday repository workflow before moving to advanced operations.
+3. Study branching, merging, and pull requests to understand collaboration.
+4. Practice undo and recovery commands carefully so you can recover from mistakes.
+5. Finish with rebase, stash, DevSecOps, and interview preparation for practical mastery.
+
 ## Files
 
 1. [01-Git-Fundamentals-and-Setup.md](01-Git-Fundamentals-and-Setup.md)

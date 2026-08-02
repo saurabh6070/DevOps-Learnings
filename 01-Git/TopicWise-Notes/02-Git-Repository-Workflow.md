@@ -4,6 +4,12 @@
 
 This file preserves the original content about the day-to-day repository workflow and common Git commands used by students and engineers.
 
+### Key takeaways
+
+- Learn how to inspect the state of a repository before changing anything.
+- Practice staging and committing in a structured way.
+- Use tags and stash to manage workflow interruptions safely.
+
 ## 1. Checking Repository Status
 
 In daily Git work, the first thing a developer usually wants to know is what changed. Status checks provide a quick overview of modified, staged, or untracked files before any further action is taken.

@@ -4,6 +4,12 @@
 
 This file preserves the original interview-oriented content and turns it into a practical study guide for students preparing for DevOps and Git interviews.
 
+### Key takeaways
+
+- Review the most commonly asked Git interview questions.
+- Use the cheat sheet as a quick revision tool before exams or interviews.
+- Connect concepts from earlier topics to practical interview answers.
+
 ## 1. Beginner Questions
 
 For beginners, the goal is to understand the purpose of Git and how it fits into modern software development. These questions build the mindset needed before moving into advanced workflows and team practices.

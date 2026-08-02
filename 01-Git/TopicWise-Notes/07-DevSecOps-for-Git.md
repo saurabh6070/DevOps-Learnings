@@ -4,6 +4,12 @@
 
 This note preserves the full DevSecOps content and presents it as a complete teaching document for Git-focused engineering teams.
 
+### Key takeaways
+
+- Understand how security is integrated into Git-based development workflows.
+- Learn the role of branch protection, review controls, and secret hygiene.
+- Apply security checks early to reduce risk in delivery pipelines.
+
 ## 1. What is DevSecOps?
 
 Modern software delivery is not only about speed and automation; it also requires trust and protection. DevSecOps brings security into the development pipeline from the beginning so that risks are reduced before they become expensive problems.

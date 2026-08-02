@@ -4,6 +4,12 @@
 
 This note preserves the original content on branching strategies, merging, and contributor workflows.
 
+### Key takeaways
+
+- Understand how branches support parallel work.
+- Learn how merges and conflicts are handled in real projects.
+- Follow the pull request workflow used by modern teams.
+
 ## 1. Branching Basics
 
 Branching is one of Git’s most powerful features because it allows multiple streams of work to exist independently. This is essential for feature development, experimentation, and safe collaboration in team environments.

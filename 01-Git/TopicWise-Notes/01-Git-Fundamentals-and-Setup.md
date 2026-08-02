@@ -4,6 +4,12 @@
 
 This note preserves the full content of the original Git introduction guide and presents it as a structured learning document for beginners and DevOps students.
 
+### Key takeaways
+
+- Understand why version control matters in software development.
+- Learn the core Git concepts and terminology.
+- Set up Git correctly so your commits are traceable and consistent.
+
 ## 1. Version Control System (VCS)
 
 A Version Control System is a tool that helps manage changes to files over time. It allows teams to collaborate, track history, and recover previous versions.
