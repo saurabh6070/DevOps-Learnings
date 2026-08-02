@@ -74,27 +74,9 @@ cat /proc/version  # Detailed kernel info
 
 A Linux system is organized in layers, from hardware up to user applications. Knowing this structure helps explain why commands, services, and kernel features behave the way they do.
 
-```
-┌─────────────────────────────────────────────────────┐
-│                  USER SPACE                          │
-│                                                     │
-│  ┌──────────────┐  ┌──────────┐  ┌──────────────┐  │
-│  │ Applications │  │  Shell   │  │  System Libs │  │
-│  │ (vim, nginx) │  │ (bash)   │  │  (glibc)     │  │
-│  └──────────────┘  └──────────┘  └──────────────┘  │
-│                         ↕ System Calls               │
-├─────────────────────────────────────────────────────┤
-│                  KERNEL SPACE                        │
-│                                                     │
-│  ┌──────────┐  ┌────────┐  ┌──────┐  ┌──────────┐  │
-│  │ Process  │  │ Memory │  │ File │  │ Network  │  │
-│  │ Mgmt     │  │ Mgmt   │  │ Sys  │  │ Stack    │  │
-│  └──────────┘  └────────┘  └──────┘  └──────────┘  │
-├─────────────────────────────────────────────────────┤
-│                   HARDWARE                           │
-│    CPU    RAM    Disk    NIC    GPU    Peripherals   │
-└─────────────────────────────────────────────────────┘
-```
+<img width="1408" height="768" alt="Gemini_Generated_Image_6nu6ez6nu6ez6nu6" src="https://github.com/user-attachments/assets/cb065270-3371-47b7-83c2-512e2d6c57ab" />
+
+
 
 ### 🔹 2.1 Key Layers
 
