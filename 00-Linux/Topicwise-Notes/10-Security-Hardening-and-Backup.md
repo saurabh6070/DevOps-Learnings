@@ -6,6 +6,8 @@
 
 ## 40. 🔒 Linux Security & Hardening
 
+Security hardening is the process of reducing risk by tightening access, monitoring activity, and limiting attack surfaces. These practices help protect Linux systems from misconfiguration, abuse, and common threats.
+
 ### 40.1 Security Audit Tools
 
 ```bash

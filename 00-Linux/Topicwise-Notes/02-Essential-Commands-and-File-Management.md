@@ -6,6 +6,8 @@
 
 ## 4. ⌨️ Essential Linux Commands
 
+Before managing files or systems, a Linux learner needs a reliable way to navigate the environment and inspect what is available. These commands form the everyday toolkit for working efficiently in the shell.
+
 ### 4.1 Navigation
 
 ```bash

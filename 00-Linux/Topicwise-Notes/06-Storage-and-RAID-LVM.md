@@ -6,6 +6,8 @@
 
 ## 20. 💾 Disk & Storage Management
 
+Storage management is a core Linux administration task because disks, filesystems, and mounts determine where data lives and how reliably it is preserved. Understanding these topics is critical for both day-to-day operations and disaster recovery.
+
 ### 20.1 Disk Usage and Space
 
 ```bash

@@ -6,6 +6,8 @@
 
 ## 1. 🐧 Introduction to Linux
 
+Linux is the foundation of modern infrastructure because it powers servers, cloud platforms, containers, and many developer workstations. Understanding the basic idea of Linux is important before exploring commands, configuration files, or system administration tasks.
+
 ### 1.1 What is Linux?
 
 **Linux** is a Unix-like operating system kernel that powers servers, desktops, cloud platforms, mobile devices, and supercomputers.
@@ -72,6 +74,8 @@ cat /proc/version  # Detailed kernel info
 
 ## 2. 🖥️ Linux Architecture
 
+A Linux system is organized in layers, from hardware up to user applications. Knowing this structure helps explain why commands, services, and kernel features behave the way they do.
+
 ```
 ┌─────────────────────────────────────────────────────┐
 │                  USER SPACE                          │
@@ -130,6 +134,8 @@ chsh -s /bin/zsh
 ---
 
 ## 3. 📂 Linux File System Hierarchy
+
+The Linux filesystem is a single tree rooted at /, which makes paths and file organization predictable. Learning this hierarchy is essential for locating configuration files, logs, user data, and system resources.
 
 Linux uses a **single root** (`/`) hierarchy — everything hangs from `/`. Unlike Windows, there are no drive letters.
 

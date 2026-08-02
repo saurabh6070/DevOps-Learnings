@@ -6,6 +6,8 @@
 
 ## 11. 👤 User & Group Management
 
+Linux security begins with controlled access to the system. Users and groups define who can log in, what they can access, and how privileges are separated.
+
 ### 11.1 User Accounts
 
 ```bash

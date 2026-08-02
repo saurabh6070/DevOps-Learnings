@@ -6,6 +6,8 @@
 
 ## 25. 📦 Package Management
 
+Software installation and updates are a routine part of Linux administration. Package managers simplify this process by handling dependencies, repositories, and version control consistently.
+
 ### 25.1 APT — Debian/Ubuntu
 
 ```bash

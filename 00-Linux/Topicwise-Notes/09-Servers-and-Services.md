@@ -6,6 +6,8 @@
 
 ## 33. 🌐 DNS Server Setup — named.conf, Record Types, Zones
 
+Many Linux services depend on name resolution and centralized configuration. DNS is the service that translates human-readable names into addresses, making modern networked applications possible.
+
 ### 33.1 DNS Concepts
 
 ```

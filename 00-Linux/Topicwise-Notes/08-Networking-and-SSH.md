@@ -6,6 +6,8 @@
 
 ## 27. 🌐 Networking in Linux
 
+Networking is what allows a Linux system to communicate with other machines, services, and the internet. A strong foundation in IP addressing, routing, and DNS is necessary for both troubleshooting and system design.
+
 ### 27.1 Network Interfaces
 
 ```bash

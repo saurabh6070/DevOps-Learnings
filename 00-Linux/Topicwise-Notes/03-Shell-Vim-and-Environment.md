@@ -6,6 +6,8 @@
 
 ## 7. 🐚 Vi / Vim Editor
 
+Text editing is a core part of Linux administration and scripting. Vim is widely used because it is powerful, fast, and available on nearly every Linux system.
+
 ### 7.1 Vim Modes
 
 ```
@@ -101,6 +103,8 @@ gg=G                 # Auto-indent entire file
 ---
 
 ## 8. 🔗 Shell & Environment Variables
+
+The shell is the interface between the user and the operating system. Environment variables allow the shell and applications to store values that affect behavior, such as paths, editors, and custom settings.
 
 ### 8.1 Variables
 

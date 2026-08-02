@@ -6,6 +6,8 @@
 
 ## 16. ⚙️ Systemd & Service Management
 
+Modern Linux systems use systemd to manage services, boot order, and background processes. Learning how to control services is essential for administration, troubleshooting, and automation.
+
 ### 16.1 systemctl — Control Services
 
 ```bash
@@ -144,6 +146,8 @@ systemctl isolate rescue.target           # Switch to rescue mode now
 ---
 
 ## 17. ⚙️ Process Management
+
+Processes are the running programs on a Linux system. Monitoring and controlling them is necessary when diagnosing performance, resource issues, or unexpected service behavior.
 
 ### 17.1 Viewing Processes
 
