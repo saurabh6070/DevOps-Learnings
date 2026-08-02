@@ -1,8 +1,6 @@
-# Networking, SSH, Firewall, and Routing
+# 🌐 Networking, SSH, Firewall, and Routing
 
-> Extracted from [00-Linux/01-Introduction.md](../01-Introduction.md)
->
-> Covers source sections 27-32 from the original Linux introduction note.
+Covers networking basics, SSH, routing, and firewall concepts in Linux.
 
 ## 27. 🌐 Networking in Linux
 

@@ -1,8 +1,6 @@
-# Introduction, Architecture, and Filesystem
+# 🐧 Introduction, Architecture, and Filesystem
 
-> Extracted from [00-Linux/01-Introduction.md](../01-Introduction.md)
->
-> Covers source sections 1-3 from the original Linux introduction note.
+Covers the essential ideas behind Linux, its architecture, and the filesystem hierarchy.
 
 ## 1. 🐧 Introduction to Linux
 

@@ -1,8 +1,6 @@
-# Package Management and Software Repositories
+# 📦 Package Management and Software Repositories
 
-> Extracted from [00-Linux/01-Introduction.md](../01-Introduction.md)
->
-> Covers source sections 25-26 from the original Linux introduction note.
+Covers package installation, updates, repositories, and package managers on Linux.
 
 ## 25. 📦 Package Management
 

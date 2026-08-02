@@ -1,8 +1,6 @@
-# DNS, DHCP, NTP, Samba, NFS, Apache, and sudo
+# 🛠️ DNS, DHCP, NTP, Samba, NFS, Apache, and sudo
 
-> Extracted from [00-Linux/01-Introduction.md](../01-Introduction.md)
->
-> Covers source sections 33-39 from the original Linux introduction note.
+Covers common Linux services and server roles used in real environments.
 
 ## 33. 🌐 DNS Server Setup — named.conf, Record Types, Zones
 

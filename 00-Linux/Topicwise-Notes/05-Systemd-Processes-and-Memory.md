@@ -1,8 +1,6 @@
-# Systemd, Processes, Memory, and Logs
+# ⚙️ Systemd, Processes, Memory, and Logs
 
-> Extracted from [00-Linux/01-Introduction.md](../01-Introduction.md)
->
-> Covers source sections 16-19 from the original Linux introduction note.
+Covers service management, process monitoring, memory concepts, and logging in Linux.
 
 ## 16. ⚙️ Systemd & Service Management
 

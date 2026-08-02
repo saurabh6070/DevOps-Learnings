@@ -1,6 +1,4 @@
-# DevSecOps for Git
-
-> Adapted from [02-DevSecOps in Git.md](../02-DevSecOps%20in%20Git.md)
+# 🔐 DevSecOps for Git
 
 This note preserves the full DevSecOps content and presents it as a complete teaching document for Git-focused engineering teams.
 

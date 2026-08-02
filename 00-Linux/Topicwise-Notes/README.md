@@ -1,4 +1,4 @@
-# Linux Topic-wise Notes
+# 📚 Linux Topic-wise Notes
 
 This set is organized to cover the full content of [00-Linux/01-Introduction.md](../01-Introduction.md) across separate topic-wise files.
 

@@ -1,6 +1,4 @@
-# Undo, Restore, Reset, and Revert
-
-> Adapted from [01-Introduction.md](../01-Introduction.md)
+# ↩️ Undo, Restore, Reset, and Revert
 
 This note preserves the original content on how to undo and recover from changes safely.
 

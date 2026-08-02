@@ -1,6 +1,4 @@
-# Branching, Merging, and Pull Requests
-
-> Adapted from [01-Introduction.md](../01-Introduction.md)
+# 🌿 Branching, Merging, and Pull Requests
 
 This note preserves the original content on branching strategies, merging, and contributor workflows.
 

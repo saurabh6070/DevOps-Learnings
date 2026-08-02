@@ -1,6 +1,4 @@
-# Git Repository Workflow and Everyday Commands
-
-> Adapted from [01-Introduction.md](../01-Introduction.md)
+# 🔄 Git Repository Workflow and Everyday Commands
 
 This file preserves the original content about the day-to-day repository workflow and common Git commands used by students and engineers.
 

@@ -1,6 +1,4 @@
-# Git Fundamentals and Setup
-
-> Adapted from [01-Introduction.md](../01-Introduction.md)
+# 🌱 Git Fundamentals and Setup
 
 This note preserves the full content of the original Git introduction guide and presents it as a structured learning document for beginners and DevOps students.
 

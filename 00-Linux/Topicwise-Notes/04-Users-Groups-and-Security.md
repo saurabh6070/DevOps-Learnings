@@ -1,8 +1,6 @@
-# Users, Groups, and Basic Security
+# 👤 Users, Groups, and Basic Security
 
-> Extracted from [00-Linux/01-Introduction.md](../01-Introduction.md)
->
-> Covers source sections 11-15 from the original Linux introduction note.
+Covers user and group administration, password policies, and essential Linux security concepts.
 
 ## 11. 👤 User & Group Management
 

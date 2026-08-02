@@ -1,8 +1,6 @@
-# Essential Commands and File Management
+# ⌨️ Essential Commands and File Management
 
-> Extracted from [00-Linux/01-Introduction.md](../01-Introduction.md)
->
-> Covers source sections 4-6 from the original Linux introduction note.
+Covers the daily shell commands and file-management skills needed to work confidently in Linux.
 
 ## 4. ⌨️ Essential Linux Commands
 

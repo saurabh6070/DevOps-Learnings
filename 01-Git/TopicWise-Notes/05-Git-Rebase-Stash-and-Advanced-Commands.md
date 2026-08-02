@@ -1,6 +1,4 @@
-# Rebase, Stash, Tags, Diff, Log, and Advanced Commands
-
-> Adapted from [01-Introduction.md](../01-Introduction.md)
+# ⚙️ Rebase, Stash, Tags, Diff, Log, and Advanced Commands
 
 This note preserves the original content on rebase, stash, tags, diff, log, and related advanced Git operations.
 

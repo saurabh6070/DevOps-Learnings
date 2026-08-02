@@ -1,8 +1,6 @@
-# Storage, Filesystems, Inodes, LVM, and RAID
+# 💾 Storage, Filesystems, Inodes, LVM, and RAID
 
-> Extracted from [00-Linux/01-Introduction.md](../01-Introduction.md)
->
-> Covers source sections 20-24 from the original Linux introduction note.
+Covers disks, partitions, filesystems, inodes, LVM, and RAID concepts.
 
 ## 20. 💾 Disk & Storage Management
 

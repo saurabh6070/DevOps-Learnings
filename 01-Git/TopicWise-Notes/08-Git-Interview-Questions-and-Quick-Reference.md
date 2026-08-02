@@ -1,6 +1,4 @@
-# Git Interview Questions and Quick Reference
-
-> Adapted from [03-Questionaire-Interview.md](../03-Questionaire-Interview.md)
+# ❓ Git Interview Questions and Quick Reference
 
 This file preserves the original interview-oriented content and turns it into a practical study guide for students preparing for DevOps and Git interviews.
 

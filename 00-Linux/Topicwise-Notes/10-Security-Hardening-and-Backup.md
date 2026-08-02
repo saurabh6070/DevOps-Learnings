@@ -1,8 +1,6 @@
-# Security Hardening, Backup, Performance, and Scripting
+# 🔒 Security Hardening, Backup, Performance, and Scripting
 
-> Extracted from [00-Linux/01-Introduction.md](../01-Introduction.md)
->
-> Covers source sections 40-47 from the original Linux introduction note.
+Covers hardening, backup, performance tuning, and shell scripting in Linux.
 
 ## 40. 🔒 Linux Security & Hardening
 

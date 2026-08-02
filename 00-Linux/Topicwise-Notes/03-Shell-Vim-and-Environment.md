@@ -1,8 +1,6 @@
-# Shell, Vim, and Environment Variables
+# 🐚 Shell, Vim, and Environment Variables
 
-> Extracted from [00-Linux/01-Introduction.md](../01-Introduction.md)
->
-> Covers source sections 7-10 from the original Linux introduction note.
+Covers the shell experience, editing with Vim, and how environment variables shape your session.
 
 ## 7. 🐚 Vi / Vim Editor
 
