@@ -1,4 +1,4 @@
-# Git Topic-wise Notes
+# 📚 Git Topic-wise Notes
 
 This directory contains a complete, teaching-oriented reorganization of the Git notes from the parent folder.
 
