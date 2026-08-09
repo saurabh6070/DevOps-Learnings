@@ -31,6 +31,28 @@ echo $SHELL
 Kaunsa shell aa raha hai aapka? Type in the chat!
 4. Aur sabse upar aati hain Applications—jaise apka web server, Python, ya database.
 
+```
+┌─────────────────────────────────────────────────────┐
+│                  USER SPACE                          │
+│                                                     │
+│  ┌──────────────┐  ┌──────────┐  ┌──────────────┐  │
+│  │ Applications │  │  Shell   │  │  System Libs │  │
+│  │ (vim, nginx) │  │ (bash)   │  │  (glibc)     │  │
+│  └──────────────┘  └──────────┘  └──────────────┘  │
+│                         ↕ System Calls               │
+├─────────────────────────────────────────────────────┤
+│                  KERNEL SPACE                        │
+│                                                     │
+│  ┌──────────┐  ┌────────┐  ┌──────┐  ┌──────────┐  │
+│  │ Process  │  │ Memory │  │ File │  │ Network  │  │
+│  │ Mgmt     │  │ Mgmt   │  │ Sys  │  │ Stack    │  │
+│  └──────────┘  └────────┘  └──────┘  └──────────┘  │
+├─────────────────────────────────────────────────────┤
+│                   HARDWARE                           │
+│    CPU    RAM    Disk    NIC    GPU    Peripherals   │
+└─────────────────────────────────────────────────────┘
+```
+
 
 
 Ab chalte hain iske sabse interesting part par—Filesystem Hierarchy.
