@@ -1,0 +1,77 @@
+Hey everyone! Welcome to my channel, Aaj ke time pe jab aap Netflix par koi series stream karte ho, Amazon par shopping karte ho, ya Swiggy se khana order karte ho—in sabke peeche jo invisible engine kaam kar raha hai, wo 'Linux' hai. Aaj cloud computing, Docker, Kubernetes aur yahan tak ki hamare smartphones ki poori duniya Linux par hi based hai.
+
+Operating System (OS) aapke computer ya server ka 'Main Manager' hota hai, jo directly physical hardware (CPU, RAM, Storage) aur aapke applications ke beech ek bridge ka kaam karta hai.
+Iska main function system ke resources ko intelligently baantna, bina crash hue multiple apps ko run karna, aur data se lekar network tak ki security ko handle karna hai taaki aapka kaam smoothly chal sake.
+
+Agar hum strictly tech terms mein baat karein, toh Linux apne aap mein koi complete Operating System nahi hai, balki ye sirf ek Kernel hai. Ise ek gaadi ke engine ki tarah samjho. Sirf engine rakha ho toh tum drive nahi kar sakte; tumhe steering, tyres aur body chahiye. Jab is Linux Kernel ke sath hum commands, shell aur applications (GNU tools) jod dete hain, tab jakar ek complete Operating System banta hai.
+
+What is Linux? Sabse pehle ek chota sa question: Jab main 'Linux' bolta hoon, toh tumhare dimaag mein kya aata hai? Ek OS? Terminal screen? Hacking movies? Strictly speaking, Linux ek Operating System nahi hai, Linux ek Kernel hai!1991 mein Linus Torvalds ne ise banaya tha.
+
+Ab sawaal ye hai ki poori tech industry Windows chhodkar Linux kyun use karti hai? Iske teen bade reasons hain:
+Free & Open Source: Koi licensing cost nahi. Code khula hai, jo marzi modify karo
+Secure: Iska permission model itna tight hai ki malware yahan aasani se enter nahi kar sakta.
+Stability: Guys, Linux servers saalon-saal bina reboot hue chalte hain
+Cloud & Container King: AWS, Azure, Docker, Kubernetes—90%+ cloud workloads Linux par chalte hain.
+
+
+Jaise Android ke alag-alag versions hote hain—Samsung ka apna UI hai, OnePlus ka apna—waise hi Linux ke alag-alag flavor hote hain jinhein hum Distributions ya Distros kehte hain.
+Agar aap beginner hain ya normal cloud instances chala rahe hain, toh Debian family ka Ubuntu sabse zyada use hota hai. Lekin agar aap kisi bank ya badi enterprise ke IT infrastructure mein jayenge, toh wahan aapko Red Hat family (jaise RHEL, CentOS) milega.
+
+Aap apne system ka kernel version seedha terminal par uname -r likh kar check kar sakte hain.
+
+Ab samajhte hain ki ye system andar se kaam kaise karta hai. Iske Architecture ko ek badi IT company ki tarah imagine karo:
+1. Sabse neeche hai Hardware (CPU, RAM, Hard Disk)—ye company ka physical office aur equipment hai. 
+2. Is hardware ko manage karta hai hamara Kernel—ye company ka core Manager hai jo decide karta hai kisko kitni RAM aur CPU milega.
+3. Uske baad number aata hai Shell ka. Shell ko aap system ka 'Translator' ya 'Receptionist' maan sakte ho. Hamara system 0 aur 1 ki bhasha samajhta hai aur hum English. Toh jab hum terminal par koi command type karte hain, toh Shell use samajhta hai aur Manager (Kernel) se wo kaam karwata hai. Linux mein alag-alag type ke shells hote hain jaise bash (jo sabse common hai) ya zsh (jo aajkal kaafi popular hai).
+bash: Default king on most distros (Bourne Again SHell).
+zsh: Mac users ka favorite, looking-wise stylish.
+fish: Super interactive with auto-suggestions.
+Apna current shell dekhne ke liye command chalao
+echo $SHELL
+Kaunsa shell aa raha hai aapka? Type in the chat!
+4. Aur sabse upar aati hain Applications—jaise apka web server, Python, ya database.
+
+
+
+Ab chalte hain iske sabse interesting part par—Filesystem Hierarchy.
+Windows mein hume aadat hoti hai C: Drive aur D: Drive dekhne ki. Linux mein koi drives nahi hoti. 
+Linux mein ek hi directory hai—Root Directory (/). Sab kuch / ke niche hi rehta hai! 
+/ (Root)
+├── bin/    → Essential commands (ls, cp, mv)
+├── etc/    → Configuration files ka ghar!
+├── home/   → Normal users ki personal directories
+├── var/    → Variable data (Logs, temp data)
+├── dev/    → Hardware device files
+└── proc/   → Virtual directory (Kernel ka Live memory)
+
+/etc: System aur services ke saare config files yahan milenge (e.g., /etc/nginx/)
+/var/log: Jab bhi koi server crash ho, yahan jaakar log check karo.
+
+Yahan poora system ek badi multi-story building ki tarah hai jiska ek hi main entrance hai. Is main darwaze ko hum kehte hain Root, jise / (forward slash) se likha jata hai. 
+Is darwaze ke andar alag-alag fixed rooms (directories) hain, jinka apna ek specific kaam hai:
+
+Jaise /bin —ye building ka tool-room hai, jahan saari basic commands rakhi hain.
+Phir aata hai /etc—ye poore system ka control room hai. Aapke system ki, web servers ki saari configuration files yahin milti hain.
+Ek room hai /var/log—ye system ka CCTV aur diary hai. System mein jab bhi koi error aati hai ya server crash hota hai, toh developer seedha is room mein aakar logs check karta hai.
+Aur ek hota hai /home—ye har user ka apna personal locker ya desk hai jahan wo apna data rakhta hai.
+
+
+Absolute vs Relative Paths
+Path samajhna bohot zaroori hai. Do tariqe hain:
+Absolute Path: Hamesha / (Root) se start hota hai. Full address!
+Example: /home/alice/documents/report.txt
+Relative Path: Aap abhi jahan khade ho, wahan se rasta batata hai.
+Example: documents/report.txt
+Shortcuts jo life easy banate hain:
+~ (Tilde) = Aapka Home directory.
+. (Single Dot) = Current directory.
+.. (Double Dot) = Ek step peechhe (Parent directory).
+- (Dash) = Pichli directory mein wapas jane ke liye (cd -).
+
+Quick Recap Question: Agar mujhe saari configuration files dhoondni hain, toh main konse directory mein jaunga? 
+Chat mein answer likho!(Wait for '/etc' answers)
+Kal hum actual Hands-on Commands run karenge. Kisi ko koi doubt hai toh chat m pooch sakte ho.
+
+Alright team! Aaj humne Linux ka Intro, Architecture, Shells, aur File Hierarchy cover kar liya hai.
+
+Toh in short, ek strong core (Kernel), ek smart translator (Shell), aur ek perfectly organized structure (Filesystem) milkar Linux ko modern tech duniya ka sabse powerful tool banate hain.
