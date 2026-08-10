@@ -3,12 +3,12 @@ Hey everyone! Welcome to my channel, Aaj ke time pe jab aap Netflix par koi seri
 Operating System (OS) aapke computer ya server ka 'Main Manager' hota hai, jo directly physical hardware (CPU, RAM, Storage) aur aapke applications ke beech ek bridge ka kaam karta hai.
 Iska main function system ke resources ko intelligently baantna, bina crash hue multiple apps ko run karna, aur data se lekar network tak ki security ko handle karna hai taaki aapka kaam smoothly chal sake.
 
-Agar hum strictly tech terms mein baat karein, toh Linux apne aap mein koi complete Operating System nahi hai, balki ye sirf ek Kernel hai. Ise ek gaadi ke engine ki tarah samjho. Sirf engine rakha ho toh tum drive nahi kar sakte; tumhe steering, tyres aur body chahiye. Jab is Linux Kernel ke sath hum commands, shell aur applications (GNU tools) jod dete hain, tab jakar ek complete Operating System banta hai.
-
 What is Linux? Sabse pehle ek chota sa question: Jab main 'Linux' bolta hoon, toh tumhare dimaag mein kya aata hai? Ek OS? Terminal screen? Hacking movies? Strictly speaking, Linux ek Operating System nahi hai, Linux ek Kernel hai!1991 mein Linus Torvalds ne ise banaya tha.
 
-Ab sawaal ye hai ki poori tech industry Windows chhodkar Linux kyun use karti hai? Iske teen bade reasons hain:
-Free & Open Source: Koi licensing cost nahi. Code khula hai, jo marzi modify karo
+Agar hum strictly tech terms mein baat karein, toh Linux apne aap mein koi complete Operating System nahi hai, balki ye sirf ek Kernel hai. Ise ek gaadi ke engine ki tarah samjho. Sirf engine rakha ho toh hum drive nahi kar sakte; humhe steering, tyres aur body chahiye. Jab is Linux Kernel ke sath hum commands, shell aur applications (GNU tools) jod dete hain, tab jakar ek complete Operating System banta hai.
+
+Ab sawaal ye hai ki poori tech industry Windows yaa macOS chhodkar Linux kyun use karti hai? Iske teen bade reasons hain:
+Free & Open Source: Koi licensing cost nahi. Code publicly available hai, jo marzi modify karo
 Secure: Iska permission model itna tight hai ki malware yahan aasani se enter nahi kar sakta.
 Stability: Guys, Linux servers saalon-saal bina reboot hue chalte hain
 Cloud & Container King: AWS, Azure, Docker, Kubernetes—90%+ cloud workloads Linux par chalte hain.
@@ -92,8 +92,9 @@ Shortcuts jo life easy banate hain:
 
 Quick Recap Question: Agar mujhe saari configuration files dhoondni hain, toh main konse directory mein jaunga? 
 Chat mein answer likho!(Wait for '/etc' answers)
-Kal hum actual Hands-on Commands run karenge. Kisi ko koi doubt hai toh chat m pooch sakte ho.
 
 Alright team! Aaj humne Linux ka Intro, Architecture, Shells, aur File Hierarchy cover kar liya hai.
 
 Toh in short, ek strong core (Kernel), ek smart translator (Shell), aur ek perfectly organized structure (Filesystem) milkar Linux ko modern tech duniya ka sabse powerful tool banate hain.
+
+Kal hum actual Hands-on Commands run karenge. Kisi ko koi doubt hai toh chat m pooch sakte ho.
